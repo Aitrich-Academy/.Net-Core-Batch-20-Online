@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity 2</title>
+</head>
+
+<body>
+<header><h2>New input type have been introduced......</h2></header>
+
+<form>
+    <table  >
+        <tr>
+            <td> <label>Enter your Email :</label></td>
+            <td><input type="email" id="email" name="email"></td>
+            <td> <input type="submit"></td>
+        </tr>
+
+        <tr>
+            <td> <label>Enter Multiple  Email :</label></td>
+            <td><input type="email" id="email" name="emails" multiple></td>
+            <td> <input type="submit"></td>
+        </tr>
+
+        <tr>
+            <td>Add your homepage:</td>
+            <td><input type="url" id="homepage" name="homepage"></td> 
+            <td><input type="submit"></td> 
+        </tr>
+
+        <tr>
+            <Td><label>Select your favorite color:</label></Td>
+            <td><input type="color" id="favcolor" name="favcolor" value=""></td>
+         </tr>
+
+        <tr>
+            <td><label>Number (between 1 and 10):</label></td>
+            <td><input type="number" id="quantity" name="quantity" min="1" max="10"></td>
+         </tr>
+        <tr>
+            <td><label>Range (between 0 and 100):</label></td>
+            <td> <input type="range" id="vol" name="vol" min="0" max="100"></td>
+         </tr>
+        <tr>
+            <td><label>Date of your birthday :</label></td>
+            <td>  <input type="date" id="birthday" name="birthday"></td>
+         </tr>
+         <tr>
+            <td><label>Birth time (date and time):</label></td>
+            <td><input type="datetime-local" id="birthdaytime" name="birthdaytime"></td>
+         </tr>
+           <tr>
+            <td><label>Birthday (month and year):</label></td>
+            <td><input type="month" id="bdaymonth" name="bdaymonth"></td>
+         </tr>
+
+         <tr>
+             <td><label>Search:</label></td>
+             <td><input type="search" id="gsearch" name="gsearch"></td>
+             <td><input type="submit"></td> 
+         </tr>
+         <tr>
+              <td><label>Phone number :</label></td>
+              <td><input type="tel" id="phone" name="phone" placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required></tr>
+         </tr>
+
+         <tr>
+             <td><label >Select a week:</label></td>
+             <td> <input type="week" id="week" name="week">
+             </td>
+         </tr>
+
+         <label for="browser">Choose your browser from the list:</label>
+         <input list="browsers" name="browser" id="browser">
+         <datalist id="browsers">
+           <option value="Edge">
+           <option value="Firefox">
+           <option value="Chrome">
+           <option value="Opera">
+           <option value="Safari">
+         </datalist>
+
+         <tr>
+            <td><label>Choose your browser from the list:</label></td>
+            <td>
+                <input list="browsers" name="browser" id="browser">
+                <datalist id="browsers">
+                  <option value="Edge">
+                  <option value="Firefox">
+                  <option value="Chrome">
+                  <option value="Opera">
+                  <option value="Safari">
+                </datalist>
+            </td>
+         </tr>
+
+       
+
+          <tr>
+            <td><lable>Audio</lable></td>
+            <td>
+                <audio controls>
+                    <source src="https://youtu.be/Xf0yP-kNyXQ?si=_U1E8Jm8orwWdQ72" type="audio/ogg">
+                   </audio>
+            </td>
+          </tr>
+
+          <tr>
+            <td><lable>video</lable></td>
+            <td>
+                <video width="320" height="240" controls>
+                    <source src="https://www.youtube.com/embed/GDlkCkcIqTs?si=vvtigJTLuZY8VGlM" type="video/mp4">
+                   </video>
+            </td>
+          </tr>
+           
+         
+    </table>
+    
+</form>
+    
+</body>
+
+</html>
