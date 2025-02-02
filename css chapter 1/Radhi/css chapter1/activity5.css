@@ -1,0 +1,39 @@
+.box1{width:98%;height: 100%;
+background-color:grey ;
+text-align: center;
+}
+.box2{width: 18%;
+    height: 604px;
+    background-color: rgb(21, 56, 170);
+    position: relative;
+    top: -64px;
+    right: -1px;
+    padding: 20px;
+
+}
+.box3{width: 109%;
+    height: 19px;
+    margin:auto
+    }
+.box4{width: 109%;
+    height: 48px;
+    background-color: blanchedalmond;
+    position: relative;
+    top: 10%;
+    right: 10%;
+    margin: auto;
+    margin-right: 47%;
+}
+.box5{
+    width: 17%;
+    height: 55px;
+    background-color: grey;
+    position: relative;
+    top: 12px;
+    right: -55%;
+    color: #cc0b0b;
+    border: solid;
+    border-color: white;
+    padding: 0%;
+    
+}
