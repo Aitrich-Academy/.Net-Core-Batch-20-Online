@@ -1,0 +1,124 @@
+.square
+{
+    width: 500px;
+    height: 500px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(217, 71, 35);
+    background-color: rgb(233, 233, 28);
+    border-radius: 124px;
+    position:relative;
+    margin-top: 55px;
+    margin-left: 215px;
+}
+
+.circle1
+{
+    width: 500px;
+    height: 500px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(217, 71, 35);
+    background-color: red;
+    border-radius: 275px;
+    position:relative;
+    margin-top: 0px;
+    margin-left: -1px;  
+}
+
+.circle2
+{
+    width: 450px;
+    height: 450px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(217, 71, 35);
+    background-color: rgb(228, 161, 61);
+    border-radius: 275px;
+    position:relative;
+    margin-top: 19px;
+    margin-left: 22px;  
+}
+.circle3
+{   
+    width: 347px;
+    height: 351px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(15, 37, 6);
+    background-color: rgb(8, 81, 43);
+    border-radius: 148px;
+    position: relative;
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.circle4
+{
+    width: 350px;
+    height: 354px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(15, 37, 6);
+    background-color: rgb(215, 228, 40);
+    border-radius: 65px;
+    position: relative;
+    margin-top: 46px;
+    margin-left: 48px;
+}
+
+.circle5
+{
+    width: 321px;
+    height: 299px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(15, 37, 6);
+    background-color: rgb(134, 15, 15);
+    border-radius: 200px;
+    position: relative;
+    margin-top: 24px;
+    margin-left: 15px;
+}
+
+.circle6
+{
+    width: 238px;
+    height: 238px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(15, 37, 6);
+    background-color: rgb(39, 8, 178);
+    border-radius: 200px;
+    position: relative;
+    margin-top: 31px;
+    margin-left: 39px;
+}
+
+.circle7
+{
+    width: 202px;
+    height: 173px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(15, 37, 6);
+    background-color: #f0f252;
+    border-radius: 38px;
+    position: relative;
+    margin-top: 32px;
+    margin-left: 16px;
+}
+
+.circle8
+{
+    width: 150px;
+    height: 150px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(15, 37, 6);
+    background-color: #57030f;
+    border-radius: 93px;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 23px;
+}

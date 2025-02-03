@@ -1,0 +1,28 @@
+.photo-repeate
+{
+        
+  border: 2px solid black;
+  padding: 25px;
+  background: url("images/jobportal.jpg");
+  background-repeat: repeat;
+  width: 1000px;
+  height: 1000px;
+}
+
+.JPS_repeate
+ {
+    position: relative;
+    top: 115px;
+    left:530px;
+    font-size: 28px;
+ }
+.content_repeate
+{
+    font-family:'Arial Narrow';
+    font-size:12px;
+    position: relative;
+    top:102px;
+    left:533px;
+    font-weight:100;
+    color: light black;
+}
