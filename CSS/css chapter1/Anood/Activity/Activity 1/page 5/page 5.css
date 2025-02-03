@@ -1,0 +1,112 @@
+.box
+{
+    background-color: darkgrey;
+    width:770px;
+    height:561px;
+    border-style: double;
+    border-color: white;
+    border-width: 4px;
+}
+
+.bluebox
+{
+    background-color:#1e66e3;
+    width:221px;
+    height:552px;
+    border-style: double;
+    border-color: white;
+    border-width: 4px;
+}
+
+.container1
+{
+width: 221px;
+height: 58px;
+background-color: white;
+color: #4c87ed;
+font-weight: bold;
+font-size: 26px;
+font-family:  'Arial Narrow';
+position: relative;
+top: -23px;
+left: 4px;
+}
+
+.container2
+{
+width: 214px;
+height: 58px;
+background-color:none;
+color:black;
+font-weight: bold;
+font-size: 26px;
+font-family:  'Arial Narrow';
+position: relative;
+top: -492px;
+left: 11px;
+border-color:#1f6cf2;
+border-style: solid;
+}
+
+.container3
+{
+    width: 225px;
+    height: 60px;
+    background-color:NONE;
+    color:#ed5c77;
+    font-weight: bold;
+    font-size: 29px;
+    font-family:  'Arial Narrow';
+    position: relative;
+    top: -594px;
+    left: 407px;
+    border-color:white;
+    border-style: solid;  
+}
+
+.container4
+{
+width: 213px;
+height: 58px;
+background-color:none;
+color: white;
+font-weight: bold;
+font-size: 26px;
+font-family:  'Arial Narrow';
+position: relative;
+top: 5px;
+left: 4px;
+border-color:#1f6cf2;
+border-style: solid;
+}
+
+.container5
+{
+    width: 214px;
+    height: 58px;
+    background-color:white;
+    color:#1f6cf2;
+    font-weight: bold;
+    font-size: 26px;
+    font-family:  'Arial Narrow';
+    position: relative;
+    top: -482px;
+    left: 8px;
+    border-color:white;
+    border-style: solid;  
+}
+.container6
+{
+    width: 225px;
+    height: 60px;
+    background-color:NONE;
+    color:#ba1433;
+    font-weight:normal;
+    font-size: 29px;
+    font-family:  'Arial Narrow';
+    position: relative;
+    top: -594px;
+    left: 407px;
+    border-color:white;
+    border-style: solid;  
+}
