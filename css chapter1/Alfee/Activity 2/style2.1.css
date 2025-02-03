@@ -1,0 +1,10 @@
+
+.containerparent {
+    width:1530px;
+    height:700px;
+    background-image: url('./Picture1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat:no-repeat;
+}
+    
