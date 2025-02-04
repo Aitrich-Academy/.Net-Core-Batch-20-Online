@@ -1,0 +1,46 @@
+.containerparent{
+    display: flex;
+    flex-direction: column;
+    justify-content:left;
+    align-items:center;
+    height: 100%;
+    width: 100%;
+}
+
+.model_one{
+    width: 300px;
+    height: 100px;
+    position: relative;
+    top: 100px;
+    left: -98px;
+}
+
+
+.model_two{
+    width: 300px;
+    height: 100px;
+    position: relative;
+    top: 74px;
+    left: -101px;
+}
+ 
+
+ 
+.model_three{
+    width: 300px;
+    height: 100px;
+    position: relative;
+    top: 36px;
+    left: -122px;
+}
+
+ 
+
+ 
+.model_four{
+    width: 300px;
+    height: 100px;
+    position: relative;
+    top: 2px;
+    left: -138px;
+ }
