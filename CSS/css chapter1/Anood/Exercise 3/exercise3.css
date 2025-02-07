@@ -1,0 +1,54 @@
+.menu 
+{
+  margin-left: 53px;
+  color: white;
+  position: absolute; 
+}
+
+.text
+{
+  margin-top:-22px;
+  margin-left:40px;
+}
+
+.rightbox
+{
+  background-color: whitesmoke;
+  margin-left: 235px;
+  position: relative;
+  top: -15px;
+  width:1043px;
+  height: 1200px;
+  border-top-left-radius: 45px;
+  border-bottom-left-radius: 45px;
+}
+
+.searchbox
+{
+ width:447px; 
+ height:47px;
+ background-color: #eee7e7; 
+ margin-top: -50px; 
+ margin-left: 283px; 
+ border-radius: 25px;
+}
+  
+.searchtext
+{
+ top: -23px;
+ left: 17px;
+ position: relative;
+ font-size: 13px;
+ font-weight: 2px;
+ font-style: normal;
+ color: grey;
+}
+
+.form
+      {
+       width:673px; 
+      height:404px;
+      background-color:white; 
+      position: relative; 
+      top:-1089px; left:276px;
+      }
