@@ -1,0 +1,28 @@
+.containerparent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.job_green {
+  width: 500px;
+  height: 100px;
+  background-color: rgb(143, 211, 41);
+}
+
+.job_red {
+  width: 500px;
+  height: 100px;
+  background-color: red;
+  margin-top: 10px;
+}
+
+.job_yellow {
+  width: 500px;
+  height: 100px;
+  background-color: yellow;
+  margin-top: 10px;
+}

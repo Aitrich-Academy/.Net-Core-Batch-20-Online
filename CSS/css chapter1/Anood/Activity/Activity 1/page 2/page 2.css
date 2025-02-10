@@ -1,0 +1,19 @@
+.text_heading
+{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+    font-weight: bold;
+    position: relative;
+    top: 68px;
+    left: 750px;
+}
+
+.text_content
+{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+    font-weight: lighter;
+    position: relative;
+    top: 7px;
+    left: -3px;
+}

@@ -1,0 +1,45 @@
+.font-setting
+{
+    color: black;
+    font-size:24px;
+    font-family:'Times New Roman', Times, serif; 
+}
+
+
+.box
+{
+border: 2px;   
+padding: 20px;  
+margin: 10px;
+text-align: center;
+display: flex;
+align-items: center;
+justify-content: center;
+position: relative;
+top:50px;
+left: 357px;
+width: 350px; 
+height: 50px;
+}
+
+ .JPS
+ {
+    position: relative;
+    top: 175px;
+    left:363px;
+    font-size: 28px;
+ }
+
+ .content
+ {
+   font-family:'Arial Narrow';
+   font-size:12px;
+   position: relative;
+   top:163px;
+   left:363px;
+   font-weight:100;
+   color: light black;
+ }
+
+
+
