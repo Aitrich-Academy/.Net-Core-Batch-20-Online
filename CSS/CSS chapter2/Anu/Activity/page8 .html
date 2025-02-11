@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <style>
+        .mainbox
+        {
+             background-color: whitesmoke;
+            box-sizing: border-box;
+            border-style: double;
+            border-color: gray;
+            width: 400px;
+            height: 436px;
+            margin-left: 100px;
+            margin-top: 50px;
+         }
+
+        .header
+        {
+            margin-top: 32px;
+            margin-left: 166px;
+         }
+
+         .content
+         {
+            width: 327px;
+            height: 56px;
+            box-sizing: border-box;
+            border-style: outset;
+            border-color: whitesmoke;
+            background-color: whitesmoke;
+            box-shadow: -2px 5px 4px #ddd8d8;
+            margin-left: 35px;
+            margin-top: -20px;
+         }
+
+         .input_style
+         {
+            width: 324px;
+            height: 35px;
+            border-color: rgb(181 173 173);
+            box-sizing: border-box;
+            color: gray;
+            border-width: thin;
+            font-weight: bold;
+            margin-left: 38px;
+            margin-top: 19px;
+            font-size: 12px;
+            padding-left: 13px;
+          }
+          .checkbox
+          {
+            position: relative;
+            margin-left: -328px;
+            top: 41px;
+          }
+         .buttonstyle
+         {
+            margin-top: 16px;
+            margin-left: 36px;
+            width: 328px;
+            height: 34px;
+            text-align: center;
+            background-color: skyblue;
+            box-sizing: border-box;
+            border-color: rgb(181 173 173);
+            border-width: thin;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+         }
+    </style>
+
+</head>
+
+<body>
+    <div class="mainbox">
+        <div class="header">
+            <img src="images/Logo.png" style="width:50px; height: 50px;">
+            <h2 style="position: relative; top:-14px;left:-60px;font-weight: bold;font-size: 22px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Welcome Back</h2>
+        </div>
+        <div class="content">
+            <img src="images/Google symbol.png" alt="google" style="margin-left: 31px; margin-top: 16px; width:25px; height: 25px;">
+            <p style="margin-top: -24px;margin-left: 100px; font-size: 16px; font-weight: bold;color: blue;">Login in with Google</p>
+        </div>
+        <p style="margin-top: 18px;margin-left: 135px; font-size: 12px; font-weight: bold;color: rgb(203 200 200);">OR LOGIN WITH E-MAIL</p>
+
+        <div>
+            <form>
+                <input type="email" placeholder="Your Email" id="email" class="input_style">
+                <input type="password" placeholder="Your Password" id="password" class="input_style">
+                <input type="checkbox" class="checkbox">
+                <p style="position: relative; top:1px; left:57px; font-size: 13px;"><b>Keep me logged in</b></p>
+                <input type="button" value="Log in" class="buttonstyle">
+            </form>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
