@@ -1,0 +1,114 @@
+#imagestyle
+{
+    width: 50px;
+    height: 50px;
+    align-items: center;
+}
+
+.body
+{
+    height: 2500px;
+    width: 2500px;
+    overflow: hidden;
+    background-color:whitesmoke;
+}
+
+.button_apply 
+    {
+    height: 22px;
+    text-align: center;
+    padding-bottom: 5px;
+    width: 95px;
+    background-color: white;
+    font-size: larger;
+    font-style: unset;
+    border: 1px solid;
+    border-color: #117aa3;
+   }
+
+   .button_apply a
+   {
+    text-decoration: none;
+    color: #2d9cddfc;
+   }
+   .button_apply:hover
+   {
+     background-color: #2d9cddfc;
+   }
+   .button_apply:hover a 
+   {
+    color: white;
+   }
+
+   .row
+   {
+    display: flex;
+   }
+
+   .endrow
+    {
+    display: inline-grid;
+    row-gap: 20px;
+    }
+
+
+    .fulltime {
+        height: 20px;
+        padding-top: 3px;
+        padding-left: 12px;
+        width: 65px;
+        font-size: smaller;
+        font-style: unset;
+        color: #011604;
+        border: 1px solid #07300b;
+        border-color: #0a5808;
+        border-radius: 18px;
+        margin-left: 5px;
+    }
+    .fulltime:hover {
+        color: #ffffff;
+        background-color: #0a5808;
+    }
+
+    .marketing {
+        height: 20px;
+        margin-left: 5px;
+        padding-top: 3px;
+        padding-left: 8px;
+        padding-right: 8px;
+        width: 65px;
+        background-color: rgb(255, 255, 255);
+        font-size: smaller;
+        font-style: unset;
+        color: rgb(203 163 17);
+        border: 1px solid;
+        border-color: #ecc900;
+        border-radius: 18px;
+    }
+    
+    .marketing:hover {
+        color: #ffffff;
+        background-color: #ecc900;
+    }
+
+    .designing {
+        margin-left: 5px;
+        height: 20px;
+        padding-top: 3px;
+        padding-left: 8px;
+        padding-right: 8px;
+        width: 65px;
+        background-color: rgb(255, 255, 255);
+        font-size: smaller;
+        font-style: unset;
+        color: rgb(10 98 141);
+        border: 1px solid;
+        border-color: #0095ec;
+        border-radius: 18px;
+    }
+    
+    .designing:hover {
+        color: #ffffff;
+        background-color: #0095ec;
+    }
+    

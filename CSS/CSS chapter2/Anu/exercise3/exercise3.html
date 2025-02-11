@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise3</title>
+    <link href="exercise3.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .leftside
+        {
+            position: relative;
+            width: 244px;
+            background-color: #4638c2;
+             border-style: double;
+            margin-top: -7px;
+            margin-left: -9px;
+            height: 587px;
+        }
+        .jobie
+        {
+            position: absolute;
+            margin-left: 24px;
+            margin-top: 22px;
+            width: 50px;
+            height: 50px;
+        }
+        .jobietext
+        {
+            position: absolute;
+            margin-left: 92px;
+            margin-top: 38px;
+            width: 64px;
+            height: 22px;
+        }
+
+        .menu 
+        {
+            margin-left: -10px;
+            margin-top: 119px;
+            color: white;
+            position: absolute;
+            list-style-type: none;
+            line-height: 15px;
+        }
+
+       .text
+       {
+            margin-top:-22px;
+            margin-left:40px;
+       }
+
+       .rightside
+{
+    background-color: whitesmoke;
+    margin-left: 204px;
+    position: relative;
+    top: -593px;
+    width: 982px;
+    height: 594px;
+    border-top-left-radius: 45px;
+    border-bottom-left-radius: 45px;
+}
+
+
+.searchbox
+{
+    width: 384px;
+    height: 39px;
+    background-color: #eee7e7;
+    margin-top: -50px;
+    margin-left: 283px;
+    border-radius: 25px;
+}
+  
+.searchtext
+{
+    top: -25px;
+    left: 58px;
+    position: relative;
+    font-size: 13px;
+    font-weight: 2px;
+    font-style: normal;
+    color: grey;
+}
+ 
+
+.dashboard
+    {
+        width: 215px;
+        height: 150px;
+        position: absolute;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-style: normal;   
+        font-size: 10px;   
+        color: white;  
+    }
+
+    #box1
+    {
+        background-color: #6dfcb2;
+        margin-top: -64px;
+        margin-left: 109px;
+
+    }
+    #box2
+    {
+        background-color:rgb(70, 192, 214);
+        margin-top: -64px;
+        margin-left: 378px;
+    }
+    #box3
+    {
+        background-color:rgb(59, 78, 247);
+        margin-top: -64px;
+        margin-left: 646px;
+    }
+    #box4
+    {
+        background-color:rgb(59, 78, 247);
+        margin-top: 140px;
+        margin-left: 109px;
+    }
+    #box5
+    {
+        background-color:rgb(70, 192, 214);
+        margin-top: 140px;
+        margin-left: 378px;
+    }
+
+    #box6
+    {
+        background-color:#6dfcb2;
+        margin-top: 140px;
+        margin-left: 646px;
+    }
+
+
+    </style>
+</head>
+
+<body style= " overflow-y: hidden;  overflow-x: hidden;">
+    <div bgcolor= "#4638c2" height="1000px" width="1030px">
+    <div class="leftside">
+        <img src="images/Group 8.png" class="jobie">
+        <img src="images/Hire me Now.png" class="jobietext">
+
+        <ul class="menu">
+            <li>
+                <img src="images/Vector.png">
+                <h5 class="text">Dashboard</h5>
+            </li>
+            <li>
+                <img src="images/image 10.png" >
+                 <h5 class="text">Job Providers</h5>     
+            </li>
+            <li>
+                <img src="images/image 6.png" >
+                 <h5 class="text">New Registrations</h5>    
+            </li>
+            <li>
+                <img src="images/image 9.png">
+                 <h5 class="text">Job Seekers</h5>    
+            </li>
+            <li>
+                <img src="images/ic_search.png" >
+                 <h5 class="text">Jobs</h5>   
+            </li>
+            <li>
+                <img src="images/profile.png" >
+                 <h5 class="text">My Profile</h5>  
+            </li>
+            <li>
+                <img src="images/Vector2.png">
+                 <h5 class="text">Messages</h5>   
+            </li>
+            <li>
+                <img src="images/setting-2.png">
+                 <h5 class="text">Settings</h5>    
+            </li>
+            <li>
+                <img src="images/image 8.png">
+                 <h5 class="text">Logout</h5>    
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="rightside">
+        <div>
+            <img src="images/ic_menu.png" style="width:26px; height:14px;margin-left: 37px;margin-top:45px;position: relative;">
+            <h3 style="margin-left: 83px;margin-top:-23px;position: relative;">Dashboard</h3>
+            <div class="searchbox">
+                <img src="images/Group.png" style="top:10px; left: 315px; width: 21px; height: 21px; position: relative;">
+                <p class="searchtext">Search something here...</p>
+            </div>
+            <img src="images/notification.png" style="top:-41px; left: 722px; width: 40px; height: 40px; position: relative;">
+            <img src="images/notification (1).png" style="top:-39px; left: 722px; width: 40px; height: 40px; position: relative;">
+            <img src="images/profilePicture.png" style="top:-41px; left: 730px; width: 40px; height: 40px; position: relative;">
+            <h3 style="top:-94px; left: 947px; position: relative; font-size: 12px; font-weight: bold;">Oda<br>Dink</h3>
+            <h3 style="top:-104px; left: 947px; position: relative; font-size: 9px; font-weight: bold; color: gray;">Admin</h3>
+          </div>
+
+ 
+            <div id="box1" class="dashboard">
+                <img src="images/avatar 1.png" 
+                  style="width: 35px;
+                  height: 35px;
+                  margin-top: 52px;
+                  margin-left: 31px;
+                  position: absolute;">
+
+                  <h4 style="margin-top: 53px;margin-left: 87px;position: absolute;">Total Jobs Posted</h4>
+                  <h1 style="margin-top: 74px;margin-left: 92px;position: absolute;">45,673</h1> 
+            </div>
+            <div id="box2" class="dashboard">
+                <img src="images/baag.png" 
+                style="width: 50px;
+                height: 50px;
+                margin-top: 52px;
+                margin-left: 31px;
+                position: absolute;">
+
+                <h4 style="margin-top: 53px;margin-left: 87px;position: absolute;">Total Jobs Seekers</h4>
+                <h1 style="margin-top: 74px;margin-left: 92px;position: absolute;">5673</h1> 
+
+            </div>
+            <div id="box3" class="dashboard">
+                <img src="images/image 2.png" 
+                style="width: 45px;
+                height: 45px;
+                margin-top: 52px;
+                margin-left: 31px;
+                position: absolute;">
+
+                <h4 style="margin-top: 53px;margin-left: 87px;position: absolute;">Total Companies</h4>
+                <h1 style="margin-top: 74px;margin-left: 92px;position: absolute;">700</h1> 
+
+            </div>
+            <div id="box4" class="dashboard">
+                <img src="images/candle.png" 
+                style="width: 50px;
+                height: 50px;
+                margin-top: 52px;
+                margin-left: 31px;
+                position: absolute;">
+
+                <h4 style="margin-top: 53px;margin-left: 87px;position: absolute;">New Jobs</h4>
+                <h1 style="margin-top: 74px;margin-left: 92px;position: absolute;">45</h1> 
+
+            </div>
+
+            <div id="box5" class="dashboard">
+                <img src="images/candle.png" 
+                style="width: 50px;
+                height: 50px;
+                margin-top: 52px;
+                margin-left: 31px;
+                position: absolute;">
+
+                <h4 style="margin-top: 53px;margin-left: 87px;position: absolute;">New Job Seekers</h4>
+                <h1 style="margin-top: 74px;margin-left: 92px;position: absolute;">67</h1> 
+
+            </div>
+
+            <div id="box6" class="dashboard">
+                <img src="images/baag.png" 
+                style="width: 50px;
+                height: 50px;
+                margin-top: 52px;
+                margin-left: 31px;
+                position: absolute;">
+
+                <h4 style="margin-top: 53px;margin-left: 87px;position: absolute;">New Companies</h4>
+                <h1 style="margin-top: 74px;margin-left: 92px;position: absolute;">70</h1> 
+
+            </div>
+
+            <div style=
+            "width: 193px;
+            height: 37px;
+            border-radius: 10px;
+            position: relative;
+            top: -71px;
+            left: -184px;
+            background-color: whitesmoke;">  
+            
+                <img src="images/Vector.png" >
+                <h5 class="text" style="color: gray;">Dashboard</h5>
+            </div>
+    </div>   
+</div>
+</body>
+
+</html>
