@@ -1,0 +1,7 @@
+.parent{
+    width: 250px;
+    height: 200px;
+    background-color: white;
+    border: 3px solid blue;
+    border-radius: 2px;
+}
