@@ -1,0 +1,113 @@
+.parent{
+    width:700px ;
+    height:400px ;
+    border-style: solid;
+    border-width: 1px;
+    position: relative; 
+}
+
+.company_1{
+    position: absolute;
+    margin-top: 2px; 
+    margin-left: 4px;
+}
+
+.company_2{
+    position: absolute; 
+    margin-top:129px ; 
+    margin-left: 4px;
+}
+
+.company_3{
+    position: absolute; 
+    margin-top:254px ; 
+    margin-left: 4px;
+}
+
+.logo{
+    margin-top: 50px;
+    margin-left: 40px;
+    position: absolute;
+}
+
+.title{
+    width:300px;
+    margin-top: 2px;
+    margin-left: 107px;
+    position: absolute;
+    color: #70b3cd;
+}
+
+.sub{
+    width: 300px;
+    margin-top: 39px;
+    margin-left: 112px;
+    font-weight: bold;
+    position: absolute;
+}
+
+.location{
+    width: 300px;
+    margin-top: 61px;
+    margin-left: 177px;
+    position: absolute;
+}
+
+.jobtags{
+    width: 71px;
+    height: 14px;
+    border: 1px solid;
+    border-radius: 9px;
+    margin-left: 113px;
+    margin-top: 96px;
+    position: absolute;
+}
+
+.tags_1{
+    text-align: center;
+    font-size: 13px;
+   
+}
+
+.tags_2{
+    text-align: center;
+    font-size: 13px;
+    color: yellow;
+    width: 71px;
+    height: 14px;
+    border-radius: 9px;
+    margin-left: 84px;
+    margin-top: -16px;
+    border: 1px solid;
+    position: absolute;
+}
+
+.tags_3{
+    text-align: center;
+    font-size: 13px;
+    color: #5790a5;
+    width: 71px;
+    height: 14px;
+    border-radius: 9px;
+    border: 1px solid;
+    position: absolute;
+    margin-left: 163px;
+    margin-top: -16px;
+    
+}
+
+.apply{
+    text-align: center;
+    font-size: 17px;
+    color: #317892;
+    width: 85px;
+    height: 23px;
+    border: 1px solid;
+    position: absolute;
+    margin-left: 497px;
+    margin-top: 63px;
+}
+
+
+
+   

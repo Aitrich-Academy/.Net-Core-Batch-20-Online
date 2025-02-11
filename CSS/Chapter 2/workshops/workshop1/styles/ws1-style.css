@@ -53,7 +53,7 @@
 .container {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 /* Style For fullitem , marketing, design buttons  */

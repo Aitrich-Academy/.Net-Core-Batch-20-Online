@@ -1,0 +1,35 @@
+.parent{
+    border: 1px;
+    border-style: solid;
+    border-color: grey;
+    width: 210px;
+    padding: 5px 10px;
+}
+
+h2{
+    padding: 0px;
+    margin: 0px;
+}
+
+table{
+    margin-top: 20px;
+
+}
+
+th{
+    background-color: #e0e0c3;
+    border-radius: 6px;
+}
+
+td{
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+}
+
+.td_text_color{
+    color: skyblue;
+}
+
+.td_bottom_border_color{
+    border-bottom: 2px solid skyblue;
+}
