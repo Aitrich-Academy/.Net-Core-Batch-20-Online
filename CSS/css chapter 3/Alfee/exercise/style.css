@@ -1,0 +1,220 @@
+.parent {
+  position: relative;
+  background-color: white;
+}
+
+.body {
+  background-color: skyblue;
+  width: 100%;
+  height: 1280px;
+}
+
+.dashboard {
+  position: absolute;
+  top: 79px;
+  left: 73px;
+}
+
+.box_1 {
+  width: 80px;
+  height: 20px;
+  background-color: green;
+  color: white;
+  font-size: 10px;
+  border-radius: 3px;
+  position: absolute;
+  left: -5px;
+  top: 56px;
+}
+
+.ul {
+  list-style-image: none;
+  list-style-type: none;
+}
+
+.heading {
+  position: absolute;
+  top: 10px;
+  left: 360px;
+}
+
+.heading_1 {
+  position: absolute;
+  top: 10px;
+  left: 500px;
+}
+
+.right {
+  width: 1200px;
+  height: 950px;
+  background-color: whitesmoke;
+}
+
+.site {
+  position: absolute;
+  top: 10px;
+  left: 1300px;
+}
+
+.rows_1 {
+  position: absolute;
+  width: 650px;
+  height: 200px;
+  border: 1px solid grey;
+  margin-left: 63px;
+  margin-top: -286px;
+  border-radius: 5px;
+}
+
+.rows_2 {
+  position: absolute;
+  width: 650px;
+  height: 200px;
+  border: 1px solid grey;
+  margin-left: 63px;
+  margin-top: -38px;
+  border-radius: 5px;
+}
+
+.rows_3 {
+  position: absolute;
+  width: 650px;
+  height: 200px;
+  border: 1px solid grey;
+  margin-left: 63px;
+  margin-top: 213px;
+  border-radius: 5px;
+}
+
+.boxes {
+  width: 100px;
+  overflow: inherit;
+  animation: nudge 5s  linear infinite alternate;
+}
+
+@keyframes nudge {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform:  translate(25px, 0);
+  }
+
+}
+
+.edit {
+  position: absolute;
+  width: 140px;
+  height: 30px;
+  font-size: 15px;
+  background-color: white;
+  color: black;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid black;
+  top: 928px;
+  left: 47px;
+}
+
+.subscribe {
+  background-color: white;
+  border-radius: 5px;
+  width: 550px;
+  height: 45px;
+  margin-left: 480px;
+  margin-top: 25px;
+  top: 71px;
+  position: relative;
+  left: -217px;
+}
+
+.footer {
+  width: 100%;
+  height: 300px;
+  background-color: whitesmoke;
+  position: relative;
+}
+
+.About_us {
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 500px;
+  width: 200px;
+  word-spacing: 2px;
+}
+
+.Company {
+  position: absolute;
+  margin-top: 41px;
+  margin-left: 700px;
+  width: 200px;
+  word-spacing: 2px;
+}
+
+.Support {
+  position: absolute;
+  margin-top: 41px;
+  margin-left: 900px;
+  width: 200px;
+  word-spacing: 2px;
+}
+
+.Service {
+  position: absolute;
+  margin-top: 41px;
+  margin-left: 1100px;
+  width: 200px;
+  word-spacing: 2px;
+}
+
+.timeline{
+  position: relative;
+  align-items: center;
+}
+
+.timeline_item{
+  position: relative;
+  left: 857px;
+  top:50px;
+}
+
+.timeline_item::before{
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 100px;
+  background-color: black;
+  top: 30px;
+  left:800px ;
+  animation: grow 2s ease-in-out forwards;
+}
+
+.circle{
+  width: 15px;
+  height: 15px;
+  background-color: green;
+  border-radius: 50%;
+  position: relative;
+  animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+@keyframes grow{
+  from{
+    height: 0;
+  }
+  to{
+    height: 100px;
+  }
+}
+
+@keyframes fadeIn{
+  from{
+    opacity: 0;
+    transform: scale(0);
+  }
+  to{
+    opacity: 1;
+    transform: scale(1);
+  }
+}
