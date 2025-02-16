@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity</title>
+    <link href="activity.css" rel="stylesheet" type="text/css">
+<style>
+    .static
+    {
+        width: 60px;
+        height: 60px;
+        background-color: skyblue;
+    }
+
+    .moved {
+            width: 60px;
+            height: 60px;
+          transform: translate(10px,0px);
+          background-color: pink;
+          }
+
+          .normal
+          {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(23, 157, 52);
+          }
+
+          .rotated
+          {
+            transform: rotate3d(0, 1, 0, 60deg);
+            background-color: rgb(132, 20, 38);
+            width: 100px;
+            height: 100px;
+          }
+
+          .btn:hover
+           {
+           background-color:#555;
+           }
+           .btn
+           {
+            background-color: #3498db;
+            transition: background-color 0.3s; 
+            width:100px;
+            height: 100px;
+           }
+
+           .button_bgcolor
+           {
+            background-color: #04AA6D; 
+            border:rgb(234, 42, 3);
+            border-style: double;
+            color: white;
+            text-align:center;
+            padding-top: 58px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            width: 200px;
+            height: 100px;
+           }
+
+           .button_bgcolor:hover
+           {
+            background-color: #c9c917;
+            color: white;
+            border: 2px solid ;
+            font-size: 20px;
+            font-weight: bold;
+           }
+
+           .ball
+           {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: relative;
+            animation-name: bounce;
+            animation-duration: 5s;
+            border-radius: 50px;
+           }
+
+           @keyframes bounce 
+           {
+             0%   {background-color:red;   top:0px; }
+             25%  {background-color:yellow; top:200px;  }
+             50%  {background-color:red;   top:0px;}
+             75%  {background-color:yellow; top:200px;}
+             100% {background-color:red;   top:0px;}
+           }
+
+      .fadeimg
+      {
+       position: relative;
+       top: 300px;
+       left: 0px;
+       animation: fadeinout 5s infinite;
+      } 
+    
+      @keyframes fadeinout
+      {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+
+
+      .slidingtext
+      {
+       animation: slideInLeft 1s infinite; 
+      }
+
+    @keyframes slideInLeft 
+    {
+      0% {
+         transform: translateX(-100%); /* Starts off-screen to the left */
+         opacity: 0;
+        }
+     100% {
+         transform: translateX(0); /* Slides to the center */
+         opacity: 1;
+         }
+     }  
+
+     .flipcard
+     {
+        background-color: transparent;
+          width: 300px;
+         height: 300px;
+        perspective: 1000px;
+        margin-top: 670px;
+        position: absolute;
+     }
+
+     .flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+
+.flipcard:hover .flip-card-inner
+{
+    transform: rotateY(180deg);
+
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+.flip-card-back {
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+}
+ 
+</style>
+    
+</head>
+
+<body>
+    <h2>1.transform: rotate...........</h2>
+    <div class="rotate"></div>
+<!-- ..................................................................................................... -->
+
+    <h2 style="margin-top: -49px;
+    margin-left: 411px;
+    position: absolute;">2.zoom on hover......</h2>
+    <div class="zoom"></div>
+<!-- .........................................................................................................   -->
+
+<h2 style="margin-top: 269px;
+    margin-left: 25px;
+position: absolute;">3.skew method</h2>
+
+<div class="skew">
+<p>This is a button</p>
+</div>
+<div class="skew1">
+    <p>This is a button</p>
+    </div>
+
+    <!-- ....................................................................................... -->
+
+    <h2>4.Transilate an element</h2>
+
+    <div class="static">Static</div>
+    <div class="moved">Moved</div>
+    <div class="static">Static</div>
+
+
+    <!-- ............................................................................ -->
+
+    <h2>5.3D rotation</h2>
+
+    <div class="normal">Normal</div>
+    <div class="rotated">Rotated</div>
+
+    <!-- ........................................................................................ -->
+ 
+    <h2>6.	Color Change on Hover</h2>
+
+    <div class="btn">
+      <p style="text-align: center; margin-top: 5px;margin-left: 3px;font-size: 30px;text-decoration: wavy; padding-top: 38px;">button</p>
+    </div>
+
+     <!-- ........................................................................................-->
+
+      <h2>7.Smooth Size Transition</h2>
+      <div class="card"></div>
+
+      <!-- ................................................................... -->
+
+       <h2>8.Border Animation</h2>  
+
+       <div class="border-button"></div>
+
+       <!-- .......................................................... -->
+       <h2>9.Fading Buttons - "Fade in Effect"</h2>
+
+       <div class="fadebutton">Hover Over Me</div>
+
+       <!-- ..................................................................... -->
+        <h2>10. change background color and font size </h2>
+        <div class="button_bgcolor">Click Me.....</div>
+        <!-- ............................................................................. -->
+
+        <h2>11.	Bouncing Ball</h2>
+        <div class="ball"></div>
+
+        <!-- ....................................................................... -->
+
+        <h2 style="margin-top: 41px;margin-left: 100px; position: absolute;">12.	Loading Spinner</h2>
+        <div class="spinner"></div>
+
+        <!-- ........................................................................ -->
+         <h2 style="position: relative; top: 300px;left: 0px;">13.Fade In and Out</h2>
+         <div class="fadeimg">
+            <img src="rose.jpg" alt="rose" width="300px" height="300px">
+         </div> 
+       <!-- .................................................................. -->
+        <h2 style=" margin-top: 331px;position: absolute;"> 14.Sliding text</h2>
+
+        <div class="slidingtext">
+            <p style=" margin-top: 400px;position: absolute;margin-left: 200px;">This is a sample sliding text...</p>
+        </div>
+
+        <!-- .......................................................................... -->
+
+        <h2 style=" margin-top: 430px;position: absolute;margin-left: 0px;">15. Pulse effect</h2>
+
+        <div class="pulse"></div>
+
+        <!-- ........................................................................ -->
+
+        <h2 style=" margin-top: 620px;position: absolute;margin-left: 0px;">16.	Image Flip Card</h2>
+
+        <div class="flipcard">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="girl.jpg" alt="girl" style="width:300px;height:300px;">
+                  </div>
+                  <div class="flip-card-back">
+                    <p>Happy Girl</p> 
+                   </div>
+
+            </div>
+ 
+         </div>
+
+<!-- .............................................................................................. -->
+
+<h2 style="margin-top: 1000px; position: absolute;">17.	Hover Ripple Effect</h2>
+         
+        <div>
+            <button class="ripplebtn" style="margin-top: 1070px;position: absolute;">Ripple Button</button>
+          </div>
+       </body>
+
+       <!-- ............................................................................................. -->
+
+       <h2 style="margin-top: 1176px; position: absolute;">18.	3D Cube</h2>
+
+       <div class="cube-container" style="margin-top: 1250px; position: absolute;">
+        <div class="cube">
+          <div class="face front">Front</div>
+          <div class="face back">Back</div>
+          <div class="face left">Left</div>
+          <div class="face right">Right</div>
+          <div class="face top">Top</div>
+          <div class="face bottom">Bottom</div>
+        </div>
+      </div>
+
+<!-- ........................................................................................... -->
+
+
+
+    
+</body>
+</html> 
