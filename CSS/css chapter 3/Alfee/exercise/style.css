@@ -35,13 +35,13 @@
 .heading {
   position: absolute;
   top: 10px;
-  left: 360px;
+  left: 65px;
 }
 
 .heading_1 {
   position: absolute;
   top: 10px;
-  left: 500px;
+  left: 156px;
 }
 
 .right {
@@ -53,7 +53,7 @@
 .site {
   position: absolute;
   top: 10px;
-  left: 1300px;
+  left: 1108px;
 }
 
 .rows_1 {
@@ -169,52 +169,51 @@
 }
 
 .timeline{
-  position: relative;
-  align-items: center;
+  position: absolute; 
+  left: 865; 
+  top:174 px;
 }
 
-.timeline_item{
-  position: relative;
-  left: 857px;
-  top:50px;
-}
 
-.timeline_item::before{
-  content: '';
-  position: absolute;
-  width: 3px;
-  height: 100px;
-  background-color: black;
-  top: 30px;
-  left:800px ;
-  animation: grow 2s ease-in-out forwards;
-}
 
-.circle{
-  width: 15px;
-  height: 15px;
+.circle_1{
+  width: 17px;
+  height: 17px;
   background-color: green;
   border-radius: 50%;
-  position: relative;
-  animation: fadeIn 1.5s ease-in-out forwards;
+  position: absolute;
+  top: 150px;
+  left: 93px;
+ 
 }
 
-@keyframes grow{
-  from{
-    height: 0;
-  }
-  to{
-    height: 100px;
-  }
+
+.circle_2{
+  width: 15px;
+  height: 15px;
+  border: 2px solid green;
+  border-radius: 50%;
+  position: absolute;
+  top: 294px;
+  left: 92px;
+ 
 }
 
-@keyframes fadeIn{
-  from{
-    opacity: 0;
-    transform: scale(0);
-  }
-  to{
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+
+.circle_3{
+  width: 15px;
+  height: 15px;
+  border: 2px solid green;
+  border-radius: 50%;
+  position: absolute;
+  top: 433px;
+  left: 92px;
+ 
+} 
+
+/* .tick{
+  position: absolute;
+
+} */
+
+
