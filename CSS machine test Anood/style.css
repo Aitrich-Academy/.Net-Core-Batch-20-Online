@@ -1,0 +1,201 @@
+body
+{
+    margin: 0px;
+    background-color: wheat;
+}
+
+.header_container
+{
+    background-image: linear-gradient(to right, red ,rgb(0, 145, 255));
+    width:100%;
+    height: 112px;
+    position: absolute;
+    margin-top: 0;
+}
+
+.header_text
+{
+    position: relative;
+    top: -9px;
+    left: 415px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    font-family: sans-serif;
+    animation: text_move 4s infinite;
+}
+
+@keyframes text_move
+ {
+    0%   { top:0px;}
+    25% { top:10px;}
+    50% { top:0px; }
+    75% { top:10px; }
+    100% { top:0px; }
+}
+
+.main-menu
+{
+   
+    color: white;
+    font-weight: normal;
+    font-size: 17px;
+    font:  sans-serif;
+}
+
+.menu-1
+{  position: relative;
+top: -6px;
+left: 460px;
+}
+.menu-2
+{  position: relative;
+top: -26px;
+left: 552px;
+}
+.menu-3
+{   position: relative;
+top: -46px;
+left: 661px;
+}
+
+.menu-4
+{  position: relative;
+  top: -69px;
+  left: 783px;
+}
+
+
+.menu-1:hover
+{
+background-color: rgb(235, 199, 21);
+border-radius: 25px;
+color: black;
+width: 80px;
+height: 22px;
+text-align: center;
+justify-content: center;
+}
+.menu-2:hover
+{
+background-color: rgb(235, 199, 21);
+border-radius: 25px;
+color: black;
+width: 80px;
+height: 22px;
+text-align: center;
+justify-content: center;
+}  
+.menu-3:hover
+{
+background-color: rgb(235, 199, 21);
+border-radius: 25px;
+color: black;
+width: 80px;
+height: 22px;
+text-align: center;
+justify-content: center;
+}
+.menu-4:hover
+{
+background-color: rgb(235, 199, 21);
+border-radius: 25px;
+color: black;
+width: 80px;
+height: 22px;
+text-align: center;
+justify-content: center;
+}
+
+
+
+.subcontainer-1
+{
+   position: relative;
+top: -54px;
+left: 212px;
+background-color: white;
+width: 852px;
+height: 95px;
+
+}
+
+.subhead-1
+{
+   position: relative;
+top: 27px;
+left: 382px;
+font-size: 22px;
+font-weight: bold;
+color: brown;
+}
+
+.sub-content1
+{
+   position: relative;
+top: 27px;
+left: 58px;
+font-size: 12px;
+font-weight: normal;
+color: black;
+}
+.sub1:hover
+{
+   animation: pulse 2s infinite;
+}
+
+@keyframes pulse 
+{
+0% {
+   transform: scale(1);
+}
+
+50% {
+   transform: scale(1.1);
+}
+
+100% {
+   transform: scale(1);
+}
+}
+
+
+.gallery
+    {
+     position: relative;
+    top: -26px;
+    left: 212px;
+    background-color: white;
+    width: 889px;
+    height: 244px;
+    color: white;
+    }
+
+    .gallery-head
+    {
+        font-size: 20px;
+    position: relative;
+    top: 35px;
+    left: 394px;
+    color: brown;
+    }
+    .img1:hover
+    {
+        transform: scale(1.1);
+    }
+    .img2:hover
+    {
+        transform: scale(1.1);
+    }
+    .img3:hover
+    {
+        transform: scale(1.1);
+    }
+    .img4:hover
+    {
+        transform: scale(1.1);
+    }
+    .img5:hover
+    {
+        transform: scale(1.1);
+    }
