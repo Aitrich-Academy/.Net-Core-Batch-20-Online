@@ -1,0 +1,271 @@
+.parent{
+    position: relative;
+    height: 1500px;
+} 
+
+.header{
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    background-color:#881E36;
+    color: whitesmoke;
+    text-align: center;
+    font-size: 20px;
+    word-spacing: 4px;
+}
+
+.head{
+    position: absolute; 
+    left: 500px; 
+    top: -40px;
+    animation:  down 1.5s ease-in-out infinite;
+    
+}
+
+@keyframes down{
+    0%{
+        transform: translateY(0);
+    }
+   
+    50%{
+        transform: translateY(100px); 
+    }
+    100%{
+        transform: translateY(0px); 
+    }
+}
+
+
+.about{
+    position: absolute;
+    width: 1300px;
+    height: 150px;
+    top: 224px;
+    margin-left: 80px;
+    border-radius: 2%;
+    background-color:whitesmoke;
+   
+
+}
+
+.gallery{
+    position: absolute;
+    width: 1300px;
+    height: 280px;
+    top: 416px;
+    margin-left: 80px;
+    border-radius: 2%;
+    background-color:whitesmoke;
+
+}
+
+.activities{
+    position: absolute;
+    width: 1300px;
+    height: 400px;
+    top: 734px;
+    margin-left: 80px;
+    border-radius: 2%;
+    background-color: whitesmoke;
+}
+
+.contact{
+    position: absolute;
+    width: 1310px;
+    height: 500px;
+    top: 437px;
+    margin-left: -5px;
+    border-radius: 2%;
+    background-color: whitesmoke;
+}
+
+.parent_1 {
+    padding: 50px;
+  }
+  
+.button {
+    position: absolute; 
+    width: 1210px;
+    height: 30px; 
+    border-radius: 10px;
+    top: 410px;
+    background-color: palevioletred; 
+    margin-left: 20px;
+  }
+  
+  
+
+.button:hover{
+    background-color: blue;
+}
+
+.headings{
+    width: 110px;
+    height: 35px;
+    border-radius: 36px;
+    top:100px;
+    position: absolute; 
+    left: 539px;
+}
+
+.headings:hover{
+ background-color:yellow;
+}
+
+.image1{
+    position: absolute; 
+    width: 200px; 
+    height: 170px; 
+    background-color: brown;
+    border-radius: 4px; 
+    top: 75px; 
+    left: 30px;
+    transition: 0.3s ease-in-out;
+} 
+
+.image1:hover {
+    transform: scale(1.1);
+  }
+
+.image2{
+    position: absolute; 
+    width: 200px; 
+    height: 170px; 
+    background-color:blue;
+    border-radius: 4px; 
+    top: 75px; 
+    left: 286px;
+    transition: 0.3s ease-in-out;
+} 
+
+.image2:hover {
+    transform: scale(1.1);
+  }
+
+  .image3{
+    position: absolute; 
+    width: 200px; 
+    height: 170px; 
+    background-color:greenyellow;
+    border-radius: 4px; 
+    top: 75px; 
+    left: 545px;
+    transition: 0.3s ease-in-out;
+} 
+
+.image3:hover {
+    transform: scale(1.1);
+  }
+
+  .image4{
+    position: absolute; 
+    width: 200px; 
+    height: 170px; 
+    background-color: yellow;
+    border-radius: 4px; 
+    top: 75px; 
+    left: 795px;
+    transition: 0.3s ease-in-out;
+} 
+
+.image4:hover {
+    transform: scale(1.1);
+  }
+
+.image5{
+    position: absolute; 
+    width: 200px; 
+    height: 170px; 
+    background-color:palevioletred;
+    border-radius: 4px; 
+    top: 75px; 
+    left: 1049px;
+    transition: 0.3s ease-in-out;
+} 
+
+.image5:hover {
+    transform: scale(1.1);
+  }
+
+.art{
+    position: absolute; 
+    width: 1240px; 
+    height: 60px; 
+    background-color:yellow;
+    border-radius: 3px; 
+    top: 75px; 
+    left: 24px;
+    animation:  move 0.5s ease-in-out infinite;
+  }
+
+  @keyframes move{
+    0%{
+        transform: translateX(0);
+    }
+    20%{
+        transform: translateX(20px);
+    }
+  }
+
+.music{
+    position: absolute; 
+    width: 1240px; 
+    height: 60px; 
+    background-color:yellow;
+    border-radius: 3px; 
+    top: 150px; 
+    left: 24px;
+    animation: move 0.6s ease-in-out infinite;
+  }
+
+  @keyframes move:hover{
+    0%{
+        transform: translateX(0);
+    }
+    20%{
+        transform: translateX(20px);
+    }
+  }
+ 
+.juggling{
+    position: absolute; 
+    width: 1240px; 
+    height: 60px; 
+    background-color:yellow;
+    border-radius: 3px; 
+    top: 229px; 
+    left: 24px;
+    animation:  move 0.7s ease-in-out infinite;
+  }
+
+  @keyframes move{
+    0%{
+        transform: translateX(0);
+    }
+    20%{
+        transform: translateX(20px);
+    }
+  }
+
+.themed{
+    position: absolute; 
+    width: 1240px; 
+    height: 60px; 
+    background-color:yellow;
+    border-radius: 3px; 
+    top: 301px; 
+    left: 24px;
+    animation:  move 0.8s ease-in-out infinite;
+  }
+
+  @keyframes move{
+    0%{
+        transform: translateX(0);
+    }
+    20%{
+        transform: translateX(20px);
+    }
+  }
+
+
+  

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 1</title>
+    <link href="exercise1.css" rel="stylesheet" type="text/css">
+    <style>
+
+      .type
+      {
+        border-radius: 16px;
+        box-sizing: border-box;
+        border-style: solid;
+        color: white;
+        background-color: rgb(228, 183, 127);
+        position: relative;
+        border-width: 2px;
+        padding-left: 12px;
+        padding-top: 5px;
+        font-size: 13px;
+        animation: nudge 5s linear infinite alternate;
+       }
+
+
+
+     @keyframes nudge 
+     {
+          0%, 100% 
+          {
+    
+             transform: translate(0, 0);
+         }
+         50%     
+        {
+            transform: translate(25px, 0);
+          } 
+     }
+
+
+     
+      #type1
+      {
+        width: 81px;
+        height: 29px;
+        top: -85px;
+        left: 18px;
+      }
+      #type2
+      {
+        width: 85px;
+        height: 29px;
+        top: -113px;
+        left: 107px;
+      }
+      #type3
+      {
+        width: 95px;
+        height: 29px;
+        top: -143px;
+        left: 202px;
+      }
+      #type4
+      {
+        width: 82px;
+        height: 29px;
+        top: -172px;
+        left: 302px;
+      }
+      #type5
+      {
+        width: 66px;
+        height: 29px;
+        top: -201px;
+        left: 395px;
+      }
+
+   
+      
+          
+    </style>
+</head>
+
+<body bgcolor="#3483eb">
+     
+        <div  class="leftside">
+              <div class="header">
+                <h2 style="font-size: 23px; padding-left: 35px;padding-top: 5px;">HireMe Now!</h2>
+                <img src="images/leslie.png" alt="" class="imgleslie"> <br>
+                <div class="leslistatus"> open to work</div><br>
+                <p  style="position: relative;top: -37px;left: 76px;font-size: 13px;font-weight: normal;">Leslie Alexander</p>
+                <p style="position: relative;top: -52px;left: 41px;font-size: 13px;font-weight: normal;">alexanderleslie@mail.com</p>
+              </div>
+
+              <div style="position: absolute;margin-left: 2px;margin-top: -38px;">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><img src="images/alljobs.png" alt="" class="menu_table" ></td>
+                            <td class="text">All Jobs</td>
+                        </tr>
+                        <tr>
+                            <td><img src="images/myapp.png" alt="" class="menu_table" style="width:15px;height: 16px;"></td>   
+                            <td class="text">My Applications</td>    
+                         </tr>
+                         <tr> 
+                            <td><img src="images/message.png" alt="" class="menu_table"></td>  
+                            <td class="text" >Message</td>         
+                        </tr>
+                        <tr>
+                            <td><img src="images/profile.png" alt="" class="menu_table"></td>
+                            <td class="text" >My Profile</td>      
+                         </tr>
+                         <tr>
+                            <td><img src="images/setting-2.png" alt="" class="menu_table"></td>
+                            <td class="text" >Settings</td>     
+                         </tr>
+                    </tbody>
+                </table>
+              </div>    
+
+              <div style="position: absolute;margin-left: 2px;margin-top: 257px;">
+                <div>
+                    <img src="images/typeemployment.png" alt="" class="menu_table1" style=" left: 28px;top: 26px;">
+                     <p class="text1" style="top: -16px; left: 77px;">Type of Employment</p><br><p class="text1" style=" top: -60px; left: 77px;">Fulltime jobs</p> 
+                </div>
+                <div>
+                     <img src="images/experience.png" alt="" class="menu_table1" style=" left: 28px;top: -35px;"> 
+                     <p class="text1" style="top: -77px; left: 77px;">Experience Level</p><br><p class="text1" style=" top: -122px; left: 77px;">Mid Level</p> 
+                </div>
+                <div>
+                    <td><img src="images/salary.png" alt="" class="menu_table1" style=" left: 28px;top: -97px;"></td>
+                    <td><p class="text1" style="top: -139px; left: 77px;">Salary Range</p><br><p class="text1" style=" top: -182px; left: 77px;">$3000-$5000</p></td> 
+                </div>
+              </div> 
+            </div> 
+
+            <!-- .................................................................................................................... -->
+
+            <div class="rightside">
+                <div>
+                    <p style="font-size: 14px;
+                    font-weight: normal;
+                    position: relative;
+                    top: 34px;
+                    left: 32px;">All Jobs</p>
+
+                    <p style="font-size: 14px;
+                    font-weight: normal;
+                    position: relative;
+                    top: 3px;
+                    left: 164px;">Saved Jobs</p>
+
+                    <img src="images/notification-bing.png" alt="notification" style=" width: 35px;
+                    height: 35px;
+                    position: relative;
+                    top: -36px;
+                    left: 720px;">
+                    <img src="images/leslie.png" alt="leslie" style="width: 35px;
+                    height: 35px;
+                    position: relative;
+                    top: -39px;
+                    left: 740px;
+                    border-radius: 50px;">
+                    <p style="font-size: 14px;
+                    font-weight: normal;
+                    position: relative;
+                    top: -80px;
+                    left: 824px;">Leslie Alexander</p>
+                    <hr style="width: 934px;
+                    position: relative;
+                    top: -80px;
+                    left: -59px;
+                    border-color: #f5f3f2; ">
+                    <p style="font-size: 17px;
+                    font-weight: bold;
+                    position: relative;
+                    top: -58px;
+                    left: 29px;">My Applications</p>
+                </div>
+                <!-- ........................................................................................................... -->
+
+                <div>
+                    <div class="boader" style="position: absolute; margin-left: 27px;margin-top: -55px;">
+                        <img src="images/mernstack.png" alt="image" style="width: 50px;
+                        height: 50px;
+                        padding-left: 8px;
+                        padding-top: 5px;">
+                        <p style="font-size: 15px;
+                        font-weight: bold;
+                        position: relative;
+                        top: -64px;
+                        left: 68px;">MERN stack Intern</p>
+                        <p style="font-size: 11px;
+                        font-weight: normal;
+                        position: relative;
+                        top: -75px;
+                        left: 68px;
+                        color: #479bf5;">Aitrich Technologies</p>
+                        <p style="font-size: 11px;
+                        font-weight: normal;
+                        position: relative;
+                        top: -100px;
+                        left: 193px;
+                        color: #68696a;">Location</p>
+                        <p style="font-size: 13px;
+                        font-weight: normal;
+                        position: relative;
+                        top: -85px;
+                        left: 8px;
+                        color: #68696a;">We are looking for a UI/UX Designer to turn our software into easy-to-use products<br>
+                           for our clients.</p>
+   <!-- ............................................................................................................................                      -->
+                          <div>
+                           <div class="type" id="type1">Full time</div>  
+                           <div class="type" id="type2">Mid Level</div>  
+                           <div class="type" id="type3">$3000-#5000</div>   
+                           <div class="type" id="type4">Indonesia</div>   
+                           <div class="type" id="type5">Onsite</div>   
+                        </div>
+                    </div>  
+<!-- ............................................................................................................................. -->
+                  
+
+                <div class="boader" style="position: absolute; margin-left: 27px;margin-top: 128px;">
+                    <img src="images/python.png" alt="image" style="width: 50px;
+                        height: 50px;
+                        padding-left: 8px;
+                        padding-top: 5px;">
+                        <p style="font-size: 15px;
+                        font-weight: bold;
+                        position: relative;
+                        top: -64px;
+                        left: 68px;">Python developer</p>
+                        <p style="font-size: 11px;
+                        font-weight: normal;
+                        position: relative;
+                        top: -75px;
+                        left: 68px;
+                        color: #479bf5;">Applexus Technologies</p>
+                        <p style="font-size: 11px;
+                        font-weight: normal;
+                        position: relative;
+                        top: -100px;
+                        left: 193px;
+                        color: #68696a;">Location</p>
+                         <p style="font-size: 13px;
+                         font-weight: normal;
+                         position: relative;
+                         top: -85px;
+                         left: 8px;
+                         color: #68696a;">Product Designer responsibilities include defining product specifications, creating<br>
+                            digital or print drawings and designing fully-functional products.</p>
+                            <div>
+                                <div class="type" id="type1">Full time</div>  
+                                <div class="type" id="type2">Mid Level</div>  
+                                <div class="type" id="type3">$3000-#5000</div>   
+                                <div class="type" id="type4">Indonesia</div>   
+                                <div class="type" id="type5">Onsite</div>   
+                             </div>
+                </div>
+
+                <div class="boader" style="position: absolute; margin-left: 27px;margin-top: 308px;">
+                    <img src="images/jrsoftwear.png" alt="image" style="width: 50px;
+                        height: 50px;
+                        padding-left: 8px;
+                        padding-top: 5px;">
+                        <p style="font-size: 15px;
+                        font-weight: bold;
+                        position: relative;
+                        top: -64px;
+                        left: 68px;">Junior Software Engineer</p>
+                         <p style="font-size: 11px;
+                         font-weight: normal;
+                         position: relative;
+                         top: -75px;
+                         left: 68px;
+                         color: #479bf5;">Excellence Technosoft</p>
+                         <p style="font-size: 11px;
+                         font-weight: normal;
+                         position: relative;
+                         top: -100px;
+                         left: 193px;
+                         color: #68696a;">Location</p>
+                          <p style="font-size: 13px;
+                          font-weight: normal;
+                          position: relative;
+                          top: -85px;
+                          left: 8px;
+                          color: #68696a;">We are looking for a talented UI Designer to create amazing user experiences. The<br>
+                            ideal candidate should have an eye for clean and artful design, possess superior UI<br>skills.</p>
+
+                            <div>
+                                <div class="type" id="type1">Full time</div>  
+                                <div class="type" id="type2">Mid Level</div>  
+                                <div class="type" id="type3">$3000-#5000</div>   
+                                <div class="type" id="type4">Indonesia</div>   
+                                <div class="type" id="type5">Onsite</div>   
+                             </div>
+
+               </div>
+                </div>
+                      
+</body>
+</html>
