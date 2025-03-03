@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Keep asking for a number until it is a prime number.
+        
+        let number;
+        let isprime
+do {
+    number = parseInt(prompt("Enter a number:"));
+    // Assume the number is prime if it is 2 or greater
+      isprime = number >= 2;
+    for (let i = 2; i <= number/2; i++) 
+  //  If the number is divisible, it's not a prime number
+    {
+        if (number % i == 0) 
+        {
+            isprime = false;
+            break;
+        }
+    }
+
+} while (!isprime);
+
+document.write( number,"is a prime number!");
+
+
+
+
+    </script>
+    
+</body>
+</html>

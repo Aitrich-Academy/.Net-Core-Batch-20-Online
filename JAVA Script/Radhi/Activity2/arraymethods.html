@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // splice
+        let colours=["red","blue","brown"];
+        colours.splice(1,0,"yellow","purple","orange");
+        document.write(colours +"<br>");
+         // reverse
+        let numbers=[1,2,3,4,5];
+        numbers.reverse();
+        document.write(numbers  +"<br>");
+
+        //concat
+        let countries =["india","uae","Uk"];
+        let newcountries = countries.concat("US","Canada","Australia");
+        document.write(newcountries  +"<br>")
+
+        //join
+        let words=["hello" ,"world"];
+        let s=words.join("");
+        document.write(s  +"<br>")
+        //sort
+        let animals=["cow","dog","elephant","horse"];
+        animals.sort();
+        document.write(animals  +"<br>")
+
+        //includes
+
+        let fruits=["apple","orange","banana"];
+        let check=fruits.includes("cherry");
+        document.write("Is cherry in the array?",check)
+
+
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

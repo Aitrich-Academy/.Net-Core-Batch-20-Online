@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+          let n=parseInt(prompt("enter a number"))
+        let l=n.toString().length;
+        let s=0;
+      let  i=1;
+      let  digit=0;
+      let reverse=0;
+        while(i<=l)
+        {
+            digit=n%10;
+
+            reverse=reverse*10+digit;
+            n=parseInt(n/10);
+           s=digit+s;
+           i++;
+
+        }
+        document.write("Sum of Digits:",s);
+    </script>
+</body>
+</html>

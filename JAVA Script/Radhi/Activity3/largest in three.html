@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let number1=parseInt(prompt("enter 1st number"));
+        let number2=parseInt(prompt("enter 2nd number"));
+        let number3=parseInt(prompt("enter 3rd number"));
+        let largest
+       if(number1==number2&&number2==number3)
+       {
+        document.write("All numbers are equal")
+       }
+     
+     
+        else if(number1>=number2&&number1>=number3)
+
+    {
+        
+       document.write(number1,"is larger than",number2,",",number3)
+
+
+    }
+    else if(number2>=number1&&number2>=number3)
+    {
+        document.write(number2,"is larger than",number1,",",number3)
+    }
+
+    else{
+        document.write(number3,"is larger than",number1,",",number2)
+    }
+    </script>
+</body>
+</html>

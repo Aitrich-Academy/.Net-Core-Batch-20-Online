@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const billamount = parseInt(prompt("Enter total bill amount: "));
+         let choice = parseInt(prompt("Enter your choice:\n1 -Regular\n2 -Silver\n3 -Gold\n4 -platinum\n5 -No Membership"))
+
+let discount = 0;
+let ms="";
+
+
+switch (choice)
+ {
+    case 1:
+         discount = 0.05;
+         ms=" Regular Customer! "
+        break;
+    case 2:
+        discount = 0.10; 
+        ms=" Silver Customer! "
+        break;
+    case 3:
+        discount = 0.20; 
+         ms=" Gold Customer! "
+        break;
+    case 4:
+        discount = 0.30; 
+         ms=" Platinum Customer! "
+        break;
+    default:
+        document.write(" discount not applied."+"<br>");
+}
+
+
+let finalamount = (billamount - (billamount * discount));
+
+document.write("Youe are a",ms,"Final payable amount:",finalamount);
+    </script>
+</body>
+</html>

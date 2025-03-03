@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       // Keep taking numbers until the sum reaches 100.
+
+
+       let sum=0;
+       let n;
+       do
+       {
+        if(sum<100)
+       {
+        n=parseInt(prompt("Enter a number"));
+    
+       
+        sum=sum+n;
+        document.write(n +"<br>");
+       
+       }
+       else
+       {
+        document.write("sum is greater than 100:"+"<br>");
+        break;
+       }
+
+
+       }while(sum!==100)
+       document.write( "sum is:"+ sum );
+
+    </script>
+</body>
+</html>

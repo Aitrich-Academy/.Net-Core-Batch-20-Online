@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Find the sum of positive numbers entered by the user (stop on negative input).
+            let sum=0;
+            let n;
+
+        do{
+            n=parseInt(prompt("enter a number"));
+            if(n>=0)
+        {
+            document.write(n +"<br>")
+            sum=sum+n;
+        }
+        }while(n>=0);
+        document.write("Sum of positive Numbers:",sum +"<br>");
+        document.write("User enterd a -ve value for Exit");
+
+
+
+
+
+    </script>
+</body>
+</html>

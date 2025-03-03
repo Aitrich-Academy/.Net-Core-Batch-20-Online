@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       // Convert a decimal number to binary using a do-while loop.
+        let binary = "";
+let decimal = parseInt(prompt("Enter a decimal number:"));
+let num = decimal;
+
+
+do {
+    let remainder = num % 2;
+    binary = remainder + binary;
+    num = parseInt(num / 2);
+} while (num > 0);
+
+document.write("Binary equivalent:", binary);
+
+    </script>
+</body>
+</html>

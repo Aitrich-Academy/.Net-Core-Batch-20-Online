@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Simulate a simple ATM withdrawal system (keep asking until balance is sufficient).
+        let sbalance=1000;
+        let amount;
+        let Totalamount=0;
+       do {
+        alert("You Have Insufficient Balance Add more! Your Balance Is:" +Totalamount);
+        amount=parseInt(prompt("Enter your Amount "))
+        if(amount<=1000)
+       {
+        Totalamount=Totalamount+amount;
+       }
+       else
+       {
+        Totalamount=Totalamount+amount;
+    
+       }
+       
+       
+    
+    }while(Totalamount<1000)
+    document.write("You Have Sufficent Balance:",Totalamount);
+    </script>
+</body>
+</html>

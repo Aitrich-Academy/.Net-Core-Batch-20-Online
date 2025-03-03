@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. Function to check if a number is prime
+function isPrime(num) {
+    if (num < 2) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+    }
+    return true;
+}
+
+// 2. Function to calculate the factorial of a number
+function factorial(n) {
+    if (n < 0) return "Factorial not defined for negative numbers";
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+function ispalindrome(str) {
+    let len = str.length;
+    for (let i = 0; i < parseInt(len / 2); i++) {
+        if (str[i] !== str[len - 1 - i]) {
+            return false;
+        }
+    }
+    return true;
+}
+console.log(isPrime(9)); // Output: true
+console.log(factorial(8)); // Output: 120
+document.write(ispalindrome("iai"))
+
+
+
+    </script>
+</body>
+</html>
