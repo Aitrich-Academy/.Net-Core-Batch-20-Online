@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. Function to count the number of vowels in a string
+        function countVowels(strn) {
+    const vowels = "aeiouAEIOU";
+    let count = 0;
+    for (let i = 0; i < strn.length; i++) {
+        if (vowels.includes(strn[i])) {
+            count++;
+        }
+    }
+    return count;
+}
+// 2. Function to return a string with letters in alphabetical order
+function alphabetizeString(str) {
+    return str.split('').sort().join('');
+}
+
+// 3. Function to capitalize the first letter of each word in a string
+function capitalizeWords(st) {
+    return st.replace(/\b\w/g, char => char.toUpperCase());
+}
+
+
+document.write(countVowels("hello world")+"<br>"); // Output: 3
+document.write(alphabetizeString("javascript")+"<br>"); // Output: "aacijprstv"
+document.write(capitalizeWords("hello world from javascript")); // Output: "Hello World From Javascrip
+
+    </script>
+</body>
+</html>

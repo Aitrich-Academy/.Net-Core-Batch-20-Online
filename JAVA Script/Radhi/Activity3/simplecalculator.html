@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        let x=parseInt (prompt("enter the first number"));
+        let y=parseInt(prompt("enter the second number"))
+
+        let op=prompt("enter an operator");
+        switch(op)
+        {
+              case"+":
+              document.write(x ,"+", y ,"=",x+y);
+              break;
+              case "-":
+              document.write(x ,"-", y ,"=",x-y);
+              break;
+              case "*":
+              document.write(x ,"*", y ,"=",x*y);
+              break;
+              case "/":
+              document.write(x ,"/", y ,"=",x/y);
+              break;
+              default:
+                document.write("invalid operator enterd");
+
+        }
+        
+    </script>
+    
+</body>
+</html>

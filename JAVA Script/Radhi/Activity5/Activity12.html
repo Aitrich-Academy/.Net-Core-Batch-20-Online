@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. Arrow function to multiply two numbers
+const multiply = (a, b) => a * b;
+
+// 2. Function to check if a number is even
+function isEven(num) {
+    return num % 2 === 0;
+}
+
+// 3. Function to convert a string to uppercase
+function convertToUpperCase(str) {
+    let upperStr = "";
+    for (let i = 0; i < str.length; i++) {
+        let charCode = str.charCodeAt(i);
+        if (charCode >= 97 && charCode <= 122) { // a-z in ASCII
+            upperStr += String.fromCharCode(charCode - 32); // Convert to uppercase
+        } else {
+            upperStr += str[i]; // Keep other characters unchanged
+        }
+    }
+    return upperStr;
+}
+
+console.log(multiply(2, 4));
+console.log(isEven(5)); 
+console.log(convertToUpperCase("hello")); 
+    </script>
+    
+</body>
+</html>
