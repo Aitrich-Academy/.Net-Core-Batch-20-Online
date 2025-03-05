@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <h2>Registeration Form</h2>
+        <form> 
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required ><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required ><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required ><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    
+    <script>
+
+    const nameRegex= /^(?!_)([a-zA-Z0-9_]{3,15})(?<!_)$/;
+    const name="username";
+
+    if(nameRegex.test(name))
+    {
+        console.log("you entered correct name");
+    }
+    else
+    {
+        console.log("you entered incorrect name");
+    }
+
+    const emailRegex= /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const email="user@example.com";
+    
+    if(nameRegex.test(email))
+    {
+        console.log("you entered valid email");
+    }
+    else
+    {
+        console.log("you entered invalid email ");
+    }
+
+    const passwordRegex= /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    const password="password";
+    
+    if(nameRegex.test(password))
+    {
+        console.log("you entered correct password");
+    }
+    else
+    {
+        console.log("you entered incorrect password");
+    }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #mybutton
+        {
+        background-color:red ;
+        color: black;
+        font-size: 10px;
+        width: 200px;
+        height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <button id="mybutton">Submit</button> -->
+    <p id="mypara">Hello welcome</p>
+    <button id="mybtn">Change text</button>
+    <!-- <script>
+        document.getElementById("mybutton").onclick=function()
+        {
+           this.style.backgroundColor= "blue";
+           this.style.color="white";
+           this.style.fontSize="20px"
+        }
+    </script> -->
+
+    <script>
+        document.getElementById("mybtn").onclick=function()
+        {
+            document.getElementById('mypara').innerHTML="text<i>changed</i>"
+        }
+
+    </script>
+</body>
+</html>

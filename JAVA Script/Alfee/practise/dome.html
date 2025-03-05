@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome to this</h1>
+    <p class="greet">Hello, How are you</p>
+    <button id="mybutton">Click here</button>
+
+    <script>
+         let head=document.getElementsByTagName('h1');
+         console.log(head)
+         let g=document.getElementsByClassName('greet');
+         console.log(g)
+         let button=document.querySelector('#mybutton')
+         console.log(button)
+         let gr=document.querySelector('.greet');
+         console.log(gr)
+
+        document.getElementById("mybutton").onclick=function()
+        {
+            this.textContent="clicked"
+        }
+    </script>
+
+</body>
+</html>
