@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Student Application Form</h2>
+<form id="studentForm" onsubmit="return validateSchoolPolicies(this);">
+  <table>
+    <tr>
+      <td><label for="studentName">Student Name:</label></td>
+      <td><input type="text" id="studentName" oninput="validateanme(this)"></td>
+    </tr>
+    <tr>
+      <td><label for="fatherName">Father’s Name:</label></td>
+      <td><input type="text" id="fatherName" oninput="validatefname(this)"></td>
+    </tr>
+    <tr>
+      <td><label for="email">Email Address:</label></td>
+      <td><input type="email" id="email" oninput="validateEmail(this)"></td>
+    </tr>
+    <tr>
+      <td><label for="phone">Phone Number:</label></td>
+      <td><input type="text" id="phone" oninput="validatePhone(this)"></td>
+    </tr>
+    <tr>
+      <td><label for="dob">Date of Birth:</label></td>
+      <td>  <input type="date" id="dob" name="dob" min="2005-01-01" max="2018-12-31" oninput="validateDOB(this)" required></td>
+    </tr>
+    <tr>
+      <td><label for="grade">Grade Applying For:</label></td>
+      <td>
+        <select id="grade">
+          <option value="">Select Grade</option>
+          <option value="1">Grade 1</option>
+          <option value="2">Grade 2</option>
+          <option value="3">Grade 3</option>
+          <option value="4">Grade 4</option>
+          <option value="5">Grade 5</option>
+          <option value="6">Grade 6</option>
+          <option value="7">Grade 7</option>
+          <option value="8">Grade 8</option>
+          <option value="9">Grade 9</option>
+          <option value="10">Grade 10</option>
+          <option value="11">Grade 11</option>
+          <option value="12">Grade 12</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="occupation">Parent’s Occupation:</label></td>
+      <td><input type="text" id="occupation" oninput="validateOccupation(this)" required></td>
+    </tr>
+    <tr>
+      <td><label for="address">Address:</label></td>
+      <td><input type="text" id="address"></td>
+    </tr>
+    <tr>
+      <td><label for="previousSchool">Previous School Name:</label></td>
+      <td><input type="text" id="previousSchool" required></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <label>
+            <input type="checkbox" name="agree">   I agree to the school policies.
+        </label>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="submit" value="Submit">
+      </td>
+    </tr>
+  </table>
+</form>
+
+
+<script>
+ 
+    function validateanme(input) {
+       let reg = /^[A-Za-z]+$/;
+       if (!reg.test(input.value)) {
+           alert("numbers and special characters are not allowed ");
+           input.value = input.value.replace(/[^A-Za-z]/g, '');
+       }
+   }
+
+   
+ 
+ function validatefname(input) {
+    let reg = /^[A-Za-z]+$/;
+    if (!reg.test(input.value)) {
+        alert("numbers and special characters are not allowed ");
+        input.value = input.value.replace(/[^A-Za-z]/g, '');
+    }
+}
+function validateEmail(input) {
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(input.value)) {
+        input.style.borderColor = "red"; // Highlight invalid input
+    } else {
+        input.style.borderColor = ""; // Reset border if valid
+    }
+}
+function validatePhone(input) {
+    let phoneRegex = /^\d{10}$/;
+    input.style.borderColor = phoneRegex.test(input.value) ? "" : "red";
+}
+function validateDOB(input) {
+    
+    let dob = new Date(input.value);
+    
+    let minDOB = new Date("2005-01-01");
+    let maxDOB = new Date("2018-12-31");
+    
+    
+    if (dob < minDOB || dob > maxDOB) {
+        
+        input.value = "";  // Optionally clear the input field
+    }
+}
+function validateAddress(input) {
+   
+    let trimmedAddress = input.value.trim();
+   
+    if (trimmedAddress.length < 15) {
+        alert("Address should be at least 15 characters long.");
+        
+     input.value = "";
+        // input.focus();
+    }
+}
+function validateSchoolPolicies(form) {
+      // Use a variable expression to store whether the checkbox is checked
+      const isAgreed = form.elements.agree.checked;
+      
+      if (!isAgreed) {
+        alert("You must agree to the school policies before submitting the form.");
+        return false; // Prevent form submission
+      }
+      return true; // Allow form submission
+    }
+ 
+  
+  
+
+  </script>  
+</body>
+</html>

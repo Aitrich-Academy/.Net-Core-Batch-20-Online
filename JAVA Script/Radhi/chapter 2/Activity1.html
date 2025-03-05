@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+      
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+    
+</head>
+<body>
+    <form id="applicationForm" onsubmit="return validateForm(this);">
+        <div class="form">
+          <label for="name">Full Name: </label>
+          <input type="text" id="name" name="name" oninput="validateInput(this)" required><br>
+      
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" oninput="validateEmail(this)" required><br>
+      
+          <label for="phnumber">Phone Number:</label>
+          <input type="tel" id="phnumber" name="phnumber" oninput="validatePhone(this)" required><br>
+      
+          <label for="dob">Date of Birth:</label>
+          <input type="date" id="dob" name="dob" oninput="validateDOB(this)" required><br>
+      
+          <label for="resume">Resume Upload:</label>
+          <input type="file" id="resume" name="resume" onchange="validateResume(this)" required><br>
+      
+          <label for="experience">Experience:</label>
+          <input type="text" id="experience" name="experience" oninput="validateExperience(this)" required><br>
+      
+          <label for="location">Location Preferred:</label>
+          <input type="text" id="location" name="location" oninput="validateURL(this)" required><br>
+      
+          <label>Gender:</label>
+          <input type="radio" name="gender" value="Male"> Male
+          <input type="radio" name="gender" value="Female"> Female<br><br>
+      
+          <label>
+            <input type="checkbox" name="terms"> I agree to the Terms and Conditions
+          </label><br><br>
+      
+          <input type="submit" name="submit" value="Submit">
+        </div>
+      </form>
+      
+      <script>
+        function validateInput(input) {
+          let reg = /^[A-Za-z\s]+$/; // 
+          if (!reg.test(input.value)) {
+            alert("Please enter only letters (and spaces) for this field.");
+            input.value = input.value.replace(/[^A-Za-z\s]/g, '');
+          }
+        }
+      
+        function validateEmail(input) {
+          let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          if (!emailRegex.test(input.value)) {
+            input.style.borderColor = "red";
+          } else {
+            input.style.borderColor = "";
+          }
+        }
+      
+        function validatePhone(input) {
+          let phoneRegex = /^\d{10}$/;
+          input.style.borderColor = phoneRegex.test(input.value) ? "" : "red";
+        }
+      
+        function validateDOB(input) {
+          let dob = new Date(input.value);
+          let today = new Date();
+          let age = today.getFullYear() - dob.getFullYear();
+          let monthDiff = today.getMonth() - dob.getMonth();
+          if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+          }
+          input.style.borderColor = age >= 18 ? "" : "red";
+        }
+      
+        function validateResume(input) {
+          let allowedExtensions = ["pdf", "docx"];
+          let fileExtension = input.value.split(".").pop().toLowerCase();
+          input.style.borderColor = allowedExtensions.includes(fileExtension) ? "" : "red";
+        }
+      
+        function validateExperience(input) {
+          let experience = parseInt(input.value, 10);
+          if (isNaN(experience) || experience < 0 || experience > 40) {
+            input.style.borderColor = "red";
+          } else {
+            input.style.borderColor = "";
+          }
+        }
+      
+        function validateURL(input) {
+          let urlRegex = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,6}\.?)([\/\w .-]*)*\/?$/;
+
+          input.style.borderColor = input.value === "" || urlRegex.test(input.value) ? "" : "red";
+        }
+      
+        function validateForm(form) {
+        
+          let genderChecked = form.querySelector('input[name="gender"]:checked');
+          if (!genderChecked) {
+            alert("Please select a gender.");
+            return false;
+          }
+          
+
+          let termsChecked = form.querySelector('input[name="terms"]:checked');
+          if (!termsChecked) {
+            alert("Please agree to the Terms and Conditions.");
+            return false;
+          }
+          
+          alert("Submitted successfully");
+          return true;
+        }
+      
+
+    </script>
+</body>
+
+</html>
