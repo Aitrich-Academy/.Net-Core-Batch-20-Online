@@ -187,33 +187,17 @@
  
 }
 
-
 .circle_2{
-  width: 15px;
-  height: 15px;
-  border: 2px solid green;
-  border-radius: 50%;
   position: absolute;
   top: 294px;
   left: 92px;
- 
 }
 
-
 .circle_3{
-  width: 15px;
-  height: 15px;
-  border: 2px solid green;
-  border-radius: 50%;
   position: absolute;
   top: 433px;
   left: 92px;
- 
 } 
 
-/* .tick{
-  position: absolute;
-
-} */
 
 

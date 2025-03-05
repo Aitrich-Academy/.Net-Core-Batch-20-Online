@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Student Admission Form</h2>
+    <form>
+        <label>Student Name:</label>
+        <input type="text" id="name" name="studentname" pattern = /^[A-Za-z\s]+$/; required><br><br>
+
+        <label>Father's Name:</label>
+        <input type="text" id="fathername" name="fathername" required><br><br>
+
+        <label>Email Address:</label>
+        <input type="text" id="emailaddress" name="emailaddress"  pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/;" required><br><br>
+
+        <label>Phone Number:</label>
+        <input type="text" id="phonenumber" name="phonenumber" pattern = /^\d{10}$/; required><br><br>
+
+        <label>Date of Birth:</label>
+        <input type="text" id="dob" name="dob"><br><br>
+
+        <label>Grade Applying For:</label>
+        <select id="grade" name="grade">
+            <option value="">-- Select Grade --</option>
+            <option value="1">Grade 1</option>
+            <option value="2">Grade 2</option>
+            <option value="3">Grade 3</option>
+            <option value="4">Grade 4</option>
+            <option value="5">Grade 5</option>
+        </select><br><br>
+
+        <label>Parent's Occupation:</label>
+        <input type="text" id="parentoccupation" name="parentoccupation"><br><br>
+
+        <label>Address:</label>
+        <input type="text" id="address" name="address"><br><br>
+
+        <label>Previous School Name:</label>
+        <input type="text" id="previous" name="previous"><br><br>
+
+        <input type="checkbox" id="policies" name="policies">
+        <label for="policies">I agree to the School Policies</label><br><br>
+
+        <button type="submit">Submit Application</button>
+    </form>
+</body>
+</html>

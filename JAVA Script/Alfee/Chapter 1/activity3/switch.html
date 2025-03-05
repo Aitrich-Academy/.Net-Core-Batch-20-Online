@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 1.Write a program to takes two numbers and an operator and performs the calculation using switch statement?
+
+      let a=prompt("enter first number");
+      let b=prompt("enter second number");
+      let operator=prompt("enter operator");
+
+      switch(operator)
+      {
+          case "+":
+          document.write(a+b);
+          break;
+
+          case "-":
+          document.write(a-b);
+          break;
+
+          case "*":
+          document.write(a*b);
+          break;
+
+          case "/":
+              if(b!==0)
+                {
+                  document.write(a/b);
+                }
+
+              else
+                {
+                  document.write(invalid);
+                }
+          break;
+          default:
+                 document.write(error);
+      }
+    </script>
+  </body>
+</html>
