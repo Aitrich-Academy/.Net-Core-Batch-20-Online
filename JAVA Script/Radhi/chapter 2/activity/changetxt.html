@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     body   {
+            background-color: aqua;
+
+        }
+    </style>
+
+</head>
+<body>
+
+    <!-- Change Text Content:
+Create a <p> tag with some text. Add a button that, when clicked, changes the text inside the <p> tag.
+    
+    Change Background Color:
+Create a button that changes the background color of the page when clicked -->
+
+    <p id="elephant">Elephant color is balck and one of the biggest Animal in the forest</p>
+    <button id="mybtn">Submit</button>
+
+
+
+
+
+</body>
+<script>
+
+
+    document.getElementById('mybtn').onclick=function()
+    {
+    
+    document.getElementById('elephant').innerHTML="Elephant likes Fruits";
+    document.body.style.backgroundColor="blue";
+    }
+    </script>
+</html>

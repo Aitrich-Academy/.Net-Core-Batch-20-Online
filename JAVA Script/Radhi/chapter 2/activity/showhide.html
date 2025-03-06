@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         /* #content {
+            transition: opacity 0.3s ease;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- Show and Hide Text:
+Create a button that hides a paragraph when clicked once and shows it again when clicked again -->
+
+<button id="mybtn">Hide</button>
+<p id="content">JavaScript is a programming language that allows developers to make webpages interactive.</p>
+
+
+
+<script>
+
+    const paragraph=document.getElementById('content')
+    document.getElementById('mybtn').onclick=function()
+    {
+    if (paragraph.style.display === "none") {
+              paragraph.style.display = "block";
+            } else {
+                paragraph.style.display = "none";
+            }
+    
+
+        }
+</script>
+    
+</body>
+</html>

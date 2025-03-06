@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="name">
+    <button id="add" onclick="addpara()">Add</button>
+
+
+    <script>
+        function addpara()
+        {
+           let add=document.createElement('p');
+           let value=document.getElementById('name').value;
+           add.textContent=value;
+           document.body.appendChild(add);
+
+           let button=document.createElement('Button');
+           button.textContent="Remove";
+        //    button.id="dynamicbutton";
+           add.appendChild(button)
+
+           
+        console.log(button)
+        button.addEventListener('click', remove) 
+            function remove()
+
+           {
+          
+            
+            add.remove()
+        }
+
+          
+    }
+        
+
+    </script>
+
+</body>
+</html>
