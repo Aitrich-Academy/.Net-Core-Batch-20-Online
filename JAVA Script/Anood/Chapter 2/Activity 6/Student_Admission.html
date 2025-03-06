@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Admission Form </title>
+</head>
+<body>
+    <div style="background-color: rgb(240, 190, 129); height: 429px; width: 386px; border-style: double; border-color: black; border-radius: 20px;">
+        <h2 style="position: relative; left: 45px; top: -2px;"> Student Admission Form </h2>
+      <div style="background-color: rgb(240, 190, 129); height: 332px; width: 386px;" >
+          <form>
+              <table>
+                  <tr>
+                      <td><label style="font-weight: bold;">Student Name</label></td>
+                      <td><input type="text" id="StudentName" name="StudentName" pattern="^[A-Za-z\s]+$" required></td>
+                  </tr>
+                  <tr>
+                    <td><label style="font-weight: bold;">Father’s Name </label></td>
+                    <td><input type="text" id="Father’sName" name="Father’sName" pattern="^[A-Za-z\s]+$" required></td>
+                </tr>
+                  <tr>
+                      <td><label style="font-weight: bold;">Email Address</label></td>
+                      <td><input type="email" id="email" name="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required></td>
+                  </tr>
+                  <tr>
+                      <td><label style="font-weight: bold;">Phone Number</label></td>
+                      <td><input type="tel" name="phone" id="phone" pattern="^[0-9]{10}$" maxlength="10" minlength="10" required></td>
+                  </tr>
+                  <tr>
+                      <td><label style="font-weight: bold;">Date Of Birth</label></td>
+                      <td><input type="date" id="dob" name="dob" min="2005-01-01" max="2018-12-31" required>
+                          <p id="dob-error" style="color: red;"></p></td>
+                  </tr>
+                  <tr>
+                    <td><label style="font-weight: bold;">Grade Applying For</label></td>
+                    <td> <select id="grade" name="grade" required>
+                        <option value="" disabled selected>Select a grade</option>
+                        <option value="Grade 1">Grade 1</option>
+                        <option value="Grade 2">Grade 2</option>
+                        <option value="Grade 3">Grade 3</option>
+                        <option value="Grade 4">Grade 4</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Parent’s Occupation </label></td>
+                    <td><input type="text" id="Occupation" name="Occupation"  required></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Address</label></td>
+                    <td><input type="text" id="address" name="address" minlength="15" required></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Previous School Name  </label></td>
+                    <td><input type="text" id="SchoolName" name="SchoolName"  required></td>
+                </tr>
+                  <tr>
+                      <td colspan="2"><input type="checkbox" id="terms" required> Agree to School Policies  </td>
+                  </tr>
+                  <tr>
+                      <td><button>Submit</button></td>
+                       
+                  </tr>
+              </table>
+          </form>
+      </div>
+  </div>
+  
+    
+</body>
+</html>

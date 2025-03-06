@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        let amount=parseFloat(prompt("Enter amount"));
+        let memership = prompt("Enter membrship level Regular , Silver ,Gold , Platinum")
+        let convert_discountpec_to_decimal=0;
+        let calculate_amount=0;
+        let discount_amount;
+
+        switch(memership)
+            {
+                case "Regular" :
+                convert_discountpec_to_decimal=5/100;
+                calculate_amount=amount*convert_discountpec_to_decimal;
+                discount_amount=amount - calculate_amount;
+                document.write("You ara a regular custumer...so you can pay " + discount_amount ," Rs.");
+                break;
+
+                case "Silver" :
+                convert_discountpec_to_decimal=10/100;
+                calculate_amount=amount*convert_discountpec_to_decimal;
+                discount_amount=amount - calculate_amount;
+                document.write("You ara a regular custumer...so you can pay " + discount_amount ,"Rs.");
+                break;
+
+                case "Gold" :
+                convert_discountpec_to_decimal=20/100;
+                calculate_amount=amount*convert_discountpec_to_decimal;
+                discount_amount=amount - calculate_amount;
+                document.write("You ara a regular custumer...so you can pay " + discount_amount,"Rs");
+                break;
+
+                case "Platinum" :
+                convert_discountpec_to_decimal=30/100;
+                calculate_amount=amount*convert_discountpec_to_decimal;
+                discount_amount=amount - calculate_amount;
+                document.write("You ara a regular custumer...so you can pay " + discount_amount,"Rs.");
+                break;
+
+                default:
+                document.write(amount);
+                break;
+            }
+        
+
+    </script>
+</body>
+</html>

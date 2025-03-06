@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student score grade calculation using if....else if ....else</title>
+</head>
+<body>
+
+    <!-- function getGrade(score) {
+        if (score >= 90) {
+            return "A";
+        } else if (score >= 80) {
+            return "B";
+        } else if (score >= 70) {
+            return "C";
+        } else if (score >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+    
+    // Get user input
+    const score = parseFloat(prompt("Enter the student's score: "));
+    if (!isNaN(score) && score >= 0 && score <= 100) {
+        console.log("Grade:", getGrade(score));
+    } else {
+        console.log("Please enter a valid score between 0 and 100.");
+    }
+     -->
+
+     <script>
+
+        let score = (prompt("Enter the student's score: "));
+        let getgrade;
+        if (score >= 90) 
+        {
+            getgrade  = "A";
+        } 
+        else if (score >= 80)
+         {
+            return "B";
+        }
+         else if (score >= 70) 
+         {
+            return "C";
+        } 
+        else if (score >= 60)
+         {
+            return "D";
+        }
+         else 
+        {
+            return "F";
+        }
+
+
+        document.write(getgrade);
+        // if ( (score) && score >= 0 && score <= 100) {
+        // document.write("Grade:", getGrade(score));
+        // } else {
+        // document.write("Please enter a valid score between 0 and 100.");
+    // }
+    
+
+
+     </script>
+</body>
+</html>

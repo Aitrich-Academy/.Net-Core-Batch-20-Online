@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divisibility Check</title>
+</head>
+<body>
+    <script>
+ 
+    let num =  parseInt(prompt("Enter a number"));
+        
+        if (num % 3 === 0 && num % 5 === 0) 
+        {    
+           document.write("FizzBuzz")
+        } 
+        else if (num % 3 === 0) 
+        {    
+            document.write("Fizz");
+        } 
+        
+        else if (num % 5 === 0)
+         {  
+            document.write("Buzz");
+        } 
+        else 
+        {
+            document.write(num.toString());
+        }
+    
+     
+
+
+// Driver code
+
+    </script>
+</body>
+</html>

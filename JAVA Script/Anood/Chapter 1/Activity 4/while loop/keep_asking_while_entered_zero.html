@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keep asking for a number until the user enters 0.</title>
+</head>
+<body>
+    <script>
+        let number;
+
+while (true) {
+    number = parseInt(prompt("Enter a number (enter 0 to stop):"), 10);
+    
+    if (number === 0) {
+        console.log("You entered 0. Stopping the loop.");
+        break; // Exit the loop
+    }
+    
+    document.write("You entered:", number + "<br>");
+}
+
+document.write( "You entered:", number + "Loop has ended.");
+
+    </script>
+</body>
+</html>

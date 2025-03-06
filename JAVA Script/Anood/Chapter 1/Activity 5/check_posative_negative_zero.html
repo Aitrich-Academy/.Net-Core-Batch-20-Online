@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a function to check if a number is positive, negative, or zero.</title>
+</head>
+<body>
+    <script>
+        function chkposativenegativezero(number)
+        {     
+        if (number > 0) 
+        {
+        return(number + " is a positive number.");
+        }
+        else if (number==0)
+        {
+            return(number + " is a zero.");
+        }
+        else
+         {
+         return(number + " is a negative number.");
+        }
+        }
+
+        document.write(chkposativenegativezero(-8));
+    </script>
+</body>
+</html>
