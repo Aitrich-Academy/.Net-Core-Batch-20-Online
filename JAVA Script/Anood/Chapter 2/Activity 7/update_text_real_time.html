@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Text in Real-Time</title>
+</head>
+<body>
+    <input type="text" id="userInput" oninput="displayText()" placeholder="Type something">
+    <p id="output"></p>
+
+    <script>
+        function displayText() {
+            document.getElementById("output").innerHTML = document.getElementById("userInput").value;
+        }
+    </script>  
+</body>
+</html>

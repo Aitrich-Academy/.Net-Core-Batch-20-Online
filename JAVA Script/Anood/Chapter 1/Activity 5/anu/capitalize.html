@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a JavaScript function that accepts a string as a parameter and converts the first letter of each word into upper case.</title>
+</head>
+<body>
+    <script>
+        function capitalizeFirstLetter(str) {
+
+            
+        const words = str.split(" ");
+
+      for (let i = 0; i < words.length; i++) {
+        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+      }
+      return words;
+}
+
+ document.write(capitalizeFirstLetter("freeCodeCamp is an awesome resource"))
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find the sum of positive numbers entered by the user (stop on negative input).</title>
+</head>
+<body>
+    <script>
+        let sum = 0;
+let number;
+
+do {
+    number = parseFloat(prompt("Enter a positive number (negative to stop):"));
+    
+    if (number >= 0) {
+        sum += number; // Add only positive numbers to sum
+    }
+} while (number >= 0);
+
+document.write("The sum of entered positive numbers is: " + sum);
+
+    </script>
+</body>
+</html>
