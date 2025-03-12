@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulate a simple ATM withdrawal system (keep asking until balance is sufficient).</title>
+</head>
+<body>
+    <script>
+        let balance=10000;
+        do {
+        let withdrawalAmount = parseFloat(prompt("Your balance is" + balance + " . Enter amount to withdraw:"));
+        
+        if (isNaN(withdrawalAmount) || withdrawalAmount <= 0) {
+            alert("Invalid amount. Please enter a valid number.");
+        } else if (withdrawalAmount > balance) {
+            alert("Insufficient balance. Please enter a smaller amount.");
+        } else {
+            balance -= withdrawalAmount;
+            alert("Transaction successful! Your new balance is " + balance);
+            break;
+        }
+    } while (true);
+
+    </script>
+</body>
+</html>

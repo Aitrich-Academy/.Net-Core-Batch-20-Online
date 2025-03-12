@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Fibonacci series up to N terms.</title>
+</head>
+<body>
+    <script>
+
+        
+        let num1=0;
+        let num2=1;
+        let i=1;
+        let sum=0; 
+        let nextnum=0;
+        document.write(num1 + "<br>" + num2 + "<br>");
+        let n=parseInt(prompt("Enter limit"));
+        while(i<=n)
+    {
+         sum=nextnum+num2;
+         document.write(sum + "<br>");
+         nextnum=num2;
+         num2=sum;
+         i++;
+    }
+
+    </script>
+</body>
+</html>

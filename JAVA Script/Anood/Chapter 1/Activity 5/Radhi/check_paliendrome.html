@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function to Check if a String is a Palindrome
+    </title>
+</head>
+<body>
+    <script>
+       function isPalindrome(str) {
+    str = str.toLowerCase().replace(/[^a-z0-9]/g, ''); // Normalize the string (remove non-alphanumeric characters)
+    let left = 0, right = str.length - 1;
+    
+    while (left < right) {
+        if (str[left] !== str[right]) return false;
+        left++;
+        right--;
+    }
+    
+    return true;
+}
+
+if (isPalindrome("1212331")==true)
+{
+    document.write("The string is Palindrome"); 
+}
+else{
+    document.write("The string is not  Palindrome");
+}
+  
+
+    </script>
+</body>
+</html>

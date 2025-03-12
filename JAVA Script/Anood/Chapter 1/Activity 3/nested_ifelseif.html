@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example for nested if ....elseif....else </title>
+</head>
+<body>
+    <script>
+
+        let age =parseInt(prompt("Enter age"))
+        if (age < 0) 
+        {
+        document.write("Invalid age!") ;
+        } 
+
+        else if (age <= 12)
+         {
+        if (age <= 2) 
+        {
+            document.write("Infant") ;
+        } 
+        else 
+        {
+            document.write("Child");
+        }
+       }
+       else if (age <= 19)
+        {
+        document.write("Teenager") ;
+        } 
+        else if (age <= 59)
+         {
+         if (age < 30)
+          {
+            document.write("Young Adult") ;
+        } 
+        else 
+        {
+            document.write("Adult") ;
+        }
+        } 
+       else 
+       {
+        document.write("Senior") ;
+       }
+
+
+    </script>
+</body>
+</html>
