@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+       *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .left_container
+        {
+          background-color: #1560bd;
+          width: 20%;
+          height:100vh ;
+          color: white;
+        }
+
+        td 
+        {
+          padding: 7px;
+
+        }
+
+
+        #container 
+        {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            flex-direction: column;
+        }
+        .card 
+        {
+          border: none;
+          border-radius: 8px;
+          padding: -7px;
+          text-align: left;
+          width: 200px;
+          position: relative;
+          top: -460px;
+          left: 305px;
+          
+        }
+
+        .card img
+         {
+          width: 45px;
+          height: 45px;
+          border-radius: 5px;
+          position: relative;
+          top: 15px;
+          left: -9px;
+         }
+        
+        .jobName {
+          font-size: 14px;
+          font-weight: bold;
+          margin: 5px 0;
+          position: relative;
+          top: 10px;
+          left: 48px;
+        }
+
+        .Location
+        {
+          font-size: 14px;
+          font-weight: normal;
+          margin: 5px 0;
+          position: relative;
+          top: -37px;
+          left: 48px;
+        }
+        .date
+        {
+          font-size: 14px;
+          font-weight: normal;
+           margin: 5px 0;
+          position: relative;
+          top: -36px;
+          left: 48px; 
+        }
+        .Time
+        {
+           
+          font-size: 14px;
+          font-weight: normal;
+          margin: 5px 0;
+          position: relative;
+          top: -36px;
+          left: 46px;
+        }
+        
+     .pic
+     {
+     
+     width: 413px;
+     height: 459px;
+     }
+
+     .imgDiv 
+     {
+      position: absolute;
+     margin-top: -931px;
+     margin-left: 662px;
+     width: 413px;
+     height: 503px;
+     }
+
+      .footer
+      {
+        background-color: black;
+        position: absolute;
+        margin-top: -467px;
+        width: 1078px;
+        height: 13px;
+      }
+
+    </style>
+</head>
+
+<body>
+    <div class="main_container">
+      <div class="left_container">
+        <h3 style="position: absolute; margin-left: 60px; margin-top: 97px;">HireMe Now!</h3>
+         <br>
+
+         <div class="tab_div" style=" position: relative;top: 140px;left: 85px;">
+          <table >
+            <tr>
+              <td><img src="image/dashboard.png" style="height: 18px; width: 18px;"></td>
+              <td >Dash Board</td>
+             </tr>
+             <tr>
+              <td><img src="image/suitcase.png" style="height: 18px; width: 18px;"></td>
+              <td >Jobs</td>
+             </tr>
+             <tr>
+              <td><img src="image/Applications.png" style="height: 18px; width: 18px;"></td>
+              <td >Applications</td>
+             </tr>
+             <tr>
+              <td><img src="image/job-interview.png" style="height: 18px; width: 18px;"></td>
+              <td >Interviews</td>
+             </tr>
+             <tr>
+              <td><img src="image/chatting.png" style="height: 18px; width: 18px;"></td>
+              <td >Messages</td>
+             </tr>
+             <tr>
+              <td><img src="image/settings.png" style="height: 18px; width: 18px;"></td>
+              <td >Settings</td>
+             </tr>
+            </table>
+         </div>
+         <img src="image/add-group.png" style="height: 94px;width: 94px;position: relative;top: 183px;left: 107px;">
+      </div>
+
+    </div class="right_container">
+    <div class="header">
+      <img src="image/bell.png" style="width: 25px;height: 25px;position: absolute;margin-top: -550px;margin-left: 979px;">
+      <img src="image/p3.png" style="width: 40px;height: 40px;position: absolute;margin-top: -558px;margin-left: 1007px;" >
+      <img src="image/logout copy.png" style="width: 20px;height: 20px;position: absolute;margin-top: -547px;margin-left: 1055px;">
+    </div>
+    </div>
+    <div id="container"></div>
+    </div>
+   
+
+    <script>
+      const items = [
+            { jobName: "Social Media Assistant", jobIcon: "image/socialmedia_assistant.png",  Location: "online", date: "16-06-23", Time: "10.am" },
+            { jobName: "Brand Designer",  jobIcon: "image/brand_designer.png",  Location: "offline", date: "19-06-23", Time: "12.pm" },
+            { jobName: "Customer Manager",  jobIcon: "image/customer_mamanger.png",  Location: "online", date: "20-06-23", Time: "12.pm" }
+        ];
+
+        const container = document.getElementById("container");
+
+        items.forEach(item => {
+             
+            let card = document.createElement("div");
+            card.classList.add("card");
+
+            
+            let jobNameElement = document.createElement("h4");
+            jobNameElement.classList.add("jobName");
+            jobNameElement.textContent = item.jobName;
+
+            let imgElement = document.createElement("img");
+            imgElement.src = item.jobIcon;  
+            imgElement.alt = item.name; 
+            
+            let locationElement = document.createElement("p");
+            locationElement.classList.add("Location");
+            locationElement.textContent =  `Location: ${item.Location}`;          
+
+            
+            let dateElement = document.createElement("p");
+            dateElement.classList.add("date");
+            dateElement.textContent = `Date: ${item.date}`;       
+
+            let timeElement = document.createElement("p");
+            timeElement.classList.add("Time");
+            timeElement.textContent = `Time: ${item.Time}`;     
+
+            card.appendChild(jobNameElement);
+            card.appendChild(imgElement);
+            card.appendChild(locationElement);
+            card.appendChild(dateElement);
+            card.appendChild(timeElement);
+
+            container.appendChild(card);
+
+          });
+    </script>
+
+<div class="imgDiv">
+<img src="image/picture.png" alt="picture" class="pic">
+</div>
+<div class="footer">
+
+</div>
+  
+</body>
+
+</html>
