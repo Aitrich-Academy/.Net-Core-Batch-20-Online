@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a JavaScript function that returns a string that has letters in alphabetical order.</title>
+</head>
+<body>
+    <script>
+        function arrangealphabetical(str) {
+        var arr = str.split(""); // splits the string
+        res = arr.sort().join(""); // sort the array and joins to form a string
+        return res; // returns the result
+  }
+   
+  document.write(arrangealphabetical("beloved"));
+    </script>
+</body>
+</html>

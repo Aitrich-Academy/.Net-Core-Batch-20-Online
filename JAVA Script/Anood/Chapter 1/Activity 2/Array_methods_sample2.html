@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array and Methods 3</title>
+</head>
+<body>
+
+    <h2>Sample 1 ....Radhi</h2>
+
+    <script>
+        const colours = ["Red", "Green", "Yellow"];
+        document.write(colours + "<br>");
+        colours.splice(2, 0, "Lightgreen", "lightPink");
+        document.write(colours + "<br>");
+        colours.reverse();
+        document.write(colours + "<br>");
+    </script>
+
+<!-- ................................................................................... -->
+
+    <h2>Sample 2 Alfi</h2>
+    <script>
+        let countries = ["Argentina", "France", "Germany"];
+        document.write(countries + "<br>");
+
+        let newCountries = ["Canada", "Italy"];
+        let updatedCountries = countries.concat(newCountries);
+
+        document.write(updatedCountries + "<br>");
+
+    </script>
+
+    <h2>Sample 3 Alfi</h2>
+
+    <script>
+        let words = ["Hello", "world"];
+        document.write(words + "<br>");
+        let sentence = words.join(" ");  // Joins with a space
+
+        document.write(sentence + "<br>");
+    </script>
+<!-- ................................................................................... -->
+<h2>Sample 4 Anu</h2>
+
+   <script>
+
+        let vocabulary = ["Jejune", "Unfettered", "Vicissitude", "Accomplish", "Obtain","Evident", "Fancy ", "league"];
+        document.write(vocabulary + "<br>");
+
+        vocabulary.sort(); // Sorts the array alphabetically
+        document.write(vocabulary + "<br>");
+ 
+   </script>
+
+   <h2>Sample 5 Anu</h2>
+
+   <script>
+         let animals = ["tiger", "elephant", "lion", "camel" ,"giraffe","dog"];
+
+         let isPresent = animals.includes("elephant"); // Returns true
+         document.write(isPresent + "<br>");
+ 
+         let notPresent = animals.includes("cat"); // Returns false
+
+         document.write(notPresent + "<br>");
+   </script>
+
+
+
+
+
+ 
+
+
+</body>
+</html>

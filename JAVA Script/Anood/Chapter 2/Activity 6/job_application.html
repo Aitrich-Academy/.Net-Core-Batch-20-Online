@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Form</title>
+</head>
+<body>
+    <div style="background-color: rgb(240, 190, 129); height: 429px; width: 386px; border-style: double; border-color: black;">
+      <h2 style="position: relative; left: 45px; top: -2px;">Job Application Form</h2>
+    <div style="background-color: bisque; height: 332px; width: 386px;" >
+        <form>
+            <table>
+                <tr>
+                    <td><label style="font-weight: bold;">Full Name</label></td>
+                    <td><input type="text" id="fullname" name="fullname" pattern="^[A-Za-z\s]+$" required></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Email</label></td>
+                    <td><input type="email" id="email" name="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Phone Number</label></td>
+                    <td><input type="tel" name="phone" id="phone" pattern="^[0-9]{10}$" maxlength="10" minlength="10" required></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Date Of Birth</label></td>
+                    <td><input type="date" id="dob" name="dob" required>
+                        <p id="dob-error" style="color: red;"></p></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Resume</label></td>
+                    <td><input type="file" id="resume" accept=".pdf, .docx"  pattern="/(\.pdf|\.docx)$/i" required>
+                        <p id="file-error" style="color: red;"></p></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Experience</label></td>
+                    <td><input type="number" id="experience" name="experience" min="0" max="40" required></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Location</label></td>
+                    <td><input type="text" id="Location" name="Location" required></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Portfolio </label></td>
+                    <td><input type="url" id="portfolio" name="portfolio" placeholder="Enter portfolio link" required></td>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;">Gender  </label></td>
+                    <td><label><input type="radio" name="gender" value="male" required> Male</label>
+                        <label><input type="radio" name="gender" value="female" required> Female</label>
+                        <label><input type="radio" name="gender" value="other" required> Other</label></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="checkbox" id="terms" required> I agree to the  Terms & Conditions </td>
+                </tr>
+                <tr>
+                    <td><button>Submit</button></td>
+                     
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function validateDOB() {
+        const dobInput = document.getElementById("dob");
+        const errorMessage = document.getElementById("dob-error");
+    
+        // Get the entered date
+        const dob = new Date(dobInput.value);
+        const today = new Date();
+    
+        // Calculate the age
+        const age = today.getFullYear() - dob.getFullYear();
+        const monthDiff = today.getMonth() - dob.getMonth();
+        const dayDiff = today.getDate() - dob.getDate();
+    
+        // Check if the user is under 18
+        if (age < 18 || (age === 18 && (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)))) {
+            errorMessage.textContent = "You must be at least 18 years old.";
+            dobInput.style.borderColor = "red";
+            return false;
+        } else {
+            errorMessage.textContent = "";
+            dobInput.style.borderColor = "green";
+            return true;
+        }
+    }
+    
+    // Add event listener to validate on input change
+    document.getElementById("dob").addEventListener("change", validateDOB);
+
+
+// .........................................................................................................
+
+
+document.getElementById("resume").addEventListener("change", function () {
+    const fileInput = this;
+    const errorMessage = document.getElementById("file-error");
+    const allowedExtensions = /(\.pdf|\.docx)$/i; // Regular expression for file type validation
+
+    if (!allowedExtensions.test(fileInput.value)) {
+        errorMessage.textContent = "Only .pdf or .docx files are allowed.";
+        fileInput.value = ""; // Reset the input
+    } else {
+        errorMessage.textContent = "";
+    }
+});
+
+    </script>
+     
+
+
+    
+</body>
+</html>

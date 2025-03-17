@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keep taking numbers until the sum reaches 100.</title>
+</head>
+<body>
+    <script>
+        let sum = 0;
+let number;
+
+do {
+    number = parseFloat(prompt("Enter a number:"));
+    
+    if (!isNaN(number)) {
+        sum += number; // Add the number to the sum
+    } else {
+        alert("Please enter a valid number.");
+    }
+} while (sum < 100);
+
+document.write("Sum has reached 100! Final sum: " + sum);
+
+    </script>
+</body>
+</html>

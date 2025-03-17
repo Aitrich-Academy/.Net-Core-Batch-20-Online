@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="inptno" placeholder="Enter a number">
+
+
+    <button onclick="addnumber()">Add Number</button>
+    <button onclick="Ascendingno()">Ascending Number</button>
+    <button onclick="Descendingno()">Descending Number</button>
+    <ul id="nolist"></ul>
+
+    <script>
+        let number=[];
+         
+         function addnumber()
+         {
+            let inputnumber=document.getElementById("inptno");
+            let no=parseInt(inputnumber.value);
+            number.push(no);
+            inputnumber.value="";
+            displaynumbers();
+         }
+
+         function displaynumbers()
+         {
+            let list=document.getElementById("nolist");
+            list.innerHTML="";
+
+            number.forEach(no => {
+                
+            
+                let li=document.createElement("li");
+
+                li.textContent=no;
+                list.appendChild(li);
+                
+            });
+
+         }
+          function Ascendingno()
+          {
+           for(let i=0;i<number.length-1;i++)
+           {
+            for(let j=0;j<number.length-1;j++)
+           {
+              if(number[j]>number[j+1])
+              {
+                let temp=number[j];
+                number[j]=number[j+1];
+                number[j+1]=temp;
+              }
+           }
+           }
+
+           displaynumbers();
+         }
+
+function Descendingno()
+{
+    for (let i=0;i<number.length-1;i++)
+{
+    for (let j=0;j<number.length-1;j++)
+{
+    if(number[j]<number[j+1])
+              {
+                let temp=number[j];
+                number[j]=number[j+1];
+                number[j+1]=temp;
+              }
+}
+}
+displaynumbers();
+}
+
+         
+
+
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find the sum of digits of a given number  </title>
+</head>
+<body>
+    <script>
+       
+         let num = parseInt(prompt("Enter number"));
+         let sum=0;
+         while(num > 0)
+         {
+            let reminder=num % 10;
+            sum=sum+reminder;
+            num=parseInt(num/10);
+            
+         }
+         
+         document.write("The sum digits in a given number is " + sum);
+
+    </script>
+</body>
+</html>
