@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="nameInput" placeholder="Enter name">
+    <button onclick="addRow()">Add Row</button>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        <tbody id="tableBody"></tbody>
+    </table>
+    
+    <script>
+        function addRow() {
+            let name = document.getElementById("nameInput").value.trim();
+            if (!name) return alert("Please enter a name!");
+
+            let row = document.createElement("tr");
+            row.innerHTML = `<td>${name}</td><td><button onclick="this.parentElement.parentElement.remove()">Delete</button></td>`;
+            document.getElementById("tableBody").appendChild(row);
+            document.getElementById("nameInput").value = "";
+        }
+    </script>
+</body>
+</html>

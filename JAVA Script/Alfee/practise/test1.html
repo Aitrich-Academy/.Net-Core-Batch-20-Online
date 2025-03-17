@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        #color-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .red { background-color: red; }
+        .green { background-color: green; }
+        .blue { background-color: blue; }
+    </style>
+</head>
+<body>
+    <div id="color-name">Current Color: White</div>
+    <div class="button-container">
+        <button class="red" data-color="red">Red</button>
+        <button class="green" data-color="green">Green</button>
+        <button class="blue" data-color="blue">Blue</button>
+    </div>
+    <script>
+         
+        const colorName = document.getElementById("color-name");
+        document.querySelectorAll("button").forEach(button => {
+            button.addEventListener("click", () => {
+                const color = button.classList[0];
+                document.body.style.backgroundColor = color;
+                colorName.textContent = `Current Color: ${color.charAt(0).toUpperCase() + color.slice(1)}`;
+            });
+        });
+    </script>
+</body>
+</html>
