@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="name">
+    <button id="add" onclick="addtext()">Add</button>
+    
+    <script>
+        function addtext()
+        {
+            let add=document.createElement("p")
+            let value=document.getElementById('name').value;
+           
+            add.innerHTML=`<span></span>${value}`;
+            document.body.appendChild(add);         
+        }
+       
+    </script>
+</body>
+</html>

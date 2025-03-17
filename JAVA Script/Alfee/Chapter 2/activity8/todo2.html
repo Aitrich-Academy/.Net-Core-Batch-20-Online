@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        text-align: center;
+        padding: 20px;
+      }
+      #todo-container {
+        background: white;
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+      }
+      input {
+        width: 70%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      #add {
+        padding: 8px 15px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #add:hover {
+        background-color: #218838;
+      }
+      .task-item {
+        padding: 10px;
+        margin-top: 10px;
+        background: #ffffff;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .remove-btn {
+        background: red;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .remove-btn:hover {
+        background: darkred;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="todo-container">
+      <h2>To-Do List</h2>
+      <input type="text" id="name" placeholder="enter a profession name" />
+      <button id="add" onclick="addtext()">Add</button>
+      <!-- <div id="list-container"></div> -->
+    </div>
+
+    <script>
+      function addtext() {
+        let container = document.getElementById("todo-container");
+
+        let todoText = document.createElement("p");
+        let inputValue = document.getElementById("name").value;
+
+        todoText.innerHTML = `${inputValue}`;
+        //todoText.classList.add("task-item");
+        container.appendChild(todoText);
+
+        let button = document.createElement("Button");
+        button.textContent = "Remove";
+        button.classList.add("remove-btn");
+        // button.id="Buttons";
+        todoText.appendChild(button);
+
+        button.addEventListener("click", remove);
+        function remove() {
+          todoText.remove();
+        }
+      }
+
+      // function addtext() {
+      //     let container = document.getElementById("list-container");
+
+      //     let value = document.getElementById('name').value.trim();
+      //     if (value === "") return; // Prevent adding empty tasks
+
+      //     let add = document.createElement("p");
+      //     add.classList.add("task"); // Apply styles
+      //     add.innerHTML = `<span>${value}</span>`;
+
+      //     let button = document.createElement("button");
+      //     button.textContent = "Remove";
+      //     button.classList.add("remove-btn");
+
+      //     button.addEventListener("click", () => {
+      //         add.remove();
+      //     });
+
+      //     add.appendChild(button);
+      //     container.appendChild(add); // Append task to correct container
+
+      //     document.getElementById("name").value = ""; // Clear input
+      // }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="name">
+    <button id="add" onclick="addtext()">Add</button>
+    
+    <!-- <div id="content" style="border: 2px solid blueviolet;"></div> -->
+
+    <script>
+        function addtext()
+        {
+            let add=document.createElement("p")
+            let value=document.getElementById('name').value;
+            // add.textContent=value;
+            add.innerHTML=`<span> name: </span>${value}`;
+            document.body.appendChild(add);
+
+            let button=document.createElement("Button");
+            button.textContent="Remove";
+            // button.id="Buttons";
+            add.appendChild(button);
+
+           
+            button.addEventListener("click",remove)
+            function remove()
+            {
+                add.remove()
+            }
+                
+        }
+       
+    </script>
+</body>
+</html>
