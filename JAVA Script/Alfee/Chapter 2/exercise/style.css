@@ -1,0 +1,27 @@
+.parent{
+    position: relative;
+    background-color: whitesmoke;
+    overflow: hidden;
+}
+.dashboard {
+    background-color:#29a0ce;
+    margin-top: -18px;
+    width: 20%;
+    height: 100%;
+}
+.ul {
+    list-style-image: none;
+    list-style-type: none;
+}
+
+
+
+    
+
+    
+    
+
+
+    
+
+    

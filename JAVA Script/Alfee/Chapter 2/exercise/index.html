@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow: hidden; width: 100%; height: 100%">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Document</title>
+  </head>
+  <script src="main.js"></script>
+  <body style="overflow: hidden; width: 100%; height: 100%" onload="loadData()">
+    <table style="width: 100%; height: 100%">
+      <tbody style="width: 100%; height: 100%">
+        <tr>
+          <td class="dashboard">
+            <h3
+              style="
+                color: white;
+                top: 50px;
+                position: absolute;
+                left: 56px;
+                width: 200px;
+              "
+            >
+              Hire Me Now!
+            </h3>
+            <div class="apps">
+              <ul class="ul" style="color: whitesmoke">
+                <li>
+                  <p style="position: absolute; left: 80px; top: 130px">
+                    <img src="images/dashboard 1.png" />
+                  </p>
+                  <p style="position: absolute; left: 112px; top: 130px">
+                    Dashboard
+                  </p>
+                </li>
+
+                <li>
+                  <p style="position: absolute; left: 80px; top: 180px">
+                    <img src="images/suitcase 2.png" />
+                  </p>
+                  <p style="position: absolute; left: 112px; top: 180px">
+                    Jobs
+                  </p>
+                </li>
+
+                <li>
+                  <p style="position: absolute; left: 80px; top: 230px">
+                    <img src="images/application (1) 1.png" />
+                  </p>
+                  <p style="position: absolute; left: 112px; top: 230px">
+                    Applications
+                  </p>
+                </li>
+
+                <li>
+                  <p style="position: absolute; left: 80px; top: 280px">
+                    <img src="images/question (1) 1.png" />
+                  </p>
+                  <p style="position: absolute; left: 112px; top: 280px">
+                    Interviews
+                  </p>
+                </li>
+
+                <li>
+                  <p style="position: absolute; left: 80px; top: 340px">
+                    <img src="images/message 1.png" />
+                  </p>
+                  <p style="position: absolute; left: 112px; top: 340px">
+                    Messages
+                  </p>
+                </li>
+
+                <li>
+                  <p style="position: absolute; left: 80px; top: 400px">
+                    <img src="images/settings 1.png" />
+                  </p>
+                  <p style="position: absolute; left: 112px; top: 400px">
+                    Settings
+                  </p>
+                </li>
+
+                <li>
+                  <p style="position: absolute; left: 100px; top: 450px">
+                    <img
+                      src="images/add-group (1) 1.png"
+                      width="60px"
+                      height="70px"
+                    /><br />
+                  </p>
+                  <p style="position: absolute; left: 110px; top: 520px">
+                    AddNew
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </td>
+          <td style="position: relative; display: flex; flex-direction: column">
+            <div style="display: flex; justify-content: flex-end">
+              <img src="images/notification-bing.png"
+                width="50px"
+                height="50px"
+              />
+              <img src="images/girl.png" width="50px" height="50px" />
+              <img src="images/logout.png" width="30px" height="30px" />
+            </div>
+            <div style="display: flex;">
+              <div id="content_container" style="display: flex; flex: 1; flex-direction: column; gap: 60px; margin-top: 80px; margin-left: 50px;">
+             
+              </div>
+              <div style="flex: 1; padding: 20px;">
+                <img src="images/business-finance.png" style="width: 100%;" height="100%; object-fit:contain">
+              </div>
+            </div>
+
+           
+
+           
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div class="parent">
+      <div class="dashboard">
+        <table>
+          <tbody>
+            <tr>
+              <td class="left" style="width: 20%; position: relative">
+                <h3
+                  style="
+                    color: white;
+                    top: 50px;
+                    position: absolute;
+                    left: 56px;
+                    width: 200px;
+                  "
+                >
+                  Hire Me Now!
+                </h3>
+                <div class="apps">
+                  <ul class="ul" style="color: whitesmoke">
+                    <li>
+                      <p style="position: absolute; left: 80px; top: 130px">
+                        <img src="images/dashboard 1.png" />
+                      </p>
+                      <p style="position: absolute; left: 112px; top: 130px">
+                        Dashboard
+                      </p>
+                    </li>
+
+                    <li>
+                      <p style="position: absolute; left: 80px; top: 180px">
+                        <img src="images/suitcase 2.png" />
+                      </p>
+                      <p style="position: absolute; left: 112px; top: 180px">
+                        Jobs
+                      </p>
+                    </li>
+
+                    <li>
+                      <p style="position: absolute; left: 80px; top: 230px">
+                        <img src="images/application (1) 1.png" />
+                      </p>
+                      <p style="position: absolute; left: 112px; top: 230px">
+                        Applications
+                      </p>
+                    </li>
+
+                    <li>
+                      <p style="position: absolute; left: 80px; top: 280px">
+                        <img src="images/question (1) 1.png" />
+                      </p>
+                      <p style="position: absolute; left: 112px; top: 280px">
+                        Interviews
+                      </p>
+                    </li>
+
+                    <li>
+                      <p style="position: absolute; left: 80px; top: 340px">
+                        <img src="images/message 1.png" />
+                      </p>
+                      <p style="position: absolute; left: 112px; top: 340px">
+                        Messages
+                      </p>
+                    </li>
+
+                    <li>
+                      <p style="position: absolute; left: 80px; top: 400px">
+                        <img src="images/settings 1.png" />
+                      </p>
+                      <p style="position: absolute; left: 112px; top: 400px">
+                        Settings
+                      </p>
+                    </li>
+
+                    <li>
+                      <p style="position: absolute; left: 100px; top: 450px">
+                        <img
+                          src="images/add-group (1) 1.png"
+                          width="60px"
+                          height="70px"
+                        /><br />
+                      </p>
+                      <p style="position: absolute; left: 110px; top: 520px">
+                        AddNew
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+
+              <td style="position: relative; width: 80%;" >
+                <div class="img" style="display: flex">
+                  <img src="images/girl.png" width="20px" height="20px" />
+                  <img
+                    src="images/notification-bing.png"
+                    width="20px"
+                    height="20px"
+                  />
+                  <img src="images/logout.png" width="20px" height="20px" />
+                </div>
+                <div class="jobs"></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> -->
+  </body>
+</html>

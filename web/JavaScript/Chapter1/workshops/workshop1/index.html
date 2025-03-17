@@ -161,14 +161,14 @@
             <input type="text" name="jobTitle" id="jobTitle" class="inpTitle" onblur="return validateCharacter(this.value)" placeholder="Enter job tittle"
                 style="font-size:18px;" onblur="return validateCharacter(this.value)">
             <label class="l2">Description</label>
-            <input type="text" name="jobDescription" id="jobDescription" class="inpDesc"
-                placeholder=" Enter Description" style="font-size:18px;">
+            <input type="text" name="jobDescription" id="jobDescription" class="inpDesc" onblur="return validateDescription(this.value)" 
+                placeholder=" Enter Description" style="font-size:18px;"  onblur="return validateDescription(this.value)">
             <label class="l3">Salary</label>
-            <input type="text" name="salary" id="salary" class="inpSalary" placeholder="Enter salary"
-                style="font-size:18px;" >
+            <input type="text" name="salary" id="salary" class="inpSalary" onblur="return validateSalary(this.value)"  placeholder="Enter salary"
+                style="font-size:18px;"  onblur="return validateSalary(this.value)">
             <label class="l4">Location</label>
-            <input type="text" name="location" id="location" class="inpLocation" placeholder="Enter location"
-                style="font-size:18px;">
+            <input type="text" name="location" id="location" class="inpLocation" onblur="return validateLocation(this.value)"  placeholder="Enter location"
+                style="font-size:18px;"  onblur="return validateLocation(this.value)">
 
             <button class="btn1 " type="submit">Post Job</button>
             <h2 class="notifications1">Push Notifications</h2>
@@ -188,6 +188,59 @@
         </form>
 
     </div>
+    <!-- <script>
+        function validate(input)
+        {
+           let=document.getElementById("jobTitle");
+           let=document.getElementById("jobDescription");
+           let=document.getElementById("inpSalary");
+           let=document.getElementById("inpLocation");
+
+        //    let jobtitleError=document.getElementById("jobtitle error");
+        //    let jobDescriptionError=document.getElementById("jobDescription");
+        //    let inpSalaryError=document.getElementById("inpSalary");
+        //    let inpLocationError=document.getElementById("inpLocation");
+
+           let jobTitleRegex=/^[A-Za-z]+$/;
+           let jobDescriptionRegex=/^[A-Za-z]+$/;
+           let inpSalaryRegex=/^[0-9]+$/;
+           let inpLocationRegex=/^[A-Za-z]+$/;
+
+
+        }
+        if(jobTitle.value="")
+        {
+            alert("Please enter job title");
+            document.myForm.jobTitle.focus();
+            return false;
+        }
+        if(jobTitle.value=""!=jobTitleRegex)
+        {
+            alert("Job is invalid");
+            document.myForm.jobTitle.focus();
+            return false;
+        }
+       
+        if(jobDescription.value="")
+        {
+            alert("Please enter job description");
+            document.myForm.jobDescription.focus();
+            return false;
+        }
+        if(inpSalary.value="")
+        {
+            alert("Please enter salary");
+            document.myForm.inpSalary.focus();
+            return false;
+        }
+        if(inpLocation.value="")
+        {
+            alert("Please enter location");
+            document.myForm.inpLocation.focus();
+            return false;
+        }
+        return true;
+    </script> -->
 
 
 

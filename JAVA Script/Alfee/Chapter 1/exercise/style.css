@@ -1,0 +1,50 @@
+.parent{
+    position: relative;
+    background-color: white;
+} 
+
+.logo{
+    position: absolute;
+    margin-left: 100px;
+    margin-top: 20px;
+
+}
+.header{
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 200px;
+}
+
+
+/* .slider{
+    position: absolute;
+    margin-left: 200px;
+} */ 
+.login{
+    margin-left:829px;
+    margin-top: -8px;
+    position: absolute;
+    width: 700px;
+    height: 900px;
+    background-color: #ffffff;
+}
+table input{
+    position: absolute;
+    width: 500px;
+    height: 35px;
+    margin-top: -19px;
+    margin-left: 80px;
+    border-radius: 6px;
+    border: 1px solid #5541d7;
+
+}
+th{
+    
+    height: 55px;
+   
+}
+td{
+    height: 50px;
+   
+    
+}

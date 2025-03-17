@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .slider {
+        width: 500px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .slider img {
+        width: 500px;
+        display: inline-block;
+        animation: slide 5s infinite linear;
+    } 
+
+    @keyframes slide {
+        0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+    }
+</style>
+</head>
+<body>
+    <div class="parent">
+        <div class="logo">
+            <div class="header">
+                <img src="images/Group 8.png" style="position: absolute; margin-left: 200px; margin-top: 50px;">
+                <img src="images/Hire me Now.png" style="position: absolute; margin-left: 280px; margin-top: 60px;">
+            </div>
+            <div class="slider">
+                <div class="slide">
+                  <img src="images/Group.png" alt="Slide 1" width="500px" height="450px" style="position: absolute; margin-left: 100px; margin-top: 140px;"/>
+                  <img src="images/Group.png" alt="Slide 2" width="500px" height="450px" style="position: absolute; margin-left: 100px; margin-top: 140px;"/>
+                  <img src="images/Group.png" alt="Slide 3" width="500px" height="450px" style="position: absolute; margin-left: 100px; margin-top: 140px;"/>
+
+                </div>
+               
+              </div>
+       
+              <div class="login">
+                <form name="myForm" onsubmit="return validateForm()">
+                    <table style="position: absolute;margin-left: 870px;width: 500px;height: 350px;margin-top: 100px;">
+                        <tr>
+                            <th colspan="2"><p style="font-style: Mulish;"><h2 style="position: absolute;margin-left: 5px; margin-top: -17px;">Sign in to Admin Dashboard</h2></p><br></th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span class="sp1">Email</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="email" placeholder=" input your email in here" style="position: absolute; width: 360px; border-radius:6px;height: 25px;"
+                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required ><br>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span class="sp1">Password</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="text" placeholder=" input your password in here" required style="position: absolute; width: 360px; border-radius:6px;height: 25px;"> 
+                            <img src="images/eye-no.png" width="20px" height="20px" style="position: absolute; margin-left: 340px; margin-top: 5px;" ><br></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><span class="forgot" style="position: absolute;margin-left:5px; margin-top: 35px;">Forgot password?</span><br><br></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" value="Sign In" class="button" style="position: absolute; width: 380px; border-radius:6px;height: 28px; background-color: purple;"></td>
+                        </tr>
+                    </table>
+                </form>
+                
+            </div>
+    </div>
+</body>
+</html>
