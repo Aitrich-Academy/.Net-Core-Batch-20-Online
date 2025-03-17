@@ -4,44 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+         .form {
+            background: rgb(189, 77, 77);
+            width: 500px;
+        }
+
+        input{
+            padding:5px;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            width: 100%;
+           
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
     <h2>Job Application Form</h2>
     <form>
-        <label>Full Name:</label>
-        <input type="text" id="fullName" name="fullName" pattern="/^[A-Za-z\s]+$/;" required ><br><br>
+        <div class="form">
+            <table>
+                <tr>
+                    <td><label>Full Name:</label></td>
+                    <td><input type="text" id="fullName" name="fullName" oninput="validateInput(this)" required ><br><br></td>
+                </tr>
 
-        <label>Email:</label>
-        <input type="text" id="email" name="email" pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/" required><br><br>
+                <tr>
+                    <td><label>Email:</label></td>
+                    <td><input type="text" id="email" name="email" oninput="validateEmail(this)" required><br><br></td>
+                </tr>
 
-        <label>Phone Number:</label>
-        <input type="text" id="phone" name="phone" pattern="/^\d{10}$/;"><br><br>
+                <tr>
+                    <td><label>Phone Number:</label></td>
+                    <td><input type="text" id="phone" name="phone" oninput="validatePhonenumber(this)" ><br><br></td>
+                </tr>
 
-        <label>Date of Birth:</label>
-        <input type="text" id="dob" name="dob"><br><br>
+                <tr>
+                    <td><label>Date of Birth:</label></td>
+                    <td><input type="text" id="dob" name="dob" oninput="validateDOB(this)"><br><br></td>
+                </tr>
 
-        <label>Upload Resume:</label>
-        <input type="text" id="resume" name="resume" pattern=" /(\.pdf|\.docx)$/i;"><br><br>
+                <tr>
+                    <td><label>Upload Resume:</label></td>
+                    <td><input type="text" id="resume" name="resume" oninput="validateResume(this)"><br><br></td>
+                </tr>
 
-        <label>Experience (Years):</label>
-        <input type="text" id="experience" name="experience"><br><br>
+                <tr>
+                    <td><label>Experience (Years):</label></td>
+                    <td><input type="text" id="experience" name="experience" oninput="validateExperience(this)"><br><br></td>
+                </tr>
 
-        <label>Preferred Location:</label>
-        <input type="text" id="location" name="location"><br><br>
+                <tr>
+                    <td><label>Preferred Location:</label></td>
+                    <td><input type="text" id="location" name="location" oninput="validateLocation(this)"><br><br></td>
+                </tr>
 
-        <label>Portfolio Link (Optional):</label>
-        <input type="text" id="portfolio" name="portfolio" pattern="/^(https?:\/\/)?([\w\-]+\.)+[\w]{2,}(\/\S*)?$/;"><br><br>
+                <tr>
+                    <td><label>Portfolio Link (Optional):</label></td>
+                    <td><input type="text" id="portfolio" name="portfolio" oninput="validatePortfolio(this)"><br><br></td>
+                </tr>
 
-        <label>Gender:</label>
-        <input type="radio" name="gender" value="Male">Male
-        <input type="radio" name="gender" value="Female">Female
-        <input type="radio" name="gender" value="Other">Other
-        <br><br>
+                <tr>
+                    <td><label>Gender:</label></td>
+                    <td><input type="radio" name="gender" value="Male">Male
+                        <input type="radio" name="gender" value="Female">Female
+                        <input type="radio" name="gender" value="Other">Other
+                        <br><br>
+                    </td>
+                </tr>
 
-        <input type="checkbox" id="terms" name="terms">
-        <label for="terms">I agree to the Terms & Conditions</label><br><br>
+                <tr>
+                    <td>
+                        <label><input type="checkbox" name="agree">   I agree to the school policies.</label>
+                    </td>
+                    
+                </tr>
 
-        <button type="submit">Submit Application</button>
+                <tr>
+                    <td colspan="2"><button type="submit">Submit Application</button></td>
+                </tr>
+            </table> 
+        </div> 
     </form>
+
+    <script>
+
+        function validateInput(input) 
+        {
+          let reg = !/^[A-Za-z]+(?: [A-Za-z]+)*$/; 
+          if (!reg.test(input.value)) 
+          {
+            alert("Please enter only letters (and spaces) for this field.");
+            input.value = input.value.replace(/[^A-Za-z\s]/g, '');
+          }
+        }
+    </script>
 </body>
 </html>

@@ -44,4 +44,38 @@ function validateCharacter(inputChar)
     }
 
 }
+function validateDescription(inputDesc)
+{
+   
+    const regex = /^[a-zA-Z]+$/; // regular expression pattern for alphabetical characters
+    if(!regex.test(inputDesc))
+    {
+        alert("Allowed alphabets")
+        return false;
+    }
+
+}
+function validateSalary(inputSalary)
+{
+   
+    const regex = /^[0-9]+$/; // regular expression pattern for alphabetical characters
+    if(!regex.test(inputSalary))
+    {
+        alert("Allowed numbers")
+        return false;
+    }
+
+}
+function validateLocation(inputLocation)
+{
+   
+    const regex = /^[a-zA-Z]+$/; // regular expression pattern for alphabetical characters
+    if(!regex.test(inputLocation))
+    {
+        alert("Allowed alphabets")
+        return false;
+    }
+
+}
+
 

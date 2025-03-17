@@ -6,12 +6,21 @@
     <title>Document</title>
 </head>
 <body>
-    <p id="mypara">This is a paragraph that will be toggled on button click</p>
-    <button id="mybtn">Click Here</button>
+    <p id="mypara">JavaScript is a scripting language that enables you to create dynamically updating content, control multimedia, animate images, and pretty much everything else.</p>
+    <button id="mybtn">Hide</button>
     <script>
+        let paragraph=document.getElementById("mypara")
         document.getElementById("mybtn").onclick=function()
         {
-            document.getElementById("mypara").innerHTML="hidden"
+            if(paragraph.style.display==="none")
+        {
+            paragraph.style.display="block";
+
+        }
+        else
+        {
+            paragraph.style.display="none";
+        }
         }
 
     </script>

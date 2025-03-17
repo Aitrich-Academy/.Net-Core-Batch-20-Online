@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function capitalizeWords(str) 
+    {
+    return str.replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+document.write("Capitalized: " + capitalizeWords("hello world") + "<br>");
+document.write("Capitalized: " + capitalizeWords("javascript is fun") + "<br>");
+    </script>
+</body>
+</html>
