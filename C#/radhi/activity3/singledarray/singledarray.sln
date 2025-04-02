@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "singledarray", "singledarray.csproj", "{B868C096-772B-4D73-81E6-4CCE3B92006E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B868C096-772B-4D73-81E6-4CCE3B92006E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B868C096-772B-4D73-81E6-4CCE3B92006E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B868C096-772B-4D73-81E6-4CCE3B92006E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B868C096-772B-4D73-81E6-4CCE3B92006E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E040ACD3-9226-4B09-B566-E9A500514D1D}
+	EndGlobalSection
+EndGlobal
