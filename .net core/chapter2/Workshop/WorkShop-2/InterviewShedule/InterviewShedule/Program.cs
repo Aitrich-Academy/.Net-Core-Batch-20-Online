@@ -50,6 +50,7 @@ namespace InterviewShedule
                                 shedule[i].title = Console.ReadLine();
                                 Console.WriteLine("Enter the Date for Interview(dd-mm-yyyy)");
                                 shedule[i].date = Convert.ToDateTime(Console.ReadLine());
+
                                 Console.WriteLine("Enter the Time of a Interview(h-m)");
                                 shedule[i].time = Console.ReadLine();
                                 Console.Write("Location of sheduled InterView {0}: ", i + 1);
