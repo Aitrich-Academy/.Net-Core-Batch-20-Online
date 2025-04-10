@@ -1,22 +1,15 @@
 ﻿
 namespace Provider_App // Note: actual namespace depends on the project name.
 {
-    public class Program
+    public partial class Program
     {
-        struct JobProvider
-        {
-            public string CompanyName;
-            public string Email;
-            public string Phone;
-            public string Password;
-            public string JobRole;
-            public string Salary;
-            public int ExperienceRequired;
-        }
 
         static JobProvider[] jobprovider = new JobProvider[5];
         static JobProvider loggedinUser;
         static int userCount = 0;
+
+       
+
         static void Main(string[] args)
         {
 
