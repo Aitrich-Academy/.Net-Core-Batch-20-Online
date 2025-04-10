@@ -66,7 +66,8 @@ namespace Provider_App // Note: actual namespace depends on the project name.
 
             foreach (JobProvider jp in jobprovider)
             {
-                if (jp.Email == email && jp.Password == password)
+                if (jp.Email == email 
+                    && jp.Password == password)
                 {
                     loginSuccessfull = true;
                     loggedinUser = jp;
