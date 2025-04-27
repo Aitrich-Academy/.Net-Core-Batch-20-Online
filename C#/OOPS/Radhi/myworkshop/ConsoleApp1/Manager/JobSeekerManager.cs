@@ -1,47 +1,78 @@
-﻿using Job_Application.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JobApplication.Enums;
+using JobApplication.Models;
 
-namespace Job_Application.Managers
+namespace JobApplication.Manager
 {
     public class JobSeekerManager
     {
-       
-
         private JobSeeker[] jobSeekers = new JobSeeker[10];
         int jobSeekerCount = 0;
         public JobSeeker loggedInJobSeeker = new JobSeeker();
-        public void RegisterJobSeeker()
+        public void RegisterJobseeker()
         {
-            JobSeeker newJobSeeker = new JobSeeker();
+            JobSeeker jobSeeker = new JobSeeker();
 
-            Console.WriteLine("Please enter your first name:");
-            newJobSeeker.FirstName = Console.ReadLine();
+            Console.WriteLine("Enter your first Name");
+            jobSeeker.FirstName = Console.ReadLine();
 
-            Console.WriteLine("Please enter your last name:");
-            newJobSeeker.LastName = Console.ReadLine();
+            Console.WriteLine("Enter your last Name");
+            jobSeeker.LastName = Console.ReadLine();
+
 
             Console.WriteLine("Please enter your email address:");
-            newJobSeeker.Email = Console.ReadLine();
+            jobSeeker.Email = Console.ReadLine();
+
+            Console.WriteLine("Choose your experience level:");
+            foreach (var level in Enum.GetValues(typeof(ExprienceLevels)))
+            {
+                Console.WriteLine($"- {level}");
+            }
+
+            Console.Write("Enter experience level: ");
+            string input = Console.ReadLine();
+
+            if (Enum.TryParse(input, true, out ExprienceLevels selectedLevel))
+            {
+                Console.WriteLine($"You selected: {selectedLevel}");
+                jobSeeker.ExperienceLevel = selectedLevel;
+            }
+            else
+            {
+                Console.WriteLine("Invalid experience level entered.");
+            }
+
+
+
+
+
 
             Console.WriteLine("Please enter your phone number:");
-            newJobSeeker.Phone = Console.ReadLine();
+            jobSeeker.Phone = Console.ReadLine();
+
+            Console.WriteLine("Please enter your Location");
+            jobSeeker.Location = Console.ReadLine();
+
+            Console.WriteLine("Please enter About Me");
+            jobSeeker.AboutMe = Console.ReadLine();
+
+            Console.WriteLine("Please enter your Qualification");
+            jobSeeker.Qualification = Console.ReadLine();
+
 
             Console.WriteLine("Please enter a password:");
-            newJobSeeker.Password = Console.ReadLine();
-
-           
-
-            jobSeekers[jobSeekerCount] = newJobSeeker;
+            jobSeeker.Password = Console.ReadLine();
+            jobSeekers[jobSeekerCount] = jobSeeker;
             jobSeekerCount++;
+            
 
-            Console.WriteLine("Registration successful");
         }
 
-       public bool LoginJobSeeker()
+        public bool LoginJobSeeker()
         {
             Console.WriteLine("Please enter your email:");
             string email = Console.ReadLine();
@@ -50,33 +81,34 @@ namespace Job_Application.Managers
             string password = Console.ReadLine();
 
             bool loginSuccessful = false;
-            foreach(JobSeeker seeker in jobSeekers)
+            foreach (JobSeeker seeker in jobSeekers)
             {
-                if (seeker !=null && seeker.Email == email && seeker.Password == password)
+                if (seeker != null && seeker.Email == email && seeker.Password == password)
                 {
                     loggedInJobSeeker = seeker;
                     loginSuccessful = true;
                     break;
                 }
             }
-            
+
             return loginSuccessful;
-         
+
         }
+
 
         public void ShowJobSeekerMenu()
         {
-          //  Console.WriteLine("Welcome " + loggedInJobSeeker.FirstName + "!");
-          
+           
+
             Console.WriteLine("1. My profile");
-          
+
             Console.WriteLine("2. Logout");
 
             string choice = Console.ReadLine();
 
             switch (choice)
             {
-               
+
                 case "1":
                     ViewProfile();
                     ShowJobSeekerMenu();
@@ -89,13 +121,14 @@ namespace Job_Application.Managers
                     ShowJobSeekerMenu();
                     break;
             }
+
+
+
+
         }
-
-       
-
         public void ViewProfile()
         {
-            Console.WriteLine("-------------------------------MY PROFILE-------------------------------------\n");
+            Console.WriteLine("************MY PROFILE************\n");
             Console.WriteLine($"First Name: {loggedInJobSeeker.FirstName}");
             Console.WriteLine($"Last Name: {loggedInJobSeeker.LastName}");
             Console.WriteLine($"Email: {loggedInJobSeeker.Email}");
@@ -111,12 +144,12 @@ namespace Job_Application.Managers
         {
             loggedInJobSeeker = new JobSeeker();
             Console.WriteLine("Logged out successfully!");
-           ShowMainMenu();
+            ShowMainMenu();
         }
 
-        public  void ShowMainMenu()
+        public void ShowMainMenu()
         {
-            //JobSeekerManager seekerManager = new JobSeekerManager();
+            
             Console.WriteLine("Welcome to the job portal!");
             Console.WriteLine("1. Register");
             Console.WriteLine("2. Login");
@@ -126,11 +159,11 @@ namespace Job_Application.Managers
             switch (choice)
             {
                 case "1":
-                    RegisterJobSeeker();
+                    RegisterJobseeker();
                     break;
                 case "2":
                     bool loginRes = LoginJobSeeker();
-                    if (loginRes) // check if the user is logged in
+                    if (loginRes) 
                     {
                         Console.WriteLine("Welcome " + loggedInJobSeeker.FirstName + "!");
                         ShowJobSeekerMenu();
@@ -152,3 +185,5 @@ namespace Job_Application.Managers
 
     }
 }
+
+

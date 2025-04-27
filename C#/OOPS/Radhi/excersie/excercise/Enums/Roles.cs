@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Job_Application.Enums
+namespace project.Enums
 {
-    public enum ExperienceLevels
+    public enum Roles
     {
-        Fresher, MidLevel, Senior
+        Admin, Jobseeker, Jobprovider
     }
 }
