@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Job_Application.Enums;
+
+namespace Job_Application.Models
+{
+    public class JobSeeker
+    {
+
+        
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Location { get; set; }
+        public string AboutMe { get; set; }
+        public string Qualification { get; set; }
+        public ExperienceLevels ExperienceLevel { get; set; }
+        public string Password { get; set; }
+    }
+}
