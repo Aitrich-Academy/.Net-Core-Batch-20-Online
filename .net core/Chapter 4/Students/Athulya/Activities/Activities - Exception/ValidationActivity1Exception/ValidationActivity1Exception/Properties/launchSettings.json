@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ValidationActivity1Exception": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

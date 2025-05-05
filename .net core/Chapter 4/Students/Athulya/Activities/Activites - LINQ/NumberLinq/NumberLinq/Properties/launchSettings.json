@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NumberLinq": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

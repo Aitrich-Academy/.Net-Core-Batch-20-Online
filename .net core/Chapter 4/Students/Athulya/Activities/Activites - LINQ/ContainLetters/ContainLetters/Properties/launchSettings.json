@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ContainLetters": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

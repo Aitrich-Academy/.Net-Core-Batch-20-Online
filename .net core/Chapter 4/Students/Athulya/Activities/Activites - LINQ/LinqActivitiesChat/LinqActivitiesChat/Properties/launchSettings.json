@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "LinqActivitiesChat": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
