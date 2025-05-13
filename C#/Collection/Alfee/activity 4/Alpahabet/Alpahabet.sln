@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpahabet", "Alpahabet\Alpahabet.csproj", "{8B949106-FD14-4919-A3CD-291ECE1F739E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B949106-FD14-4919-A3CD-291ECE1F739E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B949106-FD14-4919-A3CD-291ECE1F739E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B949106-FD14-4919-A3CD-291ECE1F739E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B949106-FD14-4919-A3CD-291ECE1F739E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96B522AD-C78B-4B06-B0FF-7B9460BD1B3D}
+	EndGlobalSection
+EndGlobal

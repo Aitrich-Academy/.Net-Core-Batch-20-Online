@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Admin_Job.Enums.ExperienceLevel;
+using Admin_Job.Enums;
+using static Admin_Job.Enums.ExperienceLevels;
 
 namespace CompanyMember.Model
 {
