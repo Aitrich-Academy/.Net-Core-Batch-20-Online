@@ -1,0 +1,125 @@
+Stored Procedure
+-----------------------
+A stored procedure is a set of SQL commands that has been compiled and stored on the datatbase server.
+Once the stored procedure has been stored,client applications can execute the stored procedure over and 
+over again without sending it to the database server again and without compiling it again.
+Stored procedures improve performance by reducing network traffic and CPU load.
+
+
+Insert procedure:-
+
+CREATE proc TS_Company_Master_Insert
+(
+@v_name as varchar(50),
+@v_remarks as varchar(250)
+)
+as
+declare @v_id as int
+begin
+select @v_id= (select isnull(max(id),0)+1 from TS_Company_Master)
+insert into TS_Company_Master(id,name,remarks)
+values (@v_id,@v_name,@v_remarks)
+end
+GO
+
+exec TS_Company_Master_Insert 'OCH',''
+
+
+
+Update Procedure:-
+
+CREATE proc TS_Company_Master_Update
+(
+@v_id as int,
+@v_name as varchar(50),
+@v_remarks as varchar(250)
+)
+as
+begin
+update TS_Company_Master set name = @v_name,remarks = @v_remarks where id = @v_id
+end
+GO
+
+
+exec TS_Company_Master_Update 5,'OCM',''
+
+
+
+Delete Procedure:-
+
+CREATE PROC [dbo].[deleteProc]
+(
+	@v_id int
+	
+) AS
+
+BEGIN
+		EXEC ('delete from '+'SP_table' + ' where '  +'id'+ '=' +@v_id)
+END
+
+
+
+EXEC deleteproc 5
+
+
+
+create proc SelectProc2
+(
+@v_id int
+)
+AS
+
+BEGIN
+exec('Select * from SP_table where id=' + @v_id)
+END
+
+EXEC SelectProc2  4
+
+
+CREATE proc SelectProc4
+(
+@v_tname varchar(50)
+)
+AS
+
+BEGIN 
+ exec('Select * From SP_table ' +@v_tname)
+END
+
+
+EXEC SelectProc4 'where name=''JAC'''
+
+
+
+
+
+To Implement Optional Case
+
+CREATE proc SelectProc6
+(
+@v_tname varchar(50)=NULL
+)
+AS
+
+
+BEGIN
+	exec('Select * From TS_Company_Master '+ @v_tname)
+
+	END
+GO
+ EXEC SelectProc6
+
+
+CREATE proc SelectProc8       ///Called a procedure within a procedure
+
+AS
+
+
+BEGIN
+	EXEC SelectProc6
+
+	END
+GO
+
+ EXEC SelectProc8
+

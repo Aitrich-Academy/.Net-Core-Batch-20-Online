@@ -1,0 +1,43 @@
+CREATE TABLE Purchase
+(
+    id VARCHAR(25) PRIMARY KEY,
+    item_id VARCHAR(50),    
+    amount DECIMAL(10, 2),
+	   
+);
+alter table purchase add  pu_id VARCHAR(25);
+insert into Purchase(id,item_id,amount) values('6','11',120.00)
+select * from Purchase
+create function get_purchsecode()
+returns varchar(50)
+as
+begin
+declare @purchase_code as varchar(50)
+select @purchase_code=(select 'pu' + left('00000000',8-len(ltrim(str(right(max(pu_id),8)+1))))+ ltrim(str(right(max(id),8)+1)) from Purchase)
+return isnull(@purchase_code ,'pu' + '00000001')
+
+end
+select dbo.get_purchsecode()
+
+create PROCEDURE InsertPurchaseCode
+(@id varchar(50),
+@item_id varchar(50),
+@amount varchar(50)
+)
+AS
+BEGIN
+    
+        -- Declare a variable to hold the purchase code
+        DECLARE @purchse_code VARCHAR(50);
+        
+        -- Generate the purchase code using the custom function
+        SET @purchse_code =dbo.get_purchsecode();
+        
+        -- Insert the purchase code into the table
+        INSERT INTO purchase (id,item_id,amount,pu_id) 
+        VALUES (@id,@item_id,@amount,@purchse_code);
+
+        
+END;
+select * from Purchase
+exec InsertPurchaseCode '9','11',23.43
