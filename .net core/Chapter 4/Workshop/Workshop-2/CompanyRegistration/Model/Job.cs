@@ -32,6 +32,6 @@ namespace CompanyMember.Model
         public string SalaryRange { get; set; }
         public string JobType { get; set; }
     }
-        }
+}
     
 

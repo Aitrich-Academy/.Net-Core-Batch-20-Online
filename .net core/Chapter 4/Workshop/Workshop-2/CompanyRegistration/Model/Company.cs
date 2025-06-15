@@ -43,11 +43,5 @@ public partial class Company
 
 	public string Location { get; set; }
 
-	public string Address { get; set; }
-
-
-
-	
-
-	
+	public string Address { get; set; }	
 }
