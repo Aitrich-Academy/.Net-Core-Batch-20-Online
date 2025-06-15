@@ -18,7 +18,7 @@ namespace CompanyMemberRegistration.Manager
 	public class CompanyManager : IMenu
 	{
 
-		 CompanyRepository companyRepository=new CompanyRepository();
+		CompanyRepository companyRepository = new CompanyRepository();
 		CompanyManager cmpmanager;
 		Lists list = new Lists();
 		IMenu menu;
@@ -26,7 +26,7 @@ namespace CompanyMemberRegistration.Manager
 		{
 
 		}
-		
+
 
 		public void DisplayMenu()
 		{
@@ -56,14 +56,15 @@ namespace CompanyMemberRegistration.Manager
 						ShowcompanyMenu();
 						break;
 					case "2":
-						
+
 						List<Company> companies = companyRepository.ListCompanies();
 
 						list.Print(companies);
 						Console.WriteLine();
 						ShowcompanyMenu();
 						break;
-					case "3":Console.WriteLine("Enter Job Provider Menu");
+					case "3":
+						Console.WriteLine("Enter Job Provider Menu");
 						menu = new ProviderManager();
 						menu.DisplayMenu();
 						break;
@@ -90,7 +91,7 @@ namespace CompanyMemberRegistration.Manager
 					Console.WriteLine("Please enter your Company Website");
 
 					company.Website = Console.ReadLine();
-					
+
 
 					company.Phone = GetPhoneNumber();
 
@@ -105,15 +106,15 @@ namespace CompanyMemberRegistration.Manager
 					Console.WriteLine("enter Company Address");
 					company.Address = Console.ReadLine();
 
-					bool result=companyRepository.register(company);
-					if(result==true)
+					bool result = companyRepository.register(company);
+					if (result == true)
 					{
 						Console.WriteLine("!!!!!!!!Registration successful!!!!!!!");
 						Console.ReadLine();
-						
+
 						ShowcompanyMenu();
 					}
-					
+
 				}
 				catch (UserAlreadyExistException ex)
 				{
@@ -122,45 +123,45 @@ namespace CompanyMemberRegistration.Manager
 				catch (Exception ex) { Console.WriteLine(ex.Message + "\n"); }
 			}
 		}
-			public string GetEmail()
+		public string GetEmail()
+		{
+			try
 			{
-				try
-				{
-					Console.WriteLine("Please enter your email address:");
-					string email = Console.ReadLine();
-					Regex regex = new Regex("^\\S+@\\S+\\.\\S+$");
+				Console.WriteLine("Please enter your email address:");
+				string email = Console.ReadLine();
+				Regex regex = new Regex("^\\S+@\\S+\\.\\S+$");
 
-					if (!regex.IsMatch(email))
-						throw new InvalidFormatException("email was not in correct format :" + email);
-					return email;
-				}
-				catch (InvalidFormatException ex)
-				{
-					Console.WriteLine(ex.Message + "\n");
-					Console.WriteLine("try again...");
-					return GetEmail();
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex.Message + "\n");
-					return GetEmail();
-				}
+				if (!regex.IsMatch(email))
+					throw new InvalidFormatException("email was not in correct format :" + email);
+				return email;
 			}
-			private long GetPhoneNumber()
+			catch (InvalidFormatException ex)
 			{
-				try
-				{
-					Console.WriteLine("Please enter your phone number:");
-					long Phone = long.Parse(Console.ReadLine());
-					return Phone;
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine("Enter valid phone number");
-					return GetPhoneNumber();
-				}
+				Console.WriteLine(ex.Message + "\n");
+				Console.WriteLine("try again...");
+				return GetEmail();
 			}
-
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message + "\n");
+				return GetEmail();
+			}
 		}
+		private long GetPhoneNumber()
+		{
+			try
+			{
+				Console.WriteLine("Please enter your phone number:");
+				long Phone = long.Parse(Console.ReadLine());
+				return Phone;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Enter valid phone number");
+				return GetPhoneNumber();
+			}
+		}
+
 	}
+}
 
