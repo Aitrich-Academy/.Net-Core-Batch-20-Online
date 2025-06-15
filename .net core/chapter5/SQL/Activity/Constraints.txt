@@ -1,0 +1,32 @@
+CREATE TABLE Cust (
+              CustomerID     int          PRIMARY KEY,
+               CompanyName    varchar(20)  NOT NULL,
+              City           varchar(20)  DEFAULT 'Seattle')
+GO
+
+
+CREATE TABLE CustOrder (
+              OrderID        varchar(10) PRIMARY KEY,
+               CustomerID     int         FOREIGN KEY REFERENCES 
+                                         Cust(CustomerID))
+GO
+
+
+CREATE TABLE employee(
+   EmployeeId INT NOT NULL,
+   LName VARCHAR(30) NOT NULL,
+   FName VARCHAR(30) NOT NULL,
+   Address VARCHAR(100) NOT NULL,
+   HireDate DATETIME NOT NULL,
+   Salary MONEY NOT NULL CONSTRAINT check_sale CHECK (salary > 0)
+)
+
+
+
+
+-- disable the check_sale constraint in the employee table
+ALTER TABLE employee NOCHECK CONSTRAINT check_sale
+
+ -- enable the check_sale constraint in the employee table
+ALTER TABLE employee CHECK CONSTRAINT check_sale
+

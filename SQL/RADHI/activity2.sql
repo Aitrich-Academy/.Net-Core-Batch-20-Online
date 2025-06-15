@@ -1,0 +1,15 @@
+create database emp1;
+create table employee(empid int identity(1,1) primary key,Name varchar(50),City Varchar(50),Desiganation varchar(50),Salary int);
+select * from employee;
+INSERT INTO employee VALUES('Alice','Delhi','Manager',30000); 
+INSERT INTO employee VALUES('Bob','Delhi','Developer',25000); 
+INSERT INTO employee VALUES('Carol','mumbai','manager',28000); 
+INSERT INTO employee VALUES('David','mumbai','Developer',27000); 
+INSERT INTO employee VALUES('Eva','Delhi','Developer',20000); 
+INSERT INTO employee VALUES('Frank','mumbai','manager',30000); 
+INSERT INTO employee VALUES('Grace','Pune','Developer',35000); 
+select name from employee where city='delhi';
+select City,SUM(salary) as  total_salary  from employee where Desiganation='developer'group by Desiganation ;
+SELECT Name as name from employee WHERE salary>30000 ;
+select city ,SUM(salary)as total_salary from employee group by city having SUM(salary)>50000;
+SELECT City,Desiganation,SUM(salary) as total_salary from employee group by city,Desiganation having SUM(Salary)>50000;

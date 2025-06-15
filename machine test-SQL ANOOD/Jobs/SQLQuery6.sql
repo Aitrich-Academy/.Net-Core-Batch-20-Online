@@ -1,0 +1,17 @@
+
+-----Retrieve names of employees working in the department with the highest number of employees.
+
+SELECT E.EMP_NAME AS EMPLOYEE_NAME ,D.DEP_NAME AS DEPARTMENT_NAME
+FROM EMPLOYEES E
+JOIN DEPARTMENT D ON
+E.EMP_DEP =D.DEP_ID 
+WHERE
+E.EMP_DEP =( SELECT TOP 1 EMP_DEP FROM EMPLOYEES 
+GROUP BY EMP_DEP 
+ORDER BY COUNT(*) DESC);
+
+
+
+ 
+
+ 
