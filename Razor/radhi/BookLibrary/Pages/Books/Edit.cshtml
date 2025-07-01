@@ -1,0 +1,38 @@
+﻿@page "{id:int}"  
+@model BookLibrary.Pages.Books.EditModel
+@{
+}
+<h2>Edit Student</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Book.id" />
+
+
+    <div class="mb-3">
+        <label asp-for="Book.Bookname" class="form-label"></label>
+        <input asp-for="Book.Bookname" class="form-control" />
+        <span asp-validation-for="Book.Bookname" class="text-danger"></span>
+    </div>
+
+
+
+    <div class="mb-3">
+        <label asp-for="Book.Author" class="form-label"></label>
+        <input asp-for="Book.Author" class="form-control"  />
+        <span asp-validation-for="Book.Author" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Book.Price" class="form-label"></label>
+        <input asp-for="Book.Price" class="form-control" />
+        <span asp-validation-for="Book.Price" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
