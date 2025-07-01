@@ -1,0 +1,40 @@
+﻿@page "{id:int}"
+@model WebApplication3.Pages.Students.EditModel
+@{
+    ViewData["Title"] = "Edit Student";
+}
+
+<h2>Edit Student</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Students.Id" />
+ 
+
+    <div class="mb-3">
+        <label asp-for="Students.Name" class="form-label"></label>
+        <input asp-for="Students.Name" class="form-control" />
+        <span asp-validation-for="Students.Name" class="text-danger"></span>
+    </div>
+
+  
+
+    <div class="mb-3">
+        <label asp-for="Students.Age" class="form-label"></label>
+        <input asp-for="Students.Age" class="form-control" type="number" />
+        <span asp-validation-for="Students.Age" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Students.Course" class="form-label"></label>
+        <input asp-for="Students.Course" class="form-control" />
+        <span asp-validation-for="Students.Course" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

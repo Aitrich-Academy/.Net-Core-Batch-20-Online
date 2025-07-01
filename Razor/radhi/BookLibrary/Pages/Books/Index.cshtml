@@ -1,0 +1,45 @@
+﻿@page
+@model BookLibrary.Pages.Books.IndexModel
+@{
+}
+<body class="container mt-4">
+    <h1 class="mb-4">Welcome</h1>
+    <h2 class="mb-3">All Books Details</h2>
+    <div class="mb-3 text-end">
+        <a asp-page="/Books/Create" class="btn btn-primary">
+            + Add New Book
+        </a>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Actions</th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var b in Model.Books)
+            {
+                <tr>
+                    <td>@b.id</td>
+                    <td>@b.Bookname</td>
+                    <td>@b.Author</td>
+                    <td>@b.Price</td>
+                    <td>
+                        <a asp-page="/Books/View" asp-route-id="@b.id" class="btn btn-info btn-sm me-1">View</a>
+                        <a asp-page="/Books/Edit" asp-route-id="@b.id" class="btn btn-warning btn-sm me-1">Edit</a>
+                        <a asp-page="/Books/Delete" asp-route-id="@b.id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+

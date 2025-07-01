@@ -1,0 +1,49 @@
+﻿@page
+@model WebApplication3.Pages.Students.IndexModel
+@{
+    ViewData["Title"] = "Student List";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Application_Razor.Styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-4">
+    <h1 class="mb-4">Welcome</h1>
+    <h2 class="mb-3">All Students</h2>
+    <div class="mb-3 text-end">
+        <a asp-page="/Students/Create" class="btn btn-primary">
+            + Add New Student
+        </a>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Course</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.StudentList)
+            {
+                <tr>
+                    <td>@student.Id</td>
+                    <td>@student.Name</td>
+                    <td>@student.Age</td>
+                    <td>@student.Course</td>
+                    <td>
+                        <a asp-page="/Students/View" asp-route-id="@student.Id" class="btn btn-info btn-sm me-1">View</a>
+                        <a asp-page="/Students/Edit" asp-route-id="@student.Id" class="btn btn-warning btn-sm me-1">Edit</a>
+                        <a asp-page="/Students/Delete" asp-route-id="@student.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

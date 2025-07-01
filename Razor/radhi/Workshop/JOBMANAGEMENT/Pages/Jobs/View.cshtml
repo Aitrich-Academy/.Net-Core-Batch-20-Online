@@ -1,0 +1,30 @@
+﻿@page
+@model JOBMANAGEMENT.Pages.Jobs.ViewModel
+@{
+}
+<h2>View Job Post</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Job Title</dt>
+    <dd class="col-sm-9">@Model.JobPost.JobTitle</dd>
+
+    <dt class="col-sm-3">Company</dt>
+    <dd class="col-sm-9">@Model.JobPost.Company</dd>
+
+    <dt class="col-sm-3">Location</dt>
+    <dd class="col-sm-9">@Model.JobPost.Location</dd>
+
+    <dt class="col-sm-3">Employment Type</dt>
+    <dd class="col-sm-9">@Model.JobPost.EmploymentType</dd>
+
+    <dt class="col-sm-3">Salary Range</dt>
+    <dd class="col-sm-9">@Model.JobPost.SalaryRange</dd>
+
+    <dt class="col-sm-3">Job Description</dt>
+    <dd class="col-sm-9">@Model.JobPost.JobDescription</dd>
+
+    <dt class="col-sm-3">Requirements</dt>
+    <dd class="col-sm-9">@Model.JobPost.Requirements</dd>
+</dl>
+
+<a asp-page="Index" class="btn btn-secondary mt-3">Back</a>
