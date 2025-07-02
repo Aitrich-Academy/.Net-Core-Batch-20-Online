@@ -1,0 +1,23 @@
+﻿@page
+@model StudentManagement.Pages.students.viewModel
+@{
+    ViewData["Title"] = "Student Details";
+
+
+    <div class="container my-4">
+        <div class="card mx-auto" style="max-width: 500px;">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Student Details</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>ID:</strong> @Model.students.studentId</p>
+                <p class="card-text"><strong>Name:</strong> @Model.students.StudentName</p>
+                <p class="card-text"><strong>Batch:</strong> @Model.students.Batch</p>
+            </div>
+            <div class="card-footer text-end">
+               
+                <a asp-page="./Index" class="btn btn-sm btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+}

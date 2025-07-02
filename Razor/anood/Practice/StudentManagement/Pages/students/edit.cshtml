@@ -1,0 +1,38 @@
+﻿@page
+@model StudentManagement.Pages.students.editModel
+@{
+    <div class="container my-4">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-header bg-success text-white">
+                <h4>Edit Student Details</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+
+
+                    
+                    <input asp-for="students.studentId" type="hidden" />
+
+                    <div class="mb-3">
+                        <label asp-for="students.StudentName" class="form-label"></label>
+                        <input asp-for="students.StudentName" class="form-control" />
+                        <span asp-validation-for="students.StudentName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="students.Batch" class="form-label"></label>
+                        <input asp-for="students.Batch" class="form-control" />
+                        <span asp-validation-for="students.Batch" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Update</button>
+                    <a asp-page="./index" class="btn btn-secondary ms-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
