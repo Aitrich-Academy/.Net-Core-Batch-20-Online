@@ -1,0 +1,28 @@
+﻿@page
+@model College.Pages.students.EditModel
+@{
+}
+<h1 class="mb-4">Student Registration</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Students.Id" />
+    <div class="mb-3">
+        <label asp-for="Students.Name" class="form-label">Name</label>
+        <input asp-for="Students.Name" class="form-control" />
+        <span asp-validation-for="Students.Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Students.Age" class="form-label">Age</label>
+        <input asp-for="Students.Age" class="form-control" />
+        <span asp-validation-for="Students.Age" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Students.Course" class="form-label">Course</label>
+        <input asp-for="Students.Course" class="form-control" />
+        <span asp-validation-for="Students.Course" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
