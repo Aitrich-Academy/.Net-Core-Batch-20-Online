@@ -1,0 +1,20 @@
+﻿@page "{id:int}"
+@model JobsManagement.Pages.Job.ViewModel
+@{
+    ViewData["Title"] = "Job Details";
+}
+
+<h2>Job Details</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.Job.JobTitle</h4>
+        <h6 class="card-subtitle mb-2 text-muted">@Model.Job.Company</h6>
+        <p class="card-text"><strong>Location:</strong> @Model.Job.Location</p>
+        <p class="card-text"><strong>Employment Type:</strong> @Model.Job.EmploymentType</p>
+        <p class="card-text"><strong>Salary Range:</strong> @Model.Job.SalaryRange</p>
+        
+    </div>
+</div>
+
+<a asp-page="index" class="btn btn-secondary mt-3">Back to List</a>

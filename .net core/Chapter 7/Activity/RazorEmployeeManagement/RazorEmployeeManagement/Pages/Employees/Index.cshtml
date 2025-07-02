@@ -29,8 +29,8 @@
                 <td>@employee.Salary</td>
                 <td>@employee.Department</td>
                 <td>
-                    <a asp-page="Edit" asp-route-id="@employee.Id" class="btn btn-warning">Edit</a>
-                    <a asp-page="Delete" asp-route-id="@employee.Id" class="btn btn-danger">Delete</a>
+                    <a asp-page="Employees/Edit" asp-route-id="@employee.Id" class="btn btn-warning">Edit</a>
+                    <a asp-page="Employees/Delete" asp-route-id="@employee.Id" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

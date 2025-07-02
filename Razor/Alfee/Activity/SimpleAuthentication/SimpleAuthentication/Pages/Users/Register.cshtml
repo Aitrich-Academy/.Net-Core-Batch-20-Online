@@ -1,0 +1,24 @@
+﻿@page
+@model SimpleAuthentication.Pages.Users.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<h2>Register</h2>
+
+<form method="post">
+    <label asp-for="NewUser.Username"></label>
+    <input asp-for="NewUser.Username" required />
+    <span asp-validation-for="NewUser.Username" class="text-danger"></span>
+
+    <label asp-for="NewUser.Password"></label>
+    <input asp-for="NewUser.Password" type="password" required />
+    <span asp-validation-for="NewUser.Password" class="text-danger"></span>
+
+    <button type="submit">Register</button>
+</form>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<p>
+    <a asp-page="/Users/Login">Already have an account? Login</a>
+</p>
