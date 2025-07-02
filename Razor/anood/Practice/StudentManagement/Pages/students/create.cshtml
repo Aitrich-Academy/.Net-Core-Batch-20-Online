@@ -1,0 +1,26 @@
+﻿@page
+@model StudentManagement.Pages.students.createModel
+@{
+	<h1>Student Registration</h1>
+	<form method="post">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label asp-for="students.StudentName"></label>
+				<input asp-for="students.StudentName" class="form-control" />
+				<span asp-validation-for="students.StudentName" class="text-danger"></span>
+			</div>
+			<div class="form-group col-md-6">
+				<label asp-for="students.Batch"></label>
+				<input asp-for="students.Batch" class="form-control" />
+				<span asp-validation-for="students.Batch" class="text-danger"></span>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-success btn-sm">Add Student</button>
+	</form>
+
+
+	@section Scripts {
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

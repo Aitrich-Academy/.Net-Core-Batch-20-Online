@@ -1,0 +1,36 @@
+﻿@page
+@model BookManagement.Pages.MyBook.AddBookModel
+@{
+	<h1>Add New Book</h1>
+	<form method="post">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label asp-for="books.BookName"></label>
+				<input asp-for="books.BookName" class="form-control" />
+				<span asp-validation-for="books.BookName" class="text-danger"></span>
+			</div>
+			<div class="form-group col-md-6">
+				<label asp-for="books.Author"></label>
+				<input asp-for="books.Author" class="form-control" />
+				<span asp-validation-for="books.Author" class="text-danger"></span>
+			</div>
+			<div class="form-group col-md-6">
+				<label asp-for="books.Category"></label>
+				<input asp-for="books.Category" class="form-control" />
+				<span asp-validation-for="books.Category" class="text-danger"></span>
+			</div>
+			<div class="form-group col-md-6">
+				<label asp-for="books.prize"></label>
+				<input asp-for="books.prize" class="form-control" />
+				<span asp-validation-for="books.prize" class="text-danger"></span>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-success btn-sm">Add Book</button>
+	</form>
+
+
+	@section Scripts {
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

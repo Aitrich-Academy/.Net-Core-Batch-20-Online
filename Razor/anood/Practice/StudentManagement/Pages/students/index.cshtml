@@ -1,0 +1,41 @@
+﻿@page
+@model StudentManagement.Pages.students.indexModel
+@{
+	<h4>Welcome to student details</h4>
+
+	<div class="d-flex justify-content-between align-items-center mb-2">
+		<h5 class="mb-0">All Students</h5>
+		<a asp-page="/students/create" class="btn btn-primary btn-sm">Add Student</a>
+	</div>
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Student Id</th>
+				<th>Student Name</th>
+				<th>Batch</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var mystudent in Model.StudentList)
+			{
+				<tr>
+					<td>@mystudent.studentId</td>
+					<td>@mystudent.StudentName</td>
+					<td>@mystudent.Batch</td>
+					<td>
+						<a asp-page="/students/view" asp-route-id="@mystudent.studentId" class="btn btn-success btn-sm">VIEW</a>
+						<a asp-page="/students/edit" asp-route-id="@mystudent.studentId" class="btn btn-warning btn-sm">EDIT</a>
+						<a asp-page="/students/delete" asp-route-id="@mystudent.studentId" class="btn btn-danger btn-sm">DELETE</a>
+				</tr>
+
+
+
+			}
+
+		</tbody>
+
+	</table>
+
+
+}
