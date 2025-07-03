@@ -1,0 +1,47 @@
+﻿@page
+@model HospitalManagement.Pages.Doctor.adminModel
+@{
+    <h2>Doctors List</h2>
+
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">All Doctors</h5>
+        <a asp-page="/Doctor/create" class="btn btn-primary btn-sm">Add New Job</a>
+    </div>
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Specialisation</th>
+                <th>Department</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Qualification</th>
+                <th>OP Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mydoc in Model.mydoctor)
+            {
+                <tr>
+                    <td>@mydoc.Name</td>
+                    <td>@mydoc.Specilisation</td>
+                    <td>@mydoc.Department</td>
+                    <td>@mydoc.Phone</td>
+                    <td>@mydoc.Email</td>
+                    <td>@mydoc.Gender</td>
+                    <td>@mydoc.Qualification</td>
+                    <td>@mydoc.OPTime</td>
+                    <td>
+                        <a asp-page="/Doctor/edit" asp-route-id="@mydoc.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-page="Delete" asp-route-id="@mydoc.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

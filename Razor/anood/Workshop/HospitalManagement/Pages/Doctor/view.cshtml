@@ -1,0 +1,25 @@
+﻿@page
+@model HospitalManagement.Pages.Doctor.viewModel
+@{
+    <div class="container my-4">
+        <div class="card mx-auto" style="max-width: 500px;">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">My Doctor</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>Name :</strong>@Model.mydoc.Name</p>
+                <p class="card-text"><strong>Specialisation:</strong> @Model.mydoc.Specilisation</p>
+                <p class="card-text"><strong>Department:</strong> @Model.mydoc.Department</p>
+                <p class="card-text"><strong>Phone:</strong> @Model.mydoc.Phone</p>
+                <p class="card-text"><strong>Email:</strong> @Model.mydoc.Email</p>
+                <p class="card-text"><strong>Gender:</strong> @Model.mydoc.Gender</p>
+                <p class="card-text"><strong>Qulaification:</strong> @Model.mydoc.Qualification</p>
+                <p class="card-text"><strong>OP Time:</strong> @Model.mydoc.OPTime</p>
+            </div>
+            <div class="card-footer text-end">
+
+                <a asp-page="./index" class="btn btn-sm btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+}
