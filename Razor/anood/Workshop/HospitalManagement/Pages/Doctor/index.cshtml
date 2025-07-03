@@ -1,0 +1,47 @@
+﻿@page
+@model HospitalManagement.Pages.Doctor.indexModel
+@{
+
+<div class="row">
+@foreach (var mydoc in Model.mydoctor)
+{
+    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+        <div class="card w-100">
+            <!-- Optional placeholder image -->
+             
+            <div class="card-body">
+                <h5 class="card-title">@mydoc.Name</h5>
+                <p class="card-text">
+                            <strong>Department:</strong> @mydoc.Department<br>
+                            <strong>Specialisation:</strong> @mydoc.Specilisation<br>
+                            <strong>OP Time:</strong> @mydoc.OPTime
+                </p>
+            </div>
+            <div class="card-footer text-center">
+                       
+                        <div id="alert-container"></div>
+                        <a asp-page="/Doctor/view" asp-route-id="@mydoc.Id" class="btn btn-info btn-sm me-2">View</a>
+                            <input type="hidden" name="id" value="@mydoc.Id"/>
+                            <button type="submit"
+                                    class="btn btn-success btn-sm"
+                                    onclick="showBookingAlert()">
+                                Book Appointment
+                            </button> 
+            </div>
+        </div>
+    </div>
+}
+</div>
+    <script>
+        function showBookingAlert() 
+        {
+          const container = document.getElementById("alert-container");
+          container.innerHTML = `
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              Appointment Scheduled!
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`;
+        }
+    </script>
+
+}
