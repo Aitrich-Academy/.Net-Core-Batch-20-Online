@@ -1,0 +1,28 @@
+﻿@page "{id:int}"
+@model EmployeeManagement.Pages.Employees.deleteModel
+@{
+    ViewData["Title"] = "Delete Employee";
+    <form method="post">
+
+        <div class="container my-4">
+            <div class="card mx-auto" style="max-width: 500px;">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Delete Employee</h4>
+                    <p> Are you sure you want to delete this Employee?</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><strong>ID:</strong> @Model.Employee.Id</p>
+                    <p class="card-text"><strong>Name:</strong> @Model.Employee.Name</p>
+                    <p class="card-text"><strong>Position:</strong> @Model.Employee.Position</p>
+                    <p class="card-text"><strong>Department:</strong> @Model.Employee.Department</p>
+                </div>
+                <div class="card-footer text-end">
+
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <a asp-page="./index" class="btn btn-sm btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+}
