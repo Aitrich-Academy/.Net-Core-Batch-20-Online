@@ -1,0 +1,23 @@
+﻿@page
+@model HospitalManagement.Pages.Doctor.ViewModel
+@{
+}
+<h2>View Doctor</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Doctors Name</dt>
+    <dd class="col-sm-9">@Model.doctor.Name</dd>
+    <dt class="col-sm-3">Qualification</dt>
+    <dd class="col-sm-9">@Model.doctor.Qualification</dd>
+    <dt class="col-sm-3">Department</dt>
+    <dd class="col-sm-9">@Model.doctor.Department</dd>
+    <dt class="col-sm-3">Op-Time</dt>
+    <dd class="col-sm-9">@Model.doctor.OP_Time</dd>
+    <dt class="col-sm-3">Experience</dt>
+    <dd class="col-sm-9">@Model.doctor.Experience</dd>
+
+    
+</dl>
+
+<a asp-page="Index" class="btn btn-secondary mt-3">Back</a>
+
