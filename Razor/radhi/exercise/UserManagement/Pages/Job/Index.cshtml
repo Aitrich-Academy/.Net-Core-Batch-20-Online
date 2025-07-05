@@ -1,0 +1,48 @@
+﻿@page
+@model UserManagement.Pages.Job.IndexModel
+@{
+}
+
+
+<h2>Job Listings</h2>
+
+<a asp-page="Create" class="btn btn-primary mb-3">Create New Job</a>
+<a asp-page="ViewJob" class="btn btn-info">View Applied Jobs</a>
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Job Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Employment Type</th>
+            <th>Salary Range</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var job in Model.JobPosts)
+        {
+            <tr>
+                <td>@job.JobTitle</td>
+                <td>@job.Company</td>
+                <td>@job.Location</td>
+                <td>@job.EmploymentType</td>
+                <td>@job.SalaryRange</td>
+                <td>
+                    <form method="post" asp-page-handler="Apply">
+                        <input type="hidden" name="jobId" value="@job.JObId" />
+                        <button type="submit" class="btn btn-success btn-sm">Apply Now</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

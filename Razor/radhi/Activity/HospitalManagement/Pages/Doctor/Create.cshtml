@@ -1,0 +1,52 @@
+﻿@page
+@model HospitalManagement.Pages.Doctor.CreateModel
+@{
+}
+<h2>Add Doctor</h2>
+<a asp-page="Index" class="btn btn-primary mb-3">View list</a>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Doctors.Name" class="control-label"></label>
+        <input asp-for="Doctors.Name" class="form-control" />
+        <span asp-validation-for="Doctors.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Doctors.Qualification" class="control-label"></label>
+        <input asp-for="Doctors.Qualification" class="form-control" />
+        <span asp-validation-for="Doctors.Qualification" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Doctors.OP_Time" class="control-label"></label>
+        <select asp-for="Doctors.OP_Time" class="form-control">
+            <option value="10am-12pm">10am-12pm</option>
+            <option value="2pm-3pm">2pm-3pm</option>
+            <option value="6pm-7pm">6pm-7pm</option>
+        </select>
+        <span asp-validation-for="Doctors.OP_Time" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Doctors.Department" class="control-label"></label>
+        <input asp-for="Doctors.Department" class="form-control" />
+        <span asp-validation-for="Doctors.Department" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Doctors.Experience" class="control-label"></label>
+        <input asp-for="Doctors.Experience" class="form-control" />
+        <span asp-validation-for="Doctors.Experience" class="text-danger"></span>
+    </div>
+
+
+  
+
+   
+
+    <button type="submit" class="btn btn-primary mt-3">Create</button>
+    <a asp-page="Index" class="btn btn-secondary mt-3">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

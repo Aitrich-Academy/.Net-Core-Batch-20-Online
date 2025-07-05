@@ -1,0 +1,38 @@
+﻿
+@page
+@model UserManagement.Pages.Job.ViewAppliedModel
+@{
+    ViewData["Title"] = "Applied Jobs";
+}
+
+<h2>Jobs You've Applied To</h2>
+
+@if (Model.AppliedJobs == null || !Model.AppliedJobs.Any())
+{
+    <p class="text-muted">You haven't applied for any jobs yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Applied On</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job in Model.AppliedJobs)
+            {
+                <tr>
+                    <td>@job.JobTitle</td>
+                    <td>@job.Company</td>
+                    <td>@job.Location</td>
+                    <td>@job.PostedDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
