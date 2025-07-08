@@ -1,0 +1,43 @@
+﻿@page "{id:int}"
+@model CompanyManagement.Pages.Members.DeleteModel
+@{
+	ViewData["Title"] = "Delete Member";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+            <h3 class="mb-0">Delete Company Member</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.Member != null)
+            {
+                <p>Are you sure you want to delete the following member?</p>
+
+                <dl class="row">
+                    <dt class="col-sm-3">Name</dt>
+                    <dd class="col-sm-9">@Model.Member.Name</dd>
+
+                    <dt class="col-sm-3">Position</dt>
+                    <dd class="col-sm-9">@Model.Member.Position</dd>
+
+                    <dt class="col-sm-3">Email</dt>
+                    <dd class="col-sm-9">@Model.Member.Email</dd>
+
+                    <dt class="col-sm-3">Department</dt>
+                    <dd class="col-sm-9">@Model.Member.Department</dd>
+                </dl>
+
+                <form method="post">
+                    <input type="hidden" asp-for="Member.Id" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+                </form>
+            }
+            else
+            {
+                <div class="alert alert-warning">Member not found.</div>
+            }
+        </div>
+    </div>
+</div>

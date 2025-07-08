@@ -1,0 +1,23 @@
+﻿@page "{id:int}"
+@model HospitalManagement.Pages.Doctor.deleteModel
+@{
+	ViewData["Title"] = "Delete Doctor";
+}
+
+<h2 class="text-danger mb-4">Are you sure you want to delete this doctor?</h2>
+
+<div class="card shadow border-0 rounded-4" style="max-width: 500px;">
+    <div class="card-body">
+        <p><strong>👨‍⚕️ Name:</strong> @Model.DoctorPost.Name</p>
+        <p><strong>🩺 Specialization:</strong> @Model.DoctorPost.Specialization</p>
+        <p><strong>⏰ Available Time:</strong> @Model.DoctorPost.AvailableTime</p>
+        <p><strong>📞 Contact:</strong> @Model.DoctorPost.Contact</p>
+    </div>
+    <div class="card-footer bg-light text-end rounded-bottom-4">
+        <form method="post">
+            <input type="hidden" asp-for="DoctorPost.Id" />
+            <button type="submit" class="btn btn-danger me-2">Yes, Delete</button>
+            <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

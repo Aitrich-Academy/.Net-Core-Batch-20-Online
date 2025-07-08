@@ -1,0 +1,37 @@
+﻿@page "{id:int}"
+@model CompanyManagement.Pages.Members.ViewModel
+@{
+	ViewData["Title"] = "View Member";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h3 class="mb-0">Company Member Details</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.Members != null)
+            {
+                <dl class="row">
+                    <dt class="col-sm-3">Name</dt>
+                    <dd class="col-sm-9">@Model.Members.Name</dd>
+
+                    <dt class="col-sm-3">Position</dt>
+                    <dd class="col-sm-9">@Model.Members.Position</dd>
+
+                    <dt class="col-sm-3">Email</dt>
+                    <dd class="col-sm-9">@Model.Members.Email</dd>
+
+                    <dt class="col-sm-3">Department</dt>
+                    <dd class="col-sm-9">@Model.Members.Department</dd>
+                </dl>
+
+                <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+            }
+            else
+            {
+                <div class="alert alert-warning">Member not found.</div>
+            }
+        </div>
+    </div>
+</div>
