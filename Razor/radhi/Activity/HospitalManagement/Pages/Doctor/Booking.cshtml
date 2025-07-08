@@ -1,0 +1,42 @@
+﻿@page
+@model HospitalManagement.Pages.Doctor.BookingModel
+@{
+}
+<h2>Doctors Listings</h2>
+
+
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Qualification</th>
+            <th>OP-Time</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model.doc)
+        {
+            <tr>
+                <td>@d.Name</td>
+                <td>@d.Qualification</td>
+                <td>@d.OP_Time</td>
+              
+                <td>
+                    <a href="Booking" class="btn btn-warning btn-sm" onclick="showSuccessBox('Doctor @d.Name booked successfully!')">Book Now</a>
+
+                   
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    function showSuccessBox(message) {
+        alert(message); // or you can replace this with a styled popup using Bootstrap modal, SweetAlert, etc.
+    }
+</script>
+
+

@@ -1,0 +1,42 @@
+﻿@page
+@model JobManagement.Pages.Job.indexModel
+@{
+    <h2>Job Listings</h2>
+
+    
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">All Jobs</h5>
+        <a asp-page="/Job/create" class="btn btn-primary btn-sm">Create New Job</a>
+    </div>
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Employment Type</th>
+                <th>Salary Range</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job in Model.JobPosts)
+            {
+                <tr>
+                    <td>@job.JobTitle</td>
+                    <td>@job.Company</td>
+                    <td>@job.Location</td>
+                    <td>@job.EmploymentType</td>
+                    <td>@job.SalaryRange</td>
+                    <td>
+                        <a asp-page="Edit" asp-route-id="@job.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-page="view" asp-route-id="@job.Id" class="btn btn-info btn-sm">View</a>
+                        <a asp-page="Delete" asp-route-id="@job.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
