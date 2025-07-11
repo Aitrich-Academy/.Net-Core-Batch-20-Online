@@ -1,0 +1,40 @@
+﻿@page
+@model LibraryManagement.Pages.Books.IndexModel
+@{
+}
+<h2>Library Books</h2>
+
+@if (Model.Role == "Admin")
+{
+    <a href="/Books/AddBook" class="btn btn-success">Add Book</a>
+}
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Quantity</th>
+            @if (Model.Role == "Admin")
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Quantity</td>
+                @if (Model.Role == "Admin")
+                {
+                    <td>
+                        <a href="/Books/Delete?id=@book.BookId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
