@@ -1,0 +1,45 @@
+﻿@page
+@model LibraryManagementSystem.Pages.Books.IndexModel
+@{
+    var isAdmin = Request.Query["role"] == "admin";
+}
+
+<h2>Book List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Quantity</th>
+            @if (isAdmin)
+            {
+                <th>Action</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Quantity</td>
+                @if (isAdmin)
+                {
+                    <td>
+                        <a asp-page="DeleteBook" asp-route-id="@book.Id">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@if (isAdmin)
+{
+    <a asp-page="AddBook" class="btn btn-primary">Add Book</a>
+    <a asp-page="TotalCount" class="btn btn-info">View Total Count</a>
+
+}

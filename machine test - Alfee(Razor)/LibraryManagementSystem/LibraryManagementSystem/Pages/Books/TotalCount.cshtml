@@ -1,0 +1,11 @@
+﻿@page
+@model LibraryManagementSystem.Pages.Books.TotalCountModel
+@{
+	ViewData["Title"] = "Total Book Count";
+}
+
+<h2>Total Number of Books</h2>
+
+<p><strong>@Model.TotalBooks</strong> books in the library.</p>
+
+<a asp-page="Index" asp-route-role="admin" class="btn btn-primary">Back to List</a>

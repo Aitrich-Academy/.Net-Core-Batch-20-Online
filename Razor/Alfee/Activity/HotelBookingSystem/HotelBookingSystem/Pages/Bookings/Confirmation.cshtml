@@ -1,0 +1,14 @@
+﻿@page
+@model HotelBookingSystem.Pages.Bookings.ConfirmationModel
+@{
+	ViewData["Title"] = "Booking Confirmed";
+}
+
+<div class="container mt-4">
+    <div class="alert alert-success">
+        <h4 class="alert-heading">✅ Booking Confirmed!</h4>
+        <p>Thank you for your booking. You will receive a confirmation soon.</p>
+    </div>
+
+    <a asp-page="/Index" class="btn btn-outline-primary">Back to Home</a>
+</div>
