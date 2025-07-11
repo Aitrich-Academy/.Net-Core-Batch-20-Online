@@ -1,0 +1,43 @@
+﻿@page 
+@model HospitalManagement.Pages.Doctor.editModel
+@{
+	ViewData["Title"] = "Edit Doctor";
+}
+
+<h2>Edit the form</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="DoctorPost.Id"/>
+    <div class="form-group">
+        <label asp-for="DoctorPost.Name"></label>
+        <input asp-for="DoctorPost.Name" class="form-control" />
+        <span asp-validation-for="DoctorPost.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoctorPost.Specialization"></label>
+        <input asp-for="DoctorPost.Specialization" class="form-control" />
+        <span asp-validation-for="DoctorPost.Specialization" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoctorPost.AvailableTime"></label>
+        <input asp-for="DoctorPost.AvailableTime" class="form-control" />
+        <span asp-validation-for="DoctorPost.AvailableTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoctorPost.Contact"></label>
+        <input asp-for="DoctorPost.Contact" class="form-control" />
+        <span asp-validation-for="DoctorPost.Contact" class="text-danger"></span>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-success">Update</button>
+    <a asp-page="index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,70 @@
+﻿
+@page
+@model HospitalManagement.Pages.Doctor.createModel
+@{
+    ViewData["Title"] = "Add New Doctor";
+
+    <h2 class="mb-4">Add New Doctor</h2>
+    <form method="post" novalidate>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="mydoctor.Name" class="form-label"></label>
+                <input asp-for="mydoctor.Name" class="form-control" />
+                <span asp-validation-for="mydoctor.Name" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="mydoctor.Specilisation" class="form-label"></label>
+                <input asp-for="mydoctor.Specilisation" class="form-control" />
+                <span asp-validation-for="mydoctor.Specilisation" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="mydoctor.Department" class="form-label"></label>
+                <input asp-for="mydoctor.Department" class="form-control" />
+                <span asp-validation-for="mydoctor.Department" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="mydoctor.Phone" class="form-label"></label>
+                <input asp-for="mydoctor.Phone" class="form-control" />
+                <span asp-validation-for="mydoctor.Phone" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="mydoctor.Email" class="form-label"></label>
+                <input asp-for="mydoctor.Email" class="form-control" />
+                <span asp-validation-for="mydoctor.Email" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="mydoctor.Gender" class="form-label"></label>
+                <select asp-for="mydoctor.Gender" class="form-select">
+                    <option value="">-- Select Gender --</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+                <span asp-validation-for="mydoctor.Gender" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="mydoctor.Qualification" class="form-label"></label>
+                <input asp-for="mydoctor.Qualification" class="form-control" placeholder="e.g., MBBS, MD" />
+                <span asp-validation-for="mydoctor.Qualification" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="mydoctor.OPTime" class="form-label"></label>
+                <input asp-for="mydoctor.OPTime" class="form-control" placeholder="e.g., 10:00 AM – 1:00 PM" />
+                <span asp-validation-for="mydoctor.OPTime" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Add Doctor</button>
+            <a asp-page="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </div>
+    </form>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+ 

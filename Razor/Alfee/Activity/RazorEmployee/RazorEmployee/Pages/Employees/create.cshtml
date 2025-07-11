@@ -1,0 +1,37 @@
+﻿@page
+@model RazorEmployee.Pages.Employees.createModel
+@{
+    <h1 class="mb-4">Employee Registeration</h1>
+
+    <form method="post" style="width=800px">
+        <div class="mb-3">
+            <label asp-for="Employee.Name" class="form-label">Name</label>
+            <input asp-for="Employee.Name" class="form-control" />
+            <span asp-validation-for="Employee.Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Employee.Position" class="form-label">Position</label>
+            <input asp-for="Employee.Position" class="form-control" />
+            <span asp-validation-for="Employee.Position" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Employee.Salary" class="form-label">Salary</label>
+            <input asp-for="Employee.Salary" class="form-control" />
+            <span asp-validation-for="Employee.Salary" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Employee.Department" class="form-label">Department</label>
+            <input asp-for="Employee.Department" class="form-control" />
+            <span asp-validation-for="Employee.Department" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    @section Scripts
+    {
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

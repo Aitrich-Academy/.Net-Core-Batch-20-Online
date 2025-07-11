@@ -1,0 +1,41 @@
+﻿@page
+@model Libraries.Pages.Books.indexModel
+@{
+}
+<h3>Welcome To Library Management</h3>
+
+<div style="display:flex; justify-content:space-between; margin-top:20px">
+	<h4>All Books</h4>
+	<a asp-page="/Books/Create" class="btn btn-primary btn-sm">Add Books</a>
+</div>
+
+<table border="1" cellpadding="10" cellspacing="0" class="table table-bordered table-hover" style="width: 100%; font-family: Arial, sans-serif; margin-top:40px">
+	<thead class="table-dark text-center">
+		<tr>
+			<td style ="border: 1px solid #ddd;">Id</td>
+			<td style="border: 1px solid #ddd;">Title</td>
+			<td style="border: 1px solid #ddd;">Author</td>
+			<td style="border: 1px solid #ddd;">Price</td>
+			<td style="border: 1px solid #ddd;">DateofPublish</td>
+			<td style="border: 1px solid #ddd;">Actions</td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var booklist in Model.mybook )
+		{
+			<tr>
+				<td style="border: 1px solid #ddd;">@booklist.Id</td>
+				<td style="border: 1px solid #ddd;">@booklist.Title</td>
+				<td style="border: 1px solid #ddd;">@booklist.Author</td>
+				<td style="border: 1px solid #ddd;">@booklist.Price</td>
+				<td style="border: 1px solid #ddd;">@booklist.DateofPublish</td>
+				<td style="border: 1px solid #ddd;">
+					<a href="Books/Edit?id=@booklist.Id" class="btn btn-warning btn-sm">Edit</a>
+					<a href="Books/view?id=@booklist.Id" class="btn btn-warning btn-sm">View</a>
+					<a href="Books/Delete?id=@booklist.Id" class="btn btn-warning btn-sm"
+					   onclick="return confirm('Are you sure you want to delete it?');">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

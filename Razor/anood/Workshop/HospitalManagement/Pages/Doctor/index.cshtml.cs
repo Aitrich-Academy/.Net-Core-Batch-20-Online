@@ -1,0 +1,27 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using HospitalManagement.Dto;
+using  HospitalManagement.Model;
+using HospitalManagement.Service;
+
+namespace HospitalManagement.Pages.Doctor
+{
+    public class indexModel : PageModel
+    {
+        private readonly DoctorService  _service;
+        public List<Doctors> mydoctor { get; set; }
+       // public string SuccessMessage { get; set; }
+        public indexModel(DoctorService service)
+        {
+            _service = service;
+        }
+
+        public async Task OnGetAsync()
+        {
+            //SuccessMessage = "Appointment Scheduled!";
+            mydoctor  = await _service.GetAllDoctorsAsync();
+
+
+        }
+    }
+}

@@ -1,0 +1,39 @@
+﻿@page
+@model College.Pages.students.indexModel
+@{
+}
+<h3>Welcome To Student Portal</h3>
+
+<div style="display:flex; justify-content:space-between; margin-top:20px">
+	<h4>All Students</h4>
+	<a asp-page="/students/Create" class="btn btn-primary btn-sm">Add Student</a>
+</div>
+
+<table border=1 cellpadding="10" cellspacing="0" class="table table-bordered table-hover" style="width: 100%; font-family: Arial, sans-serif; margin-top:50px">
+	<thead class="table-dark text-center">
+		<tr>
+			<th style="border: 1px solid #ddd;">ID</th>
+			<th style="border: 1px solid #ddd;">Name</th>
+			<th style="border: 1px solid #ddd;">Age</th>
+			<th style="border: 1px solid #ddd;">Course</th>
+			<th style="border: 1px solid #ddd;">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var mystudent in Model.StudentList)
+		{
+			<tr>
+				<td style="border: 1px solid #ddd;">@mystudent.Id </td>
+				<td style="border: 1px solid #ddd;">@mystudent.Name </td>
+				<td style="border: 1px solid #ddd;">@mystudent.Age </td>
+				<td style="border: 1px solid #ddd;">@mystudent.Course </td>
+				<td style="border: 1px solid #ddd;">
+					<a href="students/Edit?id=@mystudent.Id" class="btn btn-warning btn-sm">Edit</a>
+					<a href="students/view?id=@mystudent.Id" class="btn btn-warning btn-sm">View</a>
+					<a href="students/Delete?id=@mystudent.Id" class="btn btn-warning btn-sm"
+					onclick="return confirm('Are you sure you want to delete it?');">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

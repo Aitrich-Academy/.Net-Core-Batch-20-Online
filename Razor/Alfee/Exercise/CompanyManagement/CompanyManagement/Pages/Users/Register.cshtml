@@ -1,0 +1,43 @@
+﻿@page
+@model CompanyManagement.Pages.Users.RegisterModel
+@{
+	ViewData["Title"] = "Register";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow rounded">
+                <div class="card-header text-center">
+                    <h4>User Registration</h4>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model.Message))
+                    {
+                        <div class="alert alert-danger">@Model.Message</div>
+                    }
+
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="UserDto.Username" class="form-label">Username</label>
+                            <input asp-for="UserDto.Username" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="UserDto.Email" class="form-label">Email</label>
+                            <input asp-for="UserDto.Email" type="email" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="UserDto.Password" class="form-label">Password</label>
+                            <input asp-for="UserDto.Password" type="password" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                        <div class="text-center mt-3">
+                            <span>Already have an account?</span>
+                            <a asp-page="/Users/Login" class="text-decoration-none">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

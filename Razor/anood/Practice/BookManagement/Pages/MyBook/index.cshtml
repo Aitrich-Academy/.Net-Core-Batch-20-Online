@@ -1,0 +1,46 @@
+﻿@page
+@model BookManagement.Pages.MyBook.indexModel
+@{
+	<h4>Welcome to books details</h4>
+
+	<div class="d-flex justify-content-between align-items-center mb-2">
+		<h5 class="mb-0">All Books</h5>
+		<a asp-page="/MyBook/AddBook" class="btn btn-primary btn-sm">Add New Book</a>
+	</div>
+
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Book Id</th>
+				<th>Book Name</th>
+				<th>Author</th>
+				<th>Category</th>
+				<th>Prize</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var mybook in Model.BookList)
+			{
+				<tr>
+					<td>@mybook.BookId</td>
+					<td>@mybook.BookName</td>
+					<td>@mybook.Author</td>
+					<td>@mybook.Category</td>
+					<td>@mybook.prize</td>
+					<td>
+						<a asp-page="/MyBook/view" asp-route-id="@mybook.BookId" class="btn btn-success btn-sm">VIEW</a>
+						<a asp-page="/MyBook/edit" asp-route-id="@mybook.BookId" class="btn btn-warning btn-sm">EDIT</a>
+						<a asp-page="/MyBook/delete" asp-route-id="@mybook.BookId" class="btn btn-danger btn-sm">DELETE</a>
+				</tr>
+
+
+
+			}
+
+		</tbody>
+
+	</table>
+
+
+
+}
