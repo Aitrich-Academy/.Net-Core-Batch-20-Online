@@ -1,0 +1,38 @@
+﻿@page
+@model HotelBookingSystem.Pages.Rooms.ListModel
+@{
+	ViewData["Title"] = "Room List";
+}
+
+<div class="container mt-4">
+    <h2>All Rooms</h2>
+
+    <a asp-page="Create" class="btn btn-success mb-3">Add New Room</a>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Available</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model.Rooms)
+            {
+                <tr>
+                    <td>@room.RoomNumber</td>
+                    <td>@room.RoomType</td>
+                    <td>₹@room.Price</td>
+                    <td>@(room.IsAvailable ? "Yes" : "No")</td>
+                    <td>
+                        <a asp-page="Edit" asp-route-id="@room.Id" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-page="Delete" asp-route-id="@room.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

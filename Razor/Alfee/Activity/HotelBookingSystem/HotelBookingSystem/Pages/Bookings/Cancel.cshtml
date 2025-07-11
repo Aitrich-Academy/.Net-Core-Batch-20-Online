@@ -1,0 +1,33 @@
+﻿@page "{bookingId:int}"
+@model HotelBookingSystem.Pages.Bookings.CancelModel
+@{
+	ViewData["Title"] = "Cancel Booking";
+}
+
+<div class="container mt-4">
+    <h3>Cancel Booking</h3>
+
+    @if (Model.Booking != null)
+    {
+        <div class="alert alert-warning">
+            <p>Are you sure you want to cancel the booking for:</p>
+            <ul>
+                <li><strong>Customer:</strong> @Model.Booking.CustomerName</li>
+                <li><strong>Room:</strong> @Model.Booking.Room?.RoomNumber (@Model.Booking.Room?.RoomType)</li>
+                <li><strong>Check-In:</strong> @Model.Booking.CheckInDate.ToShortDateString()</li>
+                <li><strong>Check-Out:</strong> @Model.Booking.CheckOutDate.ToShortDateString()</li>
+            </ul>
+        </div>
+
+        <form method="post">
+            <input type="hidden" asp-for="Booking.Id" />
+            <button type="submit" class="btn btn-danger">Yes, Cancel Booking</button>
+            <a asp-page="/Index" class="btn btn-secondary ml-2">No, Go Back</a>
+        </form>
+    }
+    else
+    {
+        <p class="text-danger">Booking not found.</p>
+        <a asp-page="/Index" class="btn btn-primary">Back to Home</a>
+    }
+</div>
