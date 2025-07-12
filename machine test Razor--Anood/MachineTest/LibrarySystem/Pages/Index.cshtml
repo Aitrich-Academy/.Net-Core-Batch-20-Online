@@ -1,0 +1,26 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h4>Welcome! Discover worlds, ideas, and your next favorite read right here</h4>
+    <a asp-page="/Library/RoleSelection"
+       class="btn btn-primary btn-lg d-inline-flex align-items-center shadow-lg"
+       style="border-radius: 50px; transition: transform 0.1s ease-in-out;">
+        <i class="bi bi-box-arrow-in-right me-2"></i>
+        <span>Enter Library</span>
+    </a>
+
+    <style>
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+    </style>
+
+</div>
