@@ -1,0 +1,17 @@
+﻿@page
+@model LibrarySystem.Pages.Library.RoleSelectionModel
+@{
+	 
+
+     
+
+    <form method="post" class="text-center">
+        <h2 class="mb-3">Select Role</h2>
+        <div class="mb-3">
+            <select asp-for="RoleSelection.SelectedRole" asp-items="Model.RoleSelection.Roles"
+                    class="form-select mx-auto w-50" onchange="this.form.submit();">
+                <option value="">-- Select Role --</option>
+            </select>
+        </div>
+    </form>
+}
