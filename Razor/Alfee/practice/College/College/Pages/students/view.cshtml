@@ -1,0 +1,20 @@
+﻿@page
+@model College.Pages.students.viewModel
+@{
+	ViewData["Title"] = "Student Details";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Student Details</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Name: @Model.Students.Name</h5>
+            <p class="card-text"><strong>ID:</strong> @Model.Students.Id</p>
+            <p class="card-text"><strong>Age:</strong> @Model.Students.Age</p>
+            <p class="card-text"><strong>Course:</strong> @Model.Students.Course</p>
+
+            <a asp-page="/students/index" class="btn btn-secondary mt-3">Back to List</a>
+        </div>
+    </div>
+</div>

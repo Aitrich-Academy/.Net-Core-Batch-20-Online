@@ -1,0 +1,19 @@
+﻿@page "{id:int}"
+@model HotelBookingSystem.Pages.Rooms.DeleteModel
+@{
+	ViewData["Title"] = "Delete Room";
+}
+
+<div class="container mt-4">
+    <h2>Delete Room</h2>
+
+    <div class="alert alert-danger">
+        <p>Are you sure you want to delete room <strong>@Model.Room.RoomNumber</strong>?</p>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="Room.Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="List" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

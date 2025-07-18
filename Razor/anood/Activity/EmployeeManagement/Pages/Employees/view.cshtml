@@ -1,0 +1,25 @@
+﻿@page
+@model EmployeeManagement.Pages.Employees.viewModel
+@{
+    ViewData["Title"] = "Employee Details";
+
+
+    <div class="container my-4">
+        <div class="card mx-auto" style="max-width: 500px;">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Employee Details</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>ID:</strong> @Model.myemp.Id</p>
+                <p class="card-text"><strong>Name:</strong> @Model.myemp.Name</p>
+                <p class="card-text"><strong>Position:</strong> @Model.myemp.Position</p>
+                <p class="card-text"><strong>Department:</strong> @Model.myemp.Department</p>
+                <p class="card-text"><strong>Salary:</strong> @Model.myemp.Salary</p>
+            </div>
+            <div class="card-footer text-end">
+
+                <a asp-page="./index" class="btn btn-sm btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+}

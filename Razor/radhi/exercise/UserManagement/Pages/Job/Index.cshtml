@@ -1,0 +1,70 @@
+﻿@page
+@model UserManagement.Pages.Job.IndexModel
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Job Listings";
+    var username = HttpContext.Session.GetString("User");
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-briefcase-fill text-primary me-2"></i> Job Listings</h2>
+
+        @if (!string.IsNullOrEmpty(username))
+        {
+            <div class="text-end text-primary">
+                Welcome, <strong>@username</strong>!
+            </div>
+        }
+    </div>
+
+    <div class="d-flex justify-content-start gap-2 mb-3">
+        <a asp-page="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Create New Job
+        </a>
+        <a asp-page="ViewJob" class="btn btn-info text-white">
+            <i class="bi bi-list-ul me-1"></i> View Applied Jobs
+        </a>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"]</div>
+    }
+
+    @if (Model.JobPosts != null && Model.JobPosts.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var job in Model.JobPosts)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@job.JobTitle</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@job.Company</h6>
+                            <p class="card-text">
+                                <strong>Location:</strong> @job.Location<br />
+                                <strong>Type:</strong>
+                                <span class="badge bg-secondary">@job.EmploymentType</span><br />
+                                <strong>Salary:</strong> @job.SalaryRange
+                            </p>
+
+                            <form method="post" asp-page-handler="Apply">
+                                <input type="hidden" name="jobId" value="@job.JObId" />
+                                <button type="submit" class="btn btn-success w-100">
+                                    <i class="bi bi-send-check-fill me-1"></i> Apply Now
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">No job posts available right now.</div>
+    }
+
+</div>

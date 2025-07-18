@@ -32,7 +32,7 @@ internal class Program
                     default: Console.WriteLine("Invalid choice."); break;
                 }
             }
-        }
+    }
     
 
     static void AddStudent()

@@ -1,0 +1,26 @@
+﻿@page  
+@model JobManagement.Pages.Job.viewModel
+@{
+  
+     
+    <div class="container my-4">
+        <div class="card mx-auto" style="max-width: 500px;">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Job Details</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>Job Title :</strong> @Model.JobPost.JobTitle</p>
+                <p class="card-text"><strong>Comapny:</strong> @Model.JobPost.Company</p>
+                <p class="card-text"><strong>Location:</strong> @Model.JobPost.Location</p>
+                <p class="card-text"><strong>Employee Type:</strong> @Model.JobPost.EmploymentType</p>
+                <p class="card-text"><strong>Salary Range:</strong> @Model.JobPost.SalaryRange</p>
+                <p class="card-text"><strong>Job Description:</strong> @Model.JobPost.JobDescription</p>
+                <p class="card-text"><strong>Requirements:</strong> @Model.JobPost.Requirements</p>
+            </div>
+            <div class="card-footer text-end">
+                 
+                <a asp-page="./index" class="btn btn-sm btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,62 @@
+﻿@page
+@model JobPortal.Pages.MyJob.viewModel
+@{
+    <div class="container my-4">
+        <div class="card mx-auto" style="max-width: 500px;">
+            <div class="card-header bg-white border-0 text-center">
+                <h4>@Model.JobPost.JobTitle</h4>
+
+                @Model.JobPost.Company
+                <i class="fas fa-external-link-alt ms-1"></i>
+
+                <p class="text-muted">@Model.JobPost.Location</p>
+                <form method="post" novalidate>
+                    <div id="alert-container"></div>
+                    @if (Model.HasApplied)
+                    {
+                        <button type="submit" class="btn btn-secondary" disabled>Applied</button>
+                    }
+                    else
+                    {
+                    <button class="btn btn-primary btn-block w-100 mb-2" asp-route-id="@Model.JobPost.Id" onclick="showBookingAlert()" asp-page-handler="Apply">
+                    Apply now
+                   </button>
+                    }
+                </form>
+                <!-- Bookmark and share icons -->
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-light"><i class="fas fa-bookmark"></i></button>
+                    <button class="btn btn-light"><i class="fas fa-link"></i></button>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h5>Job details</h5>
+                <div class="mb-3">
+                    @foreach (var type in Model.JobPost.EmploymentType)
+                    {
+                        <span class="badge bg-secondary me-1">@type</span>
+                    }
+                </div>
+
+                <h5>Location</h5>
+                <p><i class="fas fa-map-marker-alt me-2"></i>@Model.JobPost.Location </p>
+                <input type = "hidden" asp -for= "@Model.JobPost.Id"/>
+                <a asp-page="/MyJob/ListJobs" class="btn btn-outline-secondary ms-2">Back To List</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showBookingAlert()
+        {
+          const container = document.getElementById("alert-container");
+          container.innerHTML = `
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              Applied successfully!
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`;
+        }
+    </script>
+    
+}

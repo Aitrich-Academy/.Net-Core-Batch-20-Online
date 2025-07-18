@@ -1,0 +1,12 @@
+﻿@page
+@model LibraryManagement.Pages.Books.AddBookModel
+@{
+}
+<h2>Add New Book</h2>
+
+<form method="post">
+    <input asp-for="NewBook.Title" class="form-control" placeholder="Title" />
+    <input asp-for="NewBook.Author" class="form-control mt-2" placeholder="Author" />
+    <input asp-for="NewBook.Quantity" class="form-control mt-2" placeholder="Quantity" />
+    <button type="submit" class="btn btn-primary mt-3">Add</button>
+</form>

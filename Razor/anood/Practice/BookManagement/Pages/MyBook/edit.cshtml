@@ -1,0 +1,48 @@
+﻿@page
+@model BookManagement.Pages.MyBook.editModel
+@{
+    <div class="container my-4">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-header bg-success text-white">
+                <h4>Edit Book Details</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+
+
+
+                    <input asp-for="mybook.BookId" type="hidden" />
+
+                    <div class="mb-3">
+                        <label asp-for="mybook.BookName" class="form-label"></label>
+                        <input asp-for="mybook.BookName" class="form-control" />
+                        <span asp-validation-for="mybook.BookName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="mybook.Author" class="form-label"></label>
+                        <input asp-for="mybook.Author" class="form-control" />
+                        <span asp-validation-for="mybook.Author" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="mybook.Category" class="form-label"></label>
+                        <input asp-for="mybook.Category" class="form-control" />
+                        <span asp-validation-for="mybook.Category" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="mybook.prize" class="form-label"></label>
+                        <input asp-for="mybook.prize" class="form-control" />
+                        <span asp-validation-for="mybook.prize" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Update</button>
+                    <a asp-page="./index" class="btn btn-secondary ms-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

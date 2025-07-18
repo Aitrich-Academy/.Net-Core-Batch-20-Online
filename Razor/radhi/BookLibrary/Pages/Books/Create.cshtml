@@ -1,0 +1,45 @@
+﻿@page
+@model BookLibrary.Pages.Books.CreateModel
+@{}
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Books Registration</h1>
+
+    <form method="post" class="needs-validation" novalidate>
+
+        <div class="mb-3">
+            <label asp-for="Book.Bookname" class="form-label"></label>
+            <input asp-for="Book.Bookname" class="form-control" />
+            <span asp-validation-for="Book.Bookname" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Book.Author" class="form-label"></label>
+            <input asp-for="Book.Author" class="form-control" />
+            <span asp-validation-for="Book.Author" class="text-danger"></span>
+        </div>
+
+         <div class="mb-3">
+            <label asp-for="Book.Price" class="form-label"></label>
+            <input asp-for="Book.Price" class="form-control" />
+            <span asp-validation-for="Book.Price" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+

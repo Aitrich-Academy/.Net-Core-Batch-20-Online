@@ -1,0 +1,44 @@
+﻿@page
+@model HotelBookingSystem.Pages.Rooms.EditModel
+@{
+    ViewData["Title"] = "Edit Room";
+}
+
+<div class="container mt-4">
+    <h2>Add New Room</h2>
+
+    <form method="post">
+        <input type="hidden" asp-for="Room.Id" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Room.RoomNumber"></label>
+            <input asp-for="Room.RoomNumber" class="form-control" />
+            <span asp-validation-for="Room.RoomNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Room.RoomType"></label>
+            <select asp-for="Room.RoomType" class="form-control">
+                <option>Single</option>
+                <option>Double</option>
+                <option>Deluxe</option>
+            </select>
+            <span asp-validation-for="Room.RoomType" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Room.Price"></label>
+            <input asp-for="Room.Price" class="form-control" />
+            <span asp-validation-for="Room.Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group form-check">
+            <input asp-for="Room.IsAvailable" class="form-check-input" />
+            <label asp-for="Room.IsAvailable" class="form-check-label"></label>
+        </div>
+
+        <button type="submit" class="btn btn-success">Add Room</button>
+        <a asp-page="List" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
