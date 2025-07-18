@@ -1,0 +1,41 @@
+﻿
+@page "/Index"
+@using Employee.Data
+@inject EmployeeService EmpService
+<!--CRUD operation...Employee management using list-->
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <form>
+                    <label for="FirstName" class="control-label">First Name</label>
+                    <input class="form-control" id="FirstName" placeholder="Enter First Name" @bind="employeeDetails.FirstName" />
+                    <label for="LastName" class="control-label">Last Name</label>
+                    <input class="form-control" id="LastName" placeholder="Enter Last Name" @bind="employeeDetails.LastName"/>
+                    <label for="Email" class="control-label">Email</label>
+                    <input class="form-control" id="Email" placeholder="Enter Email" @bind="employeeDetails.Email"/>
+                    <label for="Phone" class="control-label">Phone</label>
+                    <input class="form-control" id="Phone" placeholder="Enter Phone" @bind="employeeDetails.Phone" />
+                    <br />
+                    <button class="btn btn-primary" @onclick="@Add">Add</button>
+                    <a class="btn btn-primary" href="/Display">Show List</a>
+                </form>
+            </div>
+          
+        </div>
+    </div>
+</body>
+
+
+@code{
+   
+    EmployeeDetails employeeDetails = 
+    new EmployeeDetails();
+
+    protected void Add()
+    {
+        EmpService.AddEmployeeList(employeeDetails);
+    }
+       
+}

@@ -1,0 +1,49 @@
+﻿@page "/Edit/{Id}"
+@using Employee.Data
+@inject EmployeeService EmpService
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Edit Employee</h3>
+                <div class="row">
+                    <div class="col-md-8">
+                        <form>
+                            <label for="Id"class="control-label">Employee Id</label>
+                            <input type="text" class="form-control" @bind="@employeeDetails.Id"/>
+                            <label for="FirstName" class="control-label">First Name</label>
+                            <input type="text" class="form-control" @bind="@employeeDetails.FirstName" />
+                            <label for="LastName" class="control-label">Last Name</label>
+                            <input type="text" class="form-control" @bind="@employeeDetails.LastName" />
+                            <label for="Email" class="control-label">Email</label>
+                            <input type="text" class="form-control" @bind="@employeeDetails.Email" />
+                            <label for="Phone" class="control-label">Phone</label>
+                            <input type="text" class="form-control" @bind="@employeeDetails.Phone" />
+                            <br />
+                            <input type="submit" class="btn btn-primary" value="Edit" @onclick=@Update />
+                            <br /><br />
+                            <a class="btn btn-primary" href="/Display">Show List</a>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@code {
+    [Parameter]
+    public string Id{ get; set; }
+    public EmployeeDetails employeeDetails;
+    protected override void OnInitialized()
+    {
+        employeeDetails = EmpService.GetEmployeeListById
+        (Convert.ToInt32(Id));
+    }
+    protected void Update()
+    {
+        EmpService.UpdateEmployeeList(employeeDetails);
+    }
+}
