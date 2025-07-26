@@ -1,0 +1,38 @@
+﻿@page
+@model LibrarySystem.Pages.Library.indexModel
+@{
+	<h4>Welcome to books details</h4>
+
+	<div class="d-flex justify-content-between align-items-center mb-2">
+		<h5 class="mb-0">All Books</h5>
+		<div>
+			<a asp-page="/Library/AddBook" class="btn btn-primary btn-sm mr-2">Add New Book</a>
+			<a asp-page="/Library/RoleSelection" class="btn btn-danger btn-sm">LogOut</a>
+		</div>
+	</div>
+
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Book Id</th>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var mybook in Model.BookList)
+			{
+				<tr>
+					<td>@mybook.Id</td>
+					<td>@mybook.Title</td>
+					<td>@mybook.Author</td>		
+				<td>
+				<a asp-page="/Library/Edit" asp-route-id="@mybook.Id" class="btn btn-warning btn-sm">EDIT</a>
+				<a asp-page="/Library/Delete" asp-route-id="@mybook.Id" class="btn btn-danger btn-sm">DELETE</a>
+				</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

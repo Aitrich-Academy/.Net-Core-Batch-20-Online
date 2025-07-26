@@ -1,0 +1,46 @@
+﻿@page "/Display"
+@using Employee.Data
+@inject EmployeeService EmpService
+<style>
+    .card{
+        background-color:lightsteelblue;
+        border-radius:25px;
+        margin:5%;
+        padding:3%;
+        color:#fff;
+    }
+</style>
+<body>
+    <div class="conteiner-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                @foreach(EmployeeDetails emp in EmployeeList)
+                {
+                    <div class="card">
+                        <h6>@emp.FirstName @emp.LastName</h6>
+                        <p>@emp.Email</p>
+                        <p>@emp.Phone</p>
+                        <div class="row">
+                            <div class="col-md-4">
+                        <a class="btn btn-primary" 
+                        href="Edit/@emp.Id">Edit</a>
+                        <a class="btn btn-danger"
+                        href="Delete/@emp.Id">Delete</a>
+                        </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+
+
+@code {
+    List<EmployeeDetails> EmployeeList = 
+    new List<EmployeeDetails>();
+    protected override void OnInitialized()
+    {
+        EmployeeList = EmpService.GetEmployeeList();
+    }
+}

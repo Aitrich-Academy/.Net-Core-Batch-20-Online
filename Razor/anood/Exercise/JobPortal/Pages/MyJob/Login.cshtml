@@ -1,0 +1,112 @@
+﻿@page
+@model JobPortal.Pages.MyJob.LoginModel
+@{
+    <section class="login-container">
+        <h2>Login</h2>
+        <form method="post">
+            <div class="input-group">
+                <label asp-for="Username">Username</label>
+                <input type="text" asp-for="Username" required />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="Password">Password</label>
+                <input type="password" asp-for="Password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-primary">Login</button>
+            <p class="text-danger">@Html.ValidationSummary(true)</p>
+            <a class="register-link" href="/MyJob/AddUser">Don't have an account? Register</a>
+        </form>
+    </section>
+
+   
+}
+<style>
+    /* site.css */
+    .login-container {
+        max-width: 360px;
+        margin: 60px auto;
+        padding: 2rem;
+        background: rgba(255,255,255,0.9);
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        font-family: 'Poppins', sans-serif;
+    }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+    .input-group {
+        margin-bottom: 1rem;
+        position: relative;
+    }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color .3s;
+        }
+
+            .input-group input:focus {
+                border-color: #5b6efb;
+                outline: none;
+            }
+
+    .btn-primary {
+        width: 100%;
+        padding: 0.8rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        font-weight: 600;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background .3s, box-shadow .3s;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5b6efb, #8e44ad);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+    .register-link {
+        display: block;
+        text-align: center;
+        margin-top: 1rem;
+        color: #764ba2;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+
+    .text-danger {
+        font-size: 0.85rem;
+    }
+    @@media (max-width: 400px) {
+        .login-container
+
+    {
+        margin: 30px 20px;
+        padding: 1.5rem;
+    }
+
+    }
+</style>

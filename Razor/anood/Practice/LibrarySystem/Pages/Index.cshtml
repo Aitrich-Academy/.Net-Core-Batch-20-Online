@@ -1,0 +1,49 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container-fluid vh-100">
+    <div class="row h-100">
+        <!-- Left half with background image -->
+        <div class="col-md-6 d-none d-md-block bg-library"></div>
+
+        <!-- Right half with text and button -->
+        <div class="col-12 col-md-6 d-flex justify-content-center align-items-center p-5">
+            <div class="text-center">
+                <h4>Welcome! Discover worlds, ideas, and your next favorite read right here</h4>
+                <a asp-page="/Library/Login"
+                   class="btn btn-primary btn-lg d-inline-flex align-items-center shadow-lg mt-3"
+                   style="border-radius: 50px; transition: transform 0.1s ease-in-out;">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                    <span>Enter Library</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .bg-library {
+        background-image: url('/images/imglibrary.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 100%;
+    }
+
+    @@media (max-width: 767px) {
+        .bg-library {
+            display: none;
+        }
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn:active {
+        transform: translateY(1px);
+    }
+</style>

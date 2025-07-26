@@ -1,0 +1,29 @@
+﻿@page "{id:int}"
+@model LibrarySystem.Pages.Library.DeleteModel
+@{
+    ViewData["Title"] = "Book Details";
+    <form method="post">
+
+        <div class="container my-4">
+            <div class="card mx-auto" style="max-width: 500px;">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Book Details</h4>
+                    <p> Are you sure you want to delete this book?</p>
+
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><strong>ID:</strong> @Model.mybook.Id</p>
+                    <p class="card-text"><strong>Title:</strong> @Model.mybook.Title</p>
+                    <p class="card-text"><strong>Author:</strong> @Model.mybook.Author</p>
+                    <p class="card-text"><strong>Quantity:</strong> @Model.mybook.Quantity </p>
+                </div>
+                <div class="card-footer text-end">
+
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <a asp-page="./index" class="btn btn-sm btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+}

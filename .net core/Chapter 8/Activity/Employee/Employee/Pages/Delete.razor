@@ -1,0 +1,50 @@
+﻿@page "/Delete/{Id}"
+@using Employee.Data
+@inject EmployeeService EmpService
+@inject NavigationManager navigationManager
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+               
+                <p class="text-danger">Do you want to Delete?</p>
+                <div class="row">
+                    <div class="col-md-8">
+                       <form @onsubmit="DeleteEmp">
+                            <label for="Id" class="control-label">Employee Id:@employeeDetails.Id</label><br />
+                             <label for="FirstName" class="control-label">First Name:@employeeDetails.FirstName</label><br />
+                            <label for="LastName" class="control-label">Last Name:@employeeDetails.LastName</label><br />
+                            <label for="Email" class="control-label">Email:@employeeDetails.Email</label><br />
+                            <label for="Phone" class="control-label">Phone:@employeeDetails.Phone</label><br />
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                            <br /><br />
+                          
+                            <a class="btn btn-primary" href="/Display">Show List</a>
+                       </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+@code {
+    [Parameter]
+    public string Id{ get; set; }
+    public EmployeeDetails employeeDetails;
+    protected override void OnInitialized()
+    {
+        employeeDetails = EmpService.GetEmployeeListById(Convert.ToInt32(Id));
+
+    }
+    protected void DeleteEmp()
+    {
+        EmpService.DeleteEmployeeList(employeeDetails);
+        
+        navigationManager.NavigateTo("/Display");
+
+    }
+   
+}
