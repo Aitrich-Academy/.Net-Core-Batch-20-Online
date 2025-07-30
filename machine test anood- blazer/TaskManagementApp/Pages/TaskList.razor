@@ -1,0 +1,59 @@
+﻿@page "/TaskList"
+@inject TaskService TaskService
+@using TaskManagementApp.Models
+@using TaskManagementApp.Services
+@using Microsoft.AspNetCore.Components.Forms
+@inject NavigationManager Navigation
+
+<h3>Task List</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in tasks)
+        {
+            <tr>
+                <td>@task.Title</td>
+                <td>@task.DueDate.ToShortDateString()</td>
+                <td>@(task.IsCompleted ? "Completed" : "Pending")</td>
+                <td>
+                    <button class="btn btn-success" @onclick="() => MarkAsCompleted(task.Id)">Complete</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteTask(task.Id)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<TaskItem> tasks = new ();
+
+    protected override async Task OnInitializedAsync()
+    {
+        tasks = (await TaskService.GetAllTasksAsync()).ToList();
+    }
+
+    private async Task MarkAsCompleted(int id)
+    {
+        var task = await TaskService.GetTaskByIdAsync(id);
+        if (task != null && !task.IsCompleted)
+        {
+            task.IsCompleted = true;
+            await TaskService.UpdateTaskAsync(task);
+            tasks = (await TaskService.GetAllTasksAsync()).ToList();
+        }
+    }
+
+    private async Task DeleteTask(int id)
+    {
+        await TaskService.DeleteTaskAsync(id);
+        tasks = (await TaskService.GetAllTasksAsync()).ToList();
+    }
+}

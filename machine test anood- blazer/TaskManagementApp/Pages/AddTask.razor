@@ -1,0 +1,38 @@
+﻿@page "/AddTask"
+@inject TaskService TaskService
+@using TaskManagementApp.Models
+@inject NavigationManager Navigation
+ 
+@using TaskManagementApp.Services
+@using Microsoft.AspNetCore.Components.Forms
+
+<h3>Add New Task</h3>
+
+<EditForm Model="newTask" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Title</label>
+        <InputText class="form-control" @bind-Value="newTask.Title" />
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <InputTextArea class="form-control" @bind-Value="newTask.Description" />
+    </div>
+    <div class="form-group">
+        <label>Due Date</label>
+        <InputDate class="form-control" @bind-Value="newTask.DueDate" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Task</button>
+</EditForm>
+
+@code {
+    private TaskItem newTask = new TaskItem();
+
+    private async Task HandleValidSubmit()
+    {
+        await TaskService.AddTaskAsync(newTask);
+        newTask = new TaskItem(); // Reset form
+    }
+}
