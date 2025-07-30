@@ -1,0 +1,111 @@
+﻿@page "/feedback"
+@using System.ComponentModel.DataAnnotations
+
+<h3>📝 Submit Your Feedback</h3>
+
+<EditForm Model="feedback" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <InputText @bind-Value="feedback.FullName" class="form-control" />
+        <ValidationMessage For="@(() => feedback.FullName)" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email Address</label>
+        <InputText @bind-Value="feedback.Email" class="form-control" />
+        <ValidationMessage For="@(() => feedback.Email)" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Rating</label>
+        <InputSelect @bind-Value="feedback.Rating" class="form-select">
+            <option value="">-- Select Rating --</option>
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => feedback.Rating)" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Comments</label>
+        <InputTextArea @bind-Value="feedback.Comments" class="form-control" rows="4" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+</EditForm>
+
+@if (success)
+{
+    <div class="alert alert-success mt-3">
+        ✅ Feedback submitted successfully!
+    </div>
+}
+
+<hr class="my-4" />
+
+<h4>📋 Submitted Feedbacks</h4>
+
+@if (feedbackList.Count == 0)
+{
+    <div class="alert alert-warning">No feedback submitted yet.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Rating</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fb in feedbackList)
+            {
+                <tr>
+                    <td>@fb.FullName</td>
+                    <td>@fb.Email</td>
+                    <td>@fb.Rating</td>
+                    <td>@fb.Comments</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    // ✅ Renamed class
+    public class FeedbackModel
+    {
+        [Required(ErrorMessage = "Full Name is required.")]
+        public string FullName { get; set; }
+
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Rating is required.")]
+        [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5.")]
+        public int? Rating { get; set; }
+
+        public string Comments { get; set; }
+    }
+
+    // ✅ Updated variable types
+    private FeedbackModel feedback = new();
+    private List<FeedbackModel> feedbackList = new();
+    private bool success = false;
+
+    private void HandleValidSubmit()
+    {
+        feedbackList.Add(feedback);
+        feedback = new(); // Clear form
+        success = true;
+    }
+}

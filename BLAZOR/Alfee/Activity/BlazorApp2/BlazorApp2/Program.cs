@@ -1,14 +1,6 @@
-using JobProviderApp.Data;
-using JobProviderApp.Extension;
-using JobProviderApp.Helpers;
-using JobProviderApp.Interface;
-using JobProviderApp.Model;
-using JobProviderApp.Repository;
-using JobProviderApp.Service;
+using BlazorApp2.Data;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddApplicationServices(builder.Configuration);
 
-
-
-
+builder.Services.AddSingleton<EmployeeService>();
+builder.Services.AddSingleton<EmployeeRepository>();
 
 var app = builder.Build();
 
@@ -28,11 +18,14 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
 
+app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-app.UseSession();
+
 app.UseRouting();
 
 app.MapBlazorHub();

@@ -1,9 +1,8 @@
-﻿@page "/"
-@page "/list"
+﻿@page "/list"
 @inject EmployeeService EmployeeService
 @inject NavigationManager Navigation
-@using EmployeeManagement.Models
-@using EmployeeManagement.Service
+@using BlazorApp3.Model
+@using BlazorApp3.Service
 
 <div class="container mt-4">
     <div class="card shadow-lg">
@@ -56,8 +55,7 @@
     </div>
 </div>
 
-@code 
-{
+@code {
     private List<Employee> employees = new();
 
     protected override async Task OnInitializedAsync()
