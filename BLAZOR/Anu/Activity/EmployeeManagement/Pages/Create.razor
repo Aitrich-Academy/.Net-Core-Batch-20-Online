@@ -1,0 +1,63 @@
+﻿@page "/Create"
+@using EmployeeManagement.Service;
+@using EmployeeManagement.Models;
+@using Microsoft.AspNetCore.Components.Forms;
+@inject EmployeeService EmpService
+@inject NavigationManager Navigation 
+
+<div class="container-mt-4">
+	<div class="card shadow-lg">
+		<div class="card-header bg-primary text-white">
+			<h3 class="mb-0">Add Employee</h3>
+		</div>
+		<div class="card-body">
+			<EditForm model="newEmployee" OnValidSubmit="SaveEmployee">
+				<DataAnnotationsValidator/>
+				<ValidationSummary class="alert alert-danger"/> 
+				<div class="mb-3">
+					<label class="form-label">Name :</label>
+					<InputText class="form-control" @bind-Value="newEmployee.Name"/>
+					<ValidationMessage for ="@(() => newEmployee.Name)" class="text-danger"/>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Position :</label>
+					<InputText class="form-control" @bind-Value="newEmployee.Position"/>
+					<ValidationMessage for="@(() => newEmployee.Position)" class="text-danger"/>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Age :</label>
+					<InputNumber class="form-control" @bind-Value="newEmployee.Age"/>
+					<ValidationMessage for="@(() => newEmployee.Age)" class="text-danger" />
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Salary :</label>
+					<InputNumber class="form-control" @bind-Value="newEmployee.Salary" />
+					<ValidationMessage for="@(() => newEmployee.Salary)" class="text-danger" />
+				</div>
+
+				<div class="d-felx gap-2">
+					<button type="submit" class="btn btn-primary">Save</button>
+					<button type="button" class="btm btn-secondary" @onclick="Cancel">Cancel</button>
+				</div>
+
+			</EditForm>
+
+		</div>
+	</div>
+
+</div>
+
+@code {
+	private Employee newEmployee = new();
+	private async Task SaveEmployee()
+	{
+		await EmpService.AddEmployeeAsync(newEmployee);
+		Navigation.NavigateTo("/List");
+	}
+
+	private void Cancel()
+	{
+		Navigation.NavigateTo("/List");
+	}
+
+}

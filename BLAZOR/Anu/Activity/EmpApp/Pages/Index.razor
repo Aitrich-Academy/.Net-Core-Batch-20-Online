@@ -1,0 +1,36 @@
+﻿@page "/"
+
+ @using EmpApp.Data;
+@inject EmployeeService em_service
+
+<div "col-md-6">
+	<form>
+		<label for="FirstName" class="control-label">First Name</label>
+		<input class=" form-control" id="FirstName" placeholder="Enter First Name" @bind="employeeDetails.FirstName" />
+
+		<label for="LastName" class="control-label">Last Name</label>
+		<input class=" form-control" id="LastName" placeholder="Enter Last Name" @bind="employeeDetails.LastName" />
+
+		<label for="Email" class="control-label">Email</label>
+		<input class=" form-control" id="Email" placeholder="Enter email" @bind="employeeDetails.Email" />
+
+		<label for="Phone" class="control-label">Phone</label>
+		<input class=" form-control" id="Phone" placeholder="Enter Phone Number" @bind="employeeDetails.Phone" />
+
+		<br />
+
+		<button class="btn btn-primary" @onclick="@Add">Add</button>
+		<a class="btn btn-primary" href="/Display">show List</a>
+	</form>
+</div>
+
+@code
+{
+	EmpApp.Data.EmployeeDetails employeeDetails = new Data.EmployeeDetails();
+
+	protected void Add()
+	{
+		em_service.AddEmployeeList(employeeDetails);
+	}
+}
+
