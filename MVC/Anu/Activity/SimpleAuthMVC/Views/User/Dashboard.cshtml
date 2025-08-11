@@ -1,0 +1,13 @@
+﻿@{
+}
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>Welcome to the Dashboard</h2>
+
+<p>Hello, @Context.Session.GetString("UserEmail")!</p>
+
+<ul>
+    <li><a href="@Url.Action("Logout", "User")">Logout</a></li>
+</ul>
