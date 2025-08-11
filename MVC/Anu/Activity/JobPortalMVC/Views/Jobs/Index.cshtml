@@ -1,0 +1,46 @@
+﻿
+
+@{
+    ViewData["Title"] = "Jobs";
+}
+
+<h1>Jobs</h1>
+
+<form asp-action="Index" method="get">
+    
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">+ Add New Job</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Salary</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var job in Model)
+        {
+            <tr>
+                <td>@job.Title</td>
+                <td>@job.Company</td>
+                <td>@job.Location</td>
+                <td>@job.Salary.ToString()</td>
+                <td>@job.Description</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@job.Id">View</a> 
+                    <a asp-action="Edit" asp-route-id="@job.Id">Edit</a> 
+                    <a asp-action="Delete" asp-route-id="@job.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
