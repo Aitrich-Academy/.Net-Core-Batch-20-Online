@@ -1,0 +1,31 @@
+﻿@model JobSeekerPortal.Dtos.UserDto
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Register</h2>
+
+<form asp-action="Register" method="post">
+    <div>
+        <label>Full Name</label>
+        <input asp-for="FullName" />
+    </div>
+    <div>
+        <label>Email</label>
+        <input asp-for="Email" />
+    </div>
+    <div>
+        <label>Password</label>
+        <input type="password" name="password" />
+    </div>
+    <div>
+        <label>Role</label>
+        <select asp-for="Role" asp-items="Html.GetEnumSelectList<JobSeekerPortal.Enums.RoleType>()"></select>
+    </div>
+    <div>
+        <label>Gender</label>
+        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<JobSeekerPortal.Enums.GenderType>()"></select>
+    </div>
+    <button type="submit">Register</button>
+</form>

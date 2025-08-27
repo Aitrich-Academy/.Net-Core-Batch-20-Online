@@ -1,0 +1,18 @@
+﻿@model IEnumerable<HospitalPortal.Dtos.DoctorDto>
+
+<h2>Doctors</h2>
+<a asp-action="Add">Add Doctor</a>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Specialization</th>
+    </tr>
+    @foreach (var doc in Model)
+    {
+        <tr>
+            <td>@doc.Name</td>
+            <td>@doc.Specialization</td>
+        </tr>
+    }
+</table>

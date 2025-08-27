@@ -1,0 +1,20 @@
+﻿@model IEnumerable<HospitalPortal.Dtos.AppointmentDto>
+
+<h2>All Appointments</h2>
+<a asp-action="Book">Book Appointment</a>
+
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Patient</th>
+        <th>Doctor</th>
+    </tr>
+    @foreach (var appt in Model)
+    {
+        <tr>
+            <td>@appt.AppointmentDate</td>
+            <td>@appt.PatientId</td>
+            <td>@appt.DoctorId</td>
+        </tr>
+    }
+</table>
