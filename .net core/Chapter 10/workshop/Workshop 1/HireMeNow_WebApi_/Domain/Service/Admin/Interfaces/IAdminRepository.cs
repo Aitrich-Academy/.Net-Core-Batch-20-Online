@@ -13,16 +13,9 @@ namespace Domain.Service.Admin.Interfaces
     {
         public Task<List<Domain.Models.JobSeeker>> GetJobSeekers();
         public Task<List<JobProviderCompany>> GetCompanies();
-
-       
-
-
-       
-
+      
         public Task<List<Location>> GetLocations();
-
         public Task<List<JobPost>> GetJobs();
-
       
         public void DeleteById(Guid id);
         public void DeleteByLocationId(Guid id);
@@ -42,7 +35,6 @@ namespace Domain.Service.Admin.Interfaces
         Task<bool> AddAsync(Skill skill);
 
         Task<bool> RemoveAsync(Guid skillId);
-
 
         Task<Location> addLocation(Location location);
         Task<List<JobProviderCompany>> SearchCompanies(string name);

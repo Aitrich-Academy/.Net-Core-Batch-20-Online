@@ -37,8 +37,6 @@ namespace Domain.Service.Admin
         }
 
 
-    
-
         public async Task<List<Location>> GetLocations()
         {
             return await _adminRepository.GetLocations();

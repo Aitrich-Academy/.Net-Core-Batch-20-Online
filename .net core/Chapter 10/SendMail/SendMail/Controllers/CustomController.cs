@@ -21,9 +21,9 @@ namespace SendMail.Controllers
             try
             {
                 MailRequest mailrequest = new MailRequest();
-                mailrequest.ToEmail = "afra.afi.74@gmail.com";
+                mailrequest.ToEmail = "ajmalaju06@gmail.com";
                 mailrequest.Subject = "Welcome";
-                mailrequest.Body = "Thank you";
+                mailrequest.Body = "Thank you for this";
                 await emailService.SendEmailAsync(mailrequest);
                 return Ok();
 
