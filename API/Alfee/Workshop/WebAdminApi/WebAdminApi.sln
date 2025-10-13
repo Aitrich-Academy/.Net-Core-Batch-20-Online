@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAdminApi", "WebAdminApi\WebAdminApi.csproj", "{5696B6E1-3D64-4E4D-9B29-8C14A3CE1F84}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{572DC8B5-D65F-4C06-B79C-C6EFE201CF5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAdminAppTest", "WebAdminAppTest\WebAdminAppTest.csproj", "{2097C97F-FBD0-4B64-98B0-89873B62F027}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{572DC8B5-D65F-4C06-B79C-C6EFE201CF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{572DC8B5-D65F-4C06-B79C-C6EFE201CF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{572DC8B5-D65F-4C06-B79C-C6EFE201CF5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2097C97F-FBD0-4B64-98B0-89873B62F027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2097C97F-FBD0-4B64-98B0-89873B62F027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2097C97F-FBD0-4B64-98B0-89873B62F027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2097C97F-FBD0-4B64-98B0-89873B62F027}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
