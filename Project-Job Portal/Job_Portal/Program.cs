@@ -1,17 +1,18 @@
-using Domain.Extension;
-using Domain.Helper;
+using System.Text;
+using Domain.Extensions;
+using Job_Portal.Helper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +30,18 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(builder.Configuration.GetSection("AuthSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
 
 builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins",
 policy =>
@@ -46,7 +59,6 @@ builder.Services.AddHttpLogging(logging =>
     logging.ResponseBodyLogLimit = 4096;
 
 });
-builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -64,5 +76,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-public partial class Program { }
