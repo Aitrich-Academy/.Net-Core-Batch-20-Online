@@ -39,10 +39,12 @@ namespace Domain.Models
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<MessageGroup> MessageGroups { get; set; }
         public virtual DbSet<GroupMember> GroupMembers { get; set; }
-
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //    => optionsBuilder.UseSqlServer(
+        //        "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
-                "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
+                "Data Source=ABITHA;Initial Catalog=JobPortal_Application;Integrated Security=True;Trust Server Certificate=True");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -158,9 +160,14 @@ namespace Domain.Models
             {
                 entity.ToTable("Location");
                 entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.Property(e => e.Discription).HasMaxLength(10).IsFixedLength();
-                entity.Property(e => e.Name).HasMaxLength(10).IsFixedLength();
+                entity.Property(e => e.Description)
+                      .HasMaxLength(25)
+                      .IsFixedLength();
+                entity.Property(e => e.Name)
+                      .HasMaxLength(25)
+                      .IsFixedLength();
             });
+
 
             modelBuilder.Entity<Qualification>(entity =>
             {

@@ -9,7 +9,7 @@ public partial class Location
 
     public string Name { get; set; } = null!;
 
-    public string Discription { get; set; } = null!;
+    public string Description { get; set; } = null!;
 
     public virtual ICollection<JobPost> JobPosts { get; set; } = new List<JobPost>();
 
