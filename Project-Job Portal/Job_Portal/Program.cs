@@ -1,5 +1,8 @@
+using System.Security.Claims;
 using System.Text;
 using Domain.Extensions;
+using Domain.Mail;
+using Domain.Models;
 using Job_Portal.Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
@@ -12,7 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddAutoMapper(typeof(SeekerProfiles));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -39,9 +43,33 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
                 .GetBytes(builder.Configuration.GetSection("AuthSettings:Token").Value)),
             ValidateIssuer = false,
-            ValidateAudience = false
+            ValidateAudience = false,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = async context =>
+            {
+                var db = context.HttpContext.RequestServices.GetRequiredService<HireMeNowDbContext>();
+                var userId = context.Principal.FindFirst(ClaimTypes.Sid)?.Value;
+                var tokenConnectionId = context.Principal.FindFirst("ConnectionId")?.Value;
+
+                if (Guid.TryParse(userId, out var guid))
+                {
+                    var user = await db.AuthUsers.FindAsync(guid);
+
+                    if (user == null || user.ConnectionId == null || user.ConnectionId != tokenConnectionId)
+                    {
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        await context.Response.WriteAsync("Session expired or invalid.");
+
+                    }
+                }
+            }
         };
     });
+
 
 builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins",
 policy =>
@@ -70,7 +98,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

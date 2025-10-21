@@ -44,6 +44,7 @@ namespace Domain.Models
             => optionsBuilder.UseSqlServer(
                 "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CompanyUser>(entity =>
@@ -56,6 +57,8 @@ namespace Domain.Models
                     .HasForeignKey(d => d.Company)
                     .HasConstraintName("FK_CompanyUser_JobProviderCompany");
             });
+
+
 
             modelBuilder.Entity<Industry>(entity =>
             {
