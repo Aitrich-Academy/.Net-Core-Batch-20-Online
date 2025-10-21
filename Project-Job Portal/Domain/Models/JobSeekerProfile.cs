@@ -11,19 +11,20 @@ namespace Domain.Models
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }  // EF handles this; don't set Guid.NewGuid() here
-
-        public Guid? ResumeId { get; set; }
+        public Guid Id { get; set; }   
 
         [ForeignKey(nameof(JobSeeker))]
         public Guid JobSeekerId { get; set; }
 
         public string? ProfileName { get; set; }
-        public string? ProfileSummary { get; set; }
 
-        // Navigation properties
-        [JsonIgnore]
-        public virtual Resume? Resume { get; set; }
+        [Required]
+        public byte[] SeekerImage { get; set; }  
+ 
+        [Required]
+        public byte[] Resume { get; set; }
+
+        public string? ProfileSummary { get; set; }
 
         public virtual JobSeeker JobSeeker { get; set; }
 

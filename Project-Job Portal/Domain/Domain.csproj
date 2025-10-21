@@ -28,8 +28,6 @@
     <Folder Include="Service\Admin\Interfaces\" />
     <Folder Include="Service\JobProvider\DTOs\" />
     <Folder Include="Service\JobProvider\Interfaces\" />
-    <Folder Include="Service\JobSeeker\DTOs\" />
-    <Folder Include="Service\JobSeeker\Interfaces\" />
   </ItemGroup>
 
 </Project>
