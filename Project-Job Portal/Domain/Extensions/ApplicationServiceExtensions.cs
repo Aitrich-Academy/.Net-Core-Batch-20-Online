@@ -1,4 +1,9 @@
 ﻿using Domain.Models;
+using Domain.Service.Admin;
+using Domain.Service.Admin.Interfaces;
+using Domain.Service.Authuser;
+using Domain.Service.Login;
+using Domain.Service.Login.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,9 +18,12 @@ namespace Domain.Extensions
             services.AddDbContext<HireMeNowDbContext>(options =>
                options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
             );
-
-            
-
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IAdminServices, AdminService>();
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
+            services.AddScoped<  IAuthUserRepository, AuthUserRepository> ();
             return services;
         }
     }

@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="API\Admin\Request Objects\" />
     <Folder Include="API\JobProvider\RequestObjects\" />
     <Folder Include="API\JobSeeker\RequestObjects\" />
   </ItemGroup>

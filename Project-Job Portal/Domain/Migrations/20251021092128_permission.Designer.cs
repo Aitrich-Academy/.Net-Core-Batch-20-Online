@@ -4,6 +4,7 @@ using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(HireMeNowDbContext))]
-    partial class HireMeNowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251021092128_permission")]
+    partial class permission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,32 @@ namespace Domain.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Domain.Models.AuthUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("OnlineStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SystemUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SystemUserId")
+                        .IsUnique();
+
+                    b.ToTable("AuthUser");
+                });
 
             modelBuilder.Entity("Domain.Models.CompanyUser", b =>
                 {
@@ -518,8 +547,6 @@ namespace Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SystemUsers");
-
-                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Models.WorkExperience", b =>
@@ -701,18 +728,13 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Models.AuthUser", b =>
                 {
-                    b.HasBaseType("Domain.Models.SystemUser");
+                    b.HasOne("Domain.Models.SystemUser", "SystemUser")
+                        .WithOne("AuthUser")
+                        .HasForeignKey("Domain.Models.AuthUser", "SystemUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Property<string>("ConnectionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("OnlineStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("AuthUser");
+                    b.Navigation("SystemUser");
                 });
 
             modelBuilder.Entity("Domain.Models.CompanyUser", b =>
@@ -950,15 +972,6 @@ namespace Domain.Migrations
                     b.Navigation("LocationNavigation");
                 });
 
-            modelBuilder.Entity("Domain.Models.AuthUser", b =>
-                {
-                    b.HasOne("Domain.Models.SystemUser", null)
-                        .WithOne()
-                        .HasForeignKey("Domain.Models.AuthUser", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Models.CompanyUser", b =>
                 {
                     b.Navigation("JobPosts");
@@ -1000,6 +1013,11 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Models.Skill", b =>
                 {
                     b.Navigation("JobSeekerProfileSkills");
+                });
+
+            modelBuilder.Entity("Domain.Models.SystemUser", b =>
+                {
+                    b.Navigation("AuthUser");
                 });
 
             modelBuilder.Entity("Industry", b =>
