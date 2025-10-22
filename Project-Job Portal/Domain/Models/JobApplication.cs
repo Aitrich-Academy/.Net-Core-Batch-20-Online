@@ -32,7 +32,6 @@ namespace Domain.Models
         public virtual Resume Resume { get; set; }
         public virtual JobSeeker Seeker { get; set; }
         public virtual JobPost JobPost { get; set; }
-
-
+        public Guid JobId { get; internal set; }
     }
 }

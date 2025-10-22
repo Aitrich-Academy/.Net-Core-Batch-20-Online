@@ -19,7 +19,7 @@ namespace Domain.Models
         public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
         public virtual DbSet<CompanyUser> CompanyUsers { get; set; }
         public virtual DbSet<Industry> Industries { get; set; }
-        public virtual DbSet<JobCategory> JobCategories { get; set; }
+        //public virtual DbSet<JobCategory> JobCategories { get; set; }
         public virtual DbSet<JobPost> JobPosts { get; set; }
         public virtual DbSet<JobProviderCompany> JobProviderCompanies { get; set; }
         public virtual DbSet<JobResponsibility> JobResponsibilities { get; set; }
@@ -42,7 +42,7 @@ namespace Domain.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
-                "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
+                "Data Source=LAPTOP-DBMHTCV2;Initial Catalog=JobPortalProject;Integrated Security=True;Trust Server Certificate=True");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -99,11 +99,11 @@ namespace Domain.Models
                     .OnDelete(DeleteBehavior.Restrict) //  changed
                     .HasConstraintName("FK_JobPost_Industry");
 
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.JobPosts)
-                    .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.Restrict) //  changed
-                    .HasConstraintName("FK_JobPost_JobCategory");
+                //entity.HasOne(d => d.Category)
+                //    .WithMany(p => p.JobPosts)
+                //    .HasForeignKey(d => d.CategoryId)
+                //    .OnDelete(DeleteBehavior.Restrict) //  changed
+                //    .HasConstraintName("FK_JobPost_JobCategory");
 
                 entity.HasOne(d => d.Company)
                     .WithMany(p => p.JobPosts)

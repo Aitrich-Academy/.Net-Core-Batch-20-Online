@@ -24,12 +24,19 @@ namespace Domain.Models
 		[ForeignKey(nameof(Application))]
 		public Guid? ApplicationId { get; set; }
 
-		public DateTime? Date { get; set; }
+
+        public DateTime DateScheduled { get; set; }
 
 
-		//public JobInterviewStatus Status { get; set; }
-		//[ForeignKey(nameof(CompanyUser))]
-		public Guid? SheduledBy { get; set; }
+        public string? Mode { get; set; } // New (Online/Offline)
+
+		//public string? Link { get; set; } // New
+
+		public string? Status { get; set; } // New (Scheduled/Completed/Cancelled)
+
+        //public JobInterviewStatus Status { get; set; }
+        //[ForeignKey(nameof(CompanyUser))]
+        public Guid? SheduledBy { get; set; }
 
 		public virtual CompanyUser? CompanyUser { get; set; }
 
@@ -39,7 +46,8 @@ namespace Domain.Models
 		//public virtual JobApplication? Application { get; set; }
 		//[ForeignKey(nameof(Company))]
 		public Guid CompanyId { get; set; }
-		public virtual JobProviderCompany Company { get; set; }
+        public virtual JobProviderCompany? Company { get; set; } // nullable
 
-	}
+
+    }
 }

@@ -4,6 +4,7 @@ using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(HireMeNowDbContext))]
-    partial class HireMeNowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251016140706_complete")]
+    partial class complete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,20 +103,14 @@ namespace Domain.Migrations
                     b.Property<Guid?>("CompanyUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateScheduled")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("JobId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Mode")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("SheduledBy")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("interviewee")
                         .HasColumnType("uniqueidentifier");
@@ -618,20 +615,13 @@ namespace Domain.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ApplicationDeadline")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Experience")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("IndustryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("JobCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("JobSummary")
@@ -645,10 +635,6 @@ namespace Domain.Migrations
                         .HasColumnType("nchar(10)")
                         .IsFixedLength();
 
-                    b.Property<string>("JobType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
@@ -658,16 +644,13 @@ namespace Domain.Migrations
                     b.Property<DateTime>("PostedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("IndustryId");
-
-                    b.HasIndex("JobCategoryId");
 
                     b.HasIndex("LocationId");
 
@@ -916,6 +899,13 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("JobPost", b =>
                 {
+                    b.HasOne("JobCategory", "Category")
+                        .WithMany("JobPosts")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_JobPost_JobCategory");
+
                     b.HasOne("JobProviderCompany", "Company")
                         .WithMany("JobPosts")
                         .HasForeignKey("CompanyId")
@@ -930,10 +920,6 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_JobPost_Industry");
 
-                    b.HasOne("JobCategory", null)
-                        .WithMany("JobPosts")
-                        .HasForeignKey("JobCategoryId");
-
                     b.HasOne("Domain.Models.Location", "Location")
                         .WithMany("JobPosts")
                         .HasForeignKey("LocationId")
@@ -946,6 +932,8 @@ namespace Domain.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_JobPost_CompanyUser");
+
+                    b.Navigation("Category");
 
                     b.Navigation("Company");
 
