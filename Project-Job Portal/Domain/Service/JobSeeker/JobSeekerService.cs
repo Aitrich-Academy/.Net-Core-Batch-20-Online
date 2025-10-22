@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+//<<<<<<< HEAD
 using Domain.Enums;
+using Azure.Core;
 using Domain.Mail;
 using Domain.Models;
 using Domain.Service.Authuser.Interfaces;
@@ -12,7 +15,6 @@ using Domain.Service.JobProvider;
 using Domain.Service.JobSeeker.DTOs;
 using Domain.Service.JobSeeker.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
 namespace Domain.Service.JobSeeker
 {
     public class JobSeekerService : IJobSeekerService
@@ -22,13 +24,17 @@ namespace Domain.Service.JobSeeker
         IAuthUserRepository authUserRepository;
         IMapper mapper;
         IEmailService emailService;
-        public JobSeekerService(IJobSeekerRepository _jobSeekerRepository, IMapper _mapper, IEmailService _emailService, IAuthUserRepository _authUserRepository/*, IJobProviderService _jobProviderService*/)
+        //private readonly IJobSeekerProfileRepository _repository;
+        private readonly HireMeNowDbContext _context;
+        public JobSeekerService(IJobSeekerRepository _jobSeekerRepository, IMapper _mapper, IEmailService _emailService, IAuthUserRepository _authUserRepository/*, IJobSeekerProfileRepository repository*/, HireMeNowDbContext context/*, IJobProviderService _jobProviderService*/)
         {
             jobSeekerRepository = _jobSeekerRepository;
             mapper = _mapper;
             emailService = _emailService;
             authUserRepository = _authUserRepository;
             //jobProviderService = _jobProviderService;
+            //_repository = repository;
+            _context = context;
         }
 
         public async void CreateSignupRequest(JobSeekerSignupRequestDto data)
@@ -181,5 +187,416 @@ namespace Domain.Service.JobSeeker
         //    var jobs = await _jobProviderService.GetAllJobsAsync();
         //    return jobs.FirstOrDefault(j=>j.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
         //}
+//=======
+//using Azure.Core;
+//using Domain.Models;
+//using Domain.Service.JobSeeker.DTOs;
+//using Domain.Service.JobSeeker.Interfaces;
+//using Microsoft.EntityFrameworkCore;
+
+
+//namespace Domain.Service.JobSeeker
+//{
+//    public  class JobSeekerService : IJobSeekerProfileService 
+    //{
+       // private readonly IJobSeekerProfileRepository _repository;
+       //// private readonly IMapper _mapper;
+       // private readonly HireMeNowDbContext _context;
+
+        //public JobSeekerService(IJobSeekerProfileRepository repository, HireMeNowDbContext context)//,IMapper mapper
+        //{
+        //    _repository = repository;
+        //   // _mapper = mapper;
+        //    _context = context;
+        //}
+
+        public async Task<JobSeekerProfileDto> CreateProfileAsync(JobSeekerProfileDto seekerprofiledto, Guid jobSeekerId)
+        {
+            byte[]? imageData = null;
+            byte[]? resumeData = null;
+
+            bool profileExists = await jobSeekerRepository.JobSeekerProfileExistsAsync(jobSeekerId);
+            if (profileExists)
+                throw new InvalidOperationException("Profile already exists for this job seeker.");
+
+            if (seekerprofiledto.SeekerImage != null)
+            {
+                using var ms = new MemoryStream();
+                await seekerprofiledto.SeekerImage.CopyToAsync(ms);
+                imageData = ms.ToArray();
+            }
+
+            if (seekerprofiledto.Resume != null)
+            {
+                using var ms = new MemoryStream();
+                await seekerprofiledto.Resume.CopyToAsync(ms);
+                resumeData = ms.ToArray();
+            }
+
+            var profile = new JobSeekerProfile
+            {
+                JobSeekerId = jobSeekerId, //seekerprofiledto.JobSeekerId,
+                ProfileName = seekerprofiledto.ProfileName,
+                ProfileSummary = seekerprofiledto.ProfileSummary,
+                SeekerImage = imageData ?? Array.Empty<byte>(),
+                Resume = resumeData ?? Array.Empty<byte>()
+            };
+
+            var created = await jobSeekerRepository.CreateJobseekerProfileAsync(profile);
+
+            return new JobSeekerProfileDto
+            {
+                Id = created.Id,
+                JobSeekerId = created.JobSeekerId,
+                ProfileName = created.ProfileName,
+                ProfileSummary = created.ProfileSummary
+            };
+        }
+
+
+        public async Task<JobSeekerProfileDto> UpdateProfileAsync(JobSeekerProfileDto JobSeekerProfileDto, Guid jobSeekerId)
+        {
+            var profile = await jobSeekerRepository.GetByJobSeekerIdAsync(jobSeekerId);
+
+            if (profile == null)
+                throw new Exception("Profile not found for this Job Seeker.");
+
+             
+            if (!string.IsNullOrEmpty(JobSeekerProfileDto.ProfileName))
+                profile.ProfileName = JobSeekerProfileDto.ProfileName;
+
+            if (!string.IsNullOrEmpty(JobSeekerProfileDto.ProfileSummary))
+                profile.ProfileSummary = JobSeekerProfileDto.ProfileSummary;
+
+            if (JobSeekerProfileDto.SeekerImage != null)
+            {
+                using var ms = new MemoryStream();
+                await JobSeekerProfileDto.SeekerImage.CopyToAsync(ms);
+                profile.SeekerImage = ms.ToArray();
+            }
+
+            if (JobSeekerProfileDto.Resume != null)
+            {
+                using var ms = new MemoryStream();
+                await JobSeekerProfileDto.Resume.CopyToAsync(ms);
+                profile.Resume = ms.ToArray();
+            }
+
+            var updated = await jobSeekerRepository.UpdateJobseekerProfileAsync(profile);
+
+            return new JobSeekerProfileDto
+            {
+                Id = updated.Id,
+                JobSeekerId = updated.JobSeekerId,
+                ProfileName = updated.ProfileName,
+                ProfileSummary = updated.ProfileSummary
+            };
+        }
+
+
+        public async Task<JobSeekerProfileDto?> PatchProfileAsync(JobSeekerProfileDto JobSeekerProfileDto, Guid jobSeekerId)
+        {
+            var profile = await jobSeekerRepository.GetByJobSeekerIdAsync(jobSeekerId);
+
+            if (profile == null)
+                return null;
+
+            // Only update if a new value or file is provided
+            if (!string.IsNullOrEmpty(JobSeekerProfileDto.ProfileName))
+                profile.ProfileName = JobSeekerProfileDto.ProfileName;
+
+            if (!string.IsNullOrEmpty(JobSeekerProfileDto.ProfileSummary))
+                profile.ProfileSummary = JobSeekerProfileDto.ProfileSummary;
+
+            if (JobSeekerProfileDto.SeekerImage != null)
+            {
+                using var ms = new MemoryStream();
+                await JobSeekerProfileDto.SeekerImage.CopyToAsync(ms);
+                profile.SeekerImage = ms.ToArray();
+            }
+
+            if (JobSeekerProfileDto.Resume != null)
+            {
+                using var ms = new MemoryStream();
+                await JobSeekerProfileDto.Resume.CopyToAsync(ms);
+                profile.Resume = ms.ToArray();
+            }
+
+            var updated = await jobSeekerRepository.UpdateJobseekerProfileAsync(profile);
+
+            return new JobSeekerProfileDto
+            {
+                Id = updated.Id,
+                JobSeekerId = updated.JobSeekerId,
+                ProfileName = updated.ProfileName,
+                ProfileSummary = updated.ProfileSummary
+            };
+        }
+
+        public async Task<JobSeekerProfileViewDto?> GetProfileByJobSeekerIdAsync(Guid jobSeekerId)
+        {
+            var profile = await jobSeekerRepository.GetByJobSeekerIdAsync(jobSeekerId);
+
+            if (profile == null)
+                return null;
+
+            return new JobSeekerProfileViewDto
+            {
+                Id = profile.Id,
+                JobSeekerId = profile.JobSeekerId,
+                ProfileName = profile.ProfileName,
+                ProfileSummary = profile.ProfileSummary,
+                ImageBase64 = profile.SeekerImage != null ? Convert.ToBase64String(profile.SeekerImage) : null,
+                ResumeBase64 = profile.Resume != null ? Convert.ToBase64String(profile.Resume) : null
+            };
+        }
+
+
+        public async Task<string> DeleteProfileAsync(Guid jobSeekerId)
+        {
+            
+            var hasApplied = await jobSeekerRepository.HasAppliedJobsAsync(jobSeekerId);
+            if (hasApplied)
+                return "Cannot delete profile. JobSeeker has applied for one or more jobs.";
+
+            
+            var deleted = await jobSeekerRepository.DeleteProfileAsync(jobSeekerId);
+            if (!deleted)
+                return "Profile not found.";
+
+            return "Profile deleted successfully.";
+        }
+
+        public async Task<byte[]?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId)
+        {
+            return await jobSeekerRepository.GetResumeByJobSeekerIdAsync(jobSeekerId);
+        }
+
+
+        public async Task<List<Skill>> GetAllSkillsAsync()
+        {
+            return await jobSeekerRepository.GetAllSkillsAsync();
+         }
+
+        public async Task<string> AddSkillsToJobSeekerAsync(Guid jobSeekerId, List<Guid> skillIds)
+        {
+            var success = await jobSeekerRepository.AddSkillsToJobSeekerAsync(jobSeekerId, skillIds);
+            return success ? "Skills added successfully." : "JobSeeker profile not found.";
+        }
+
+
+        public async Task<bool> UpdateSkillsAsync(Guid jobSeekerId, List<Guid> newSkillIds)
+        {
+            return await jobSeekerRepository.UpdateSkillsAsync(jobSeekerId, newSkillIds);
+        }
+
+
+        public async Task<bool> PatchSkillsAsync(Guid jobSeekerId, List<Guid> addSkillIds, List<Guid> removeSkillIds)
+        {
+            return await jobSeekerRepository.PatchSkillsAsync(jobSeekerId, addSkillIds, removeSkillIds);
+        }
+
+        public async Task<bool> DeleteSkillsAsync(Guid jobSeekerId, List<Guid> skillIds)
+        {
+            return await jobSeekerRepository.DeleteSkillsAsync(jobSeekerId, skillIds);
+        }
+
+        public async Task<List<SkillDto>> GetSkillsByJobSeekerIdAsync(Guid jobSeekerId)
+        {
+            var skills = await jobSeekerRepository.GetSkillsByJobSeekerIdAsync(jobSeekerId);
+            return mapper.Map<List<SkillDto>>(skills);
+        }
+
+        public async Task<WorkExperienceDto> AddWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto)
+        {
+            
+            var profile = await _context.JobSeekerProfiles
+                .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
+
+            if (profile == null)
+                throw new Exception("JobSeeker profile not found");
+
+            var entity = mapper.Map<WorkExperience>(dto);
+            entity.JobSeekerProfileId = profile.Id;
+            entity.Id = Guid.NewGuid();
+
+            await jobSeekerRepository.AddWorkExperiencesync(entity);
+            await jobSeekerRepository.SaveChangesAsync();
+
+            return mapper.Map<WorkExperienceDto>(entity);
+        }
+
+        public async Task<WorkExperienceDto> UpdateWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto)
+        {
+            var profile = await _context.JobSeekerProfiles
+                .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
+
+            if (profile == null)
+                throw new Exception("JobSeeker profile not found");
+
+            var existing = await jobSeekerRepository.GetWorkExperienceByIdAsync(dto.Id);
+
+            if (existing == null)
+                throw new Exception("Work experience not found");
+
+            
+            if (existing.JobSeekerProfileId != profile.Id)
+                throw new UnauthorizedAccessException("You can update only your own experiences.");
+
+            
+            existing.JobTitle = dto.JobTitle;
+            existing.CompanyName = dto.CompanyName;
+            existing.Summary = dto.Summary;
+            existing.ServiceStart = dto.ServiceStart;
+            existing.ServiceEnd = dto.ServiceEnd;
+
+            await jobSeekerRepository.UpdateWorkExperienceAsync(existing);
+
+            return mapper.Map<WorkExperienceDto>(existing);
+        }
+
+
+        public async Task<WorkExperienceDto> PatchWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto)
+        {
+            var profile = await _context.JobSeekerProfiles
+                .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
+
+            if (profile == null)
+                throw new Exception("JobSeeker profile not found.");
+
+            var existing = await jobSeekerRepository.GetWorkExperienceByIdAsync(dto.Id);
+
+            if (existing == null)
+                throw new Exception("Work experience not found.");
+
+            if (existing.JobSeekerProfileId != profile.Id)
+                throw new UnauthorizedAccessException("You can only modify your own work experiences.");
+
+            
+            if (!string.IsNullOrEmpty(dto.JobTitle)) existing.JobTitle = dto.JobTitle;
+            if (!string.IsNullOrEmpty(dto.CompanyName)) existing.CompanyName = dto.CompanyName;
+            if (!string.IsNullOrEmpty(dto.Summary)) existing.Summary = dto.Summary;
+            if (dto.ServiceStart != default) existing.ServiceStart = dto.ServiceStart;
+            if (dto.ServiceEnd != default) existing.ServiceEnd = dto.ServiceEnd;
+
+            await jobSeekerRepository.UpdateWorkExperienceAsync(existing);
+
+            return mapper.Map<WorkExperienceDto>(existing);
+        }
+
+          public async Task<List<WorkExperienceDto>> GetWorkExperienceByJobSeekerIdAsync(Guid jobSeekerId)
+        {
+             var experiences = await jobSeekerRepository.GetBySeekerIdAsync(jobSeekerId);
+
+             if (experiences == null || !experiences.Any())
+              return new List<WorkExperienceDto>();
+
+             return mapper.Map<List<WorkExperienceDto>>(experiences);
+         }
+
+        public async Task<bool> DeleteWorkExperienceAsync(Guid workExperienceId, Guid jobSeekerId)
+        {
+            var existing = await jobSeekerRepository.GetBySeekerWorkExperienceIdAsync(workExperienceId);
+
+            if (existing == null)
+                throw new KeyNotFoundException("Work experience not found.");
+
+             
+            if (existing.JobSeekerProfile.JobSeekerId != jobSeekerId)
+                throw new UnauthorizedAccessException("You cannot delete another user's record.");
+
+            return await jobSeekerRepository.DeleteWorkExperienceAsync(existing);
+        }
+
+
+        public async Task<QualificationDto> AddQualificationAsync(Guid jobSeekerId, QualificationDto qualificationDto)
+        {
+
+             
+            var profile = await _context.JobSeekerProfiles.FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
+            if (profile == null)
+                throw new Exception("Job seeker profile not found.");
+
+            var entity = mapper.Map<Qualification>(qualificationDto);
+            entity.JobseekerProfileId = profile.Id;
+            entity.JobPostId = null; 
+
+            var added = await jobSeekerRepository.AddQualificationAsync(entity);
+            return mapper.Map<QualificationDto>(added);
+        }
+
+
+
+        public async Task<QualificationDto?> UpdateQualificationAsync(Guid qualificationId, Guid jobSeekerId, QualificationDto dto)
+        {
+            var existing = await jobSeekerRepository.GetQualificationByIdAsync(qualificationId);
+            if (existing == null)
+                throw new KeyNotFoundException("Qualification not found.");
+
+            
+            var profile = await _context.JobSeekerProfiles.FirstOrDefaultAsync(p => p.Id == existing.JobseekerProfileId);
+            if (profile == null || profile.JobSeekerId != jobSeekerId)
+                throw new UnauthorizedAccessException("You cannot edit another user's qualification.");
+
+            
+            existing.Name = dto.Name;
+            existing.Description = dto.Description;
+            existing.JobPostId = null; 
+
+            await jobSeekerRepository.UpdateQualificationAsync(existing);
+
+            return mapper.Map<QualificationDto>(existing);
+        }
+
+
+        public async Task<QualificationDto?> PatchQualificationAsync(Guid qualificationId, Guid jobSeekerId, QualificationDto dto)
+        {
+            var existing = await jobSeekerRepository.GetQualificationByIdAsync(qualificationId);
+            if (existing == null)
+                throw new KeyNotFoundException("Qualification not found.");
+
+            
+            var profile = await _context.JobSeekerProfiles
+                .FirstOrDefaultAsync(p => p.Id == existing.JobseekerProfileId);
+            if (profile == null || profile.JobSeekerId != jobSeekerId)
+                throw new UnauthorizedAccessException("You cannot edit another user's qualification.");
+
+            
+            if (!string.IsNullOrEmpty(dto.Name))
+                existing.Name = dto.Name;
+
+            if (!string.IsNullOrEmpty(dto.Description))
+                existing.Description = dto.Description;
+
+            
+            existing.JobPostId = null;
+
+            await jobSeekerRepository.UpdateQualificationAsync(existing);
+
+            return mapper.Map<QualificationDto>(existing);
+        }
+
+        public async Task<IEnumerable<QualificationDto>> GetQualificationsByJobSeekerIdAsync(Guid jobSeekerId)
+        {
+            var qualifications = await jobSeekerRepository.GetQualificationsByJobSeekerIdAsync(jobSeekerId);
+            return mapper.Map<IEnumerable<QualificationDto>>(qualifications);
+        }
+
+        public async Task<bool> DeleteQualificationAsync(Guid qualificationId, Guid jobSeekerId)
+        {
+            var qualification = await jobSeekerRepository.GetQualificationDeleteByIdAsync(qualificationId);
+            if (qualification == null)
+                throw new KeyNotFoundException("Qualification not found.");
+
+             
+            if (qualification.JobSeekerProfile.JobSeekerId != jobSeekerId)
+                throw new UnauthorizedAccessException("You are not allowed to delete this qualification.");
+
+            return await jobSeekerRepository.DeleteQualificationAsync(qualification);
+        }
+//>>>>>>> 91486e349328fc03c64198fcaa7c9593b57a90c4
     }
+
 }
+
+
