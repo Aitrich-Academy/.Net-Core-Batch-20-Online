@@ -135,6 +135,7 @@ namespace Domain.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CoverLetter")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Datesubmitted")
@@ -143,11 +144,16 @@ namespace Domain.Migrations
                     b.Property<Guid>("JobPost_id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("Resume_id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Applicant");
 
                     b.HasIndex("JobPost_id");
+
+                    b.HasIndex("Resume_id");
 
                     b.ToTable("JobApplications");
                 });
@@ -460,9 +466,6 @@ namespace Domain.Migrations
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -779,7 +782,15 @@ namespace Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Models.Resume", "Resume")
+                        .WithMany()
+                        .HasForeignKey("Resume_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("JobPost");
+
+                    b.Navigation("Resume");
 
                     b.Navigation("Seeker");
                 });

@@ -23,6 +23,6 @@ namespace Domain.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        public Status Status { get; set; }
+        //public Status Status { get; set; } 
     }
 }
