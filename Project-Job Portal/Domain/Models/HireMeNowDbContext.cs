@@ -32,6 +32,7 @@ namespace Domain.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<SystemUser> SystemUsers { get; set; }
+        public virtual DbSet<EmailVerification> EmailVerifications { get; set; }
 
         public virtual DbSet<SavedJob> SavedJobs { get; set; }
         public virtual DbSet<Interview> Interviews { get; set; }
@@ -42,7 +43,7 @@ namespace Domain.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
-                "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
+                "Data Source=SRUTHI;Initial Catalog=final_project;Integrated Security=True;Trust Server Certificate=True");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

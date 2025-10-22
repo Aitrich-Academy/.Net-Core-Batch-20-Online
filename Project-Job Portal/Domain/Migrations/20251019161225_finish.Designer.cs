@@ -4,6 +4,7 @@ using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(HireMeNowDbContext))]
-    partial class HireMeNowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251019161225_finish")]
+    partial class finish
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,8 +67,9 @@ namespace Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExpiryTime")
                         .HasColumnType("datetime2");
@@ -73,16 +77,11 @@ namespace Domain.Migrations
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("JobProviderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("OTP")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("JobProviderId");
 
                     b.ToTable("EmailVerifications");
                 });
@@ -758,17 +757,6 @@ namespace Domain.Migrations
                         .HasConstraintName("FK_CompanyUser_JobProviderCompany");
 
                     b.Navigation("CompanyNavigation");
-                });
-
-            modelBuilder.Entity("Domain.Models.EmailVerification", b =>
-                {
-                    b.HasOne("JobProviderCompany", "JobProvider")
-                        .WithMany()
-                        .HasForeignKey("JobProviderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("JobProvider");
                 });
 
             modelBuilder.Entity("Domain.Models.GroupMember", b =>

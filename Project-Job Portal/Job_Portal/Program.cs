@@ -1,5 +1,7 @@
 using System.Text;
 using Domain.Extensions;
+using Domain.Service.JobProvider.Interfaces;
+using Domain.Service.JobProvider;
 using Job_Portal.Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
@@ -13,6 +15,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
+
+
+
+// Add services to the container
+builder.Services.AddControllers();
+
+// Register repository and service
+builder.Services.AddScoped<IJobProviderRepository, JobProviderRepository>();
+builder.Services.AddScoped<IJobProviderService, JobProviderService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,7 +43,6 @@ builder.Services.AddSwaggerGen(options =>
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -49,6 +62,13 @@ policy =>
     policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
 
 builder.Services.AddHttpLogging(logging =>
 {
