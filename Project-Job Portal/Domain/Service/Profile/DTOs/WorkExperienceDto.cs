@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Service.JobSeeker.DTOs
+namespace Domain.Service.Profile.DTOs
 {
     public class WorkExperienceDto
     {

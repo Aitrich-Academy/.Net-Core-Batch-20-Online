@@ -8,9 +8,11 @@ namespace Domain.Service.JobSeeker.DTOs
 {
     public class SavedJobDto
     {
-        public Guid JobId { get; set; }
-        public DateTime DateSaved { get; set; }
-
+        public Guid SavedJobId { get; set; }     
+        public Guid JobId { get; set; }          
+        public string JobTitle { get; set; }    
+        public DateTime DateSaved { get; set; } 
     }
+
 
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Models;
 
-namespace Domain.Service.JobSeeker.DTOs
+namespace Domain.Service.Profile.DTOs
 {
     public class JobseekerProfileSkillDto
     {

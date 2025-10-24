@@ -43,7 +43,7 @@ namespace Domain.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
-                "Data Source=ANOOD;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
+                "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

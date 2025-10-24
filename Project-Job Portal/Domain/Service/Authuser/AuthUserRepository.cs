@@ -39,39 +39,7 @@ namespace Domain.Service.Authuser
             return authUser;
         }
 
-        //public string? CreateToken(AuthUser user)
-        //{
-        //    if (user == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(user), "User object cannot be null.");
-        //    }
-        //    string tokenSecret = _configuration.GetSection("AuthSettings:Token").Value;
-        //    if (string.IsNullOrEmpty(tokenSecret))
-        //    {
-        //        throw new InvalidOperationException("Token secret is missing or empty in configuration.");
-        //    }
 
-        //    List<Claim> claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimTypes.Name, user.FirstName),
-        //        new Claim(ClaimTypes.Email, user.Email),
-        //        new Claim(ClaimTypes.Sid, user.Id.ToString()),
-        //        new Claim(ClaimTypes.Role, user.Role.ToString())
-        //    };
-        //    var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-        //        _configuration.GetSection("AuthSettings:Token").Value));
-
-        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-        //    var token = new JwtSecurityToken(
-        //        claims: claims,
-        //        expires: DateTime.Now.AddDays(1),
-        //        signingCredentials: creds);
-
-        //    var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-        //    return jwt;
-        //}
 
         public string? CreateToken(AuthUser user)
         {
