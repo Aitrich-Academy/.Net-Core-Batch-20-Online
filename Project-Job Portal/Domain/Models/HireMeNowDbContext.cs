@@ -44,9 +44,9 @@ namespace Domain.Models
         //    => optionsBuilder.UseSqlServer(
         //        "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer(
-                "Data Source=VIJISHA;Initial Catalog=JobPortalProjectOriginal;Integrated Security=True;Trust Server Certificate=True");
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //    => optionsBuilder.UseSqlServer(
+        //        "Data Source=VIJISHA;Initial Catalog=JobPortalProjectOriginal;Integrated Security=True;Trust Server Certificate=True");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

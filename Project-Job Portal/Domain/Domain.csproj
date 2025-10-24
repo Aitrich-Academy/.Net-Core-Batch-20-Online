@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Service\Admin\DTOs\" />
     <Folder Include="Service\JobProvider\Interfaces\" />
     <Folder Include="Service\JobSeeker\DTOs\" />
     <Folder Include="Service\JobSeeker\Interfaces\" />

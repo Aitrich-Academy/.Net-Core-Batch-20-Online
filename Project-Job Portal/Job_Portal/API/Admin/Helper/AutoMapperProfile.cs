@@ -30,6 +30,19 @@ namespace Job_Portal.API.Admin.Helper
 
 
             CreateMap<JobPost, JobDto>().ReverseMap();
+
+
+            CreateMap<CreateJobCategoryDto, JobCategoryDto>().ReverseMap();
+            CreateMap<JobCategoryDto, JobCategory>().ReverseMap();
+            // From API Patch DTO -> Domain Patch DTO
+            CreateMap<PatchJobCategoryDto, PatchJobCategoryDTO>().ReverseMap();
+
+            // From Domain Patch DTO -> JobCategory (entity)
+            CreateMap<PatchJobCategoryDTO, JobCategory>().ReverseMap();
+
+
+
+
         }
 
     }

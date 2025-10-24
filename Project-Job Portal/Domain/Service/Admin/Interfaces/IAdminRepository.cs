@@ -13,7 +13,8 @@ namespace Domain.Service.Admin.Interfaces
         Task<Industry?> GetIndustryByIdAsync(Guid id);
         Task<int> GetIndustryCountAsync();
         Task<Industry> UpdateIndustryAsync(Industry industry);
-        Task<Industry?> PatchIndustryAsync(Guid id, Industry industry);
+        //Task<Industry?> PatchIndustryAsync(Guid id, Industry industry);
+        Task<bool> PatchIndustryAsync( Industry industry);
         Task<bool> DeleteIndustryAsync(Guid id);
 
 
@@ -21,6 +22,12 @@ namespace Domain.Service.Admin.Interfaces
         Task<bool> ApproveJobAsync(Guid jobId);
         Task<bool> RejectJobAsync(Guid jobId);
 
+        Task<JobCategory> AddAsync(JobCategory category);
+        Task<IEnumerable<JobCategory>> GetAllAsync();
+        Task<JobCategory?> GetJobCategoryByIdAsync(Guid id);
+        Task<bool> UpdateJobCategoryAsync(JobCategory category);
+        Task<bool> PatchJobCategoryAsync( JobCategory dto);
+        Task<bool> DeleteJobCategoryAsync(Guid id);
 
     }
 }

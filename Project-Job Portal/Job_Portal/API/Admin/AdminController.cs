@@ -8,6 +8,7 @@ using Job_Portal.API.Admin.Request_Objects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PatchJobCategoryDto = Job_Portal.API.Admin.Request_Objects.PatchJobCategoryDto;
 
 namespace Job_Portal.API.Admin
 {
@@ -112,7 +113,7 @@ namespace Job_Portal.API.Admin
 
 
         [HttpPatch("PatchIndustry/{id}")]
-        
+
         public async Task<IActionResult> PatchIndustry(Guid id, [FromBody] PatchIndustryDto request)
         {
             if (request == null)
@@ -124,12 +125,19 @@ namespace Job_Portal.API.Admin
 
             var updated = await _adminService.PatchIndustryAsync(id, updatedData);
 
-            if (updated == null)
+            //if (updated == null)
+            //    return NotFound("Industry not found.");
+
+            if (updated == false)
                 return NotFound("Industry not found.");
 
-            var response = _mapper.Map<PatchIndustryDto>(updated);
-            return Ok(response);
+            //var response = _mapper.Map<PatchIndustryDto>(updated);
+            //return Ok(response);
+
+            return Ok("Industry Updated successfully");
         }
+
+
 
 
 
@@ -167,8 +175,72 @@ namespace Job_Portal.API.Admin
 
 
 
+        [HttpPost("AddJobCategory")]
+        public async Task<IActionResult> Create([FromBody] CreateJobCategoryDto dto)
+        {
+            var mappeddto=_mapper.Map<JobCategoryDto>(dto);
+            var AddedCategory=await _adminService.CreateAsync(mappeddto);
+            var Responsedto= _mapper.Map<CreateJobCategoryDto>(AddedCategory);
+            return Ok(Responsedto);
+        }
 
-        
+        [HttpGet("GetAllJobCategory")]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _adminService.GetAllAsync();
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetJobCategoryById/{id}")]
+        public async Task<IActionResult> GetJobCategoryById(Guid id)
+        {
+            var result = await _adminService.GetJobCategoryByIdAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
+
+        [HttpPut("UpdateJobCategory/{id}")]
+        public async Task<IActionResult> Update(Guid id, CreateJobCategoryDto dto)
+        {
+            var mappeddto = _mapper.Map<JobCategoryDto>(dto);
+            var updated = await _adminService.UpdateJobCategoryAsync(id, mappeddto);
+            if (!updated) return NotFound();
+            return Ok("Job category updated successfully.");
+        }
+
+
+        [HttpPatch("PatchJobCategory/{id}")]
+        public async Task<IActionResult> PatchJobCategory(Guid id, [FromBody] PatchJobCategoryDto dto)
+        {
+            var mapper = _mapper.Map<PatchJobCategoryDTO>(dto);
+            var result = await _adminService.PatchAsync(id, mapper);
+            if (!result)
+                return NotFound("Job category not found.");
+
+            return Ok("Job category updated successfully.");
+        }
+
+
+        [HttpDelete("DeleteJobCategory/{id}")]
+
+        public async Task<IActionResult> DeleteJobCategory(Guid id)
+        {
+            var deleted = await _adminService.DeleteJobCategoryAsync(id);
+
+            if (!deleted)
+                return NotFound("Industry not found.");
+
+            return Ok(new { Message = "JobCategory deleted successfully." });
+        }
+
+
+
+
+
+
+
     }
 
 
