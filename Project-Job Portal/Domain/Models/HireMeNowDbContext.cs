@@ -32,6 +32,7 @@ namespace Domain.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<SystemUser> SystemUsers { get; set; }
+        public virtual DbSet<JobSeekerProfileSkill> JobSeekerProfileSkills { get; set; }
 
         public virtual DbSet<SavedJob> SavedJobs { get; set; }
         public virtual DbSet<Interview> Interviews { get; set; }
@@ -43,6 +44,7 @@ namespace Domain.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
                 "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,6 +58,8 @@ namespace Domain.Models
                     .HasForeignKey(d => d.Company)
                     .HasConstraintName("FK_CompanyUser_JobProviderCompany");
             });
+
+
 
             modelBuilder.Entity<Industry>(entity =>
             {
@@ -144,15 +148,29 @@ namespace Domain.Models
                     .HasConstraintName("FK_JobResponsibility_JobPost");
             });
 
-            modelBuilder.Entity<JobSeekerProfile>(entity =>
-            {
-                entity.ToTable("JobSeekerProfile");
-                entity.Property(e => e.Id).ValueGeneratedNever();
+            //modelBuilder.Entity<JobSeekerProfile>(entity =>
+            //{
+            //    entity.ToTable("JobSeekerProfile");
+            //    entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.HasOne(d => d.Resume)
-                    .WithMany(p => p.JobSeekerProfiles)
-                    .HasForeignKey(d => d.ResumeId);
+            //    entity.HasOne(d => d.Resume)
+            //        .WithMany(p => p.JobSeekerProfiles)
+            //        .HasForeignKey(d => d.ResumeId);
+            //});
+
+
+
+            modelBuilder.Entity<WorkExperience>(entity =>
+            {
+                   entity.HasOne(w => w.JobSeekerProfile)
+                  .WithMany(p => p.WorkExperiences)
+                  .HasForeignKey(w => w.JobSeekerProfileId)
+                  .OnDelete(DeleteBehavior.Cascade);
             });
+        
+
+
+
 
             modelBuilder.Entity<Location>(entity =>
             {
