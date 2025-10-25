@@ -39,15 +39,19 @@ namespace Domain.Models
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<MessageGroup> MessageGroups { get; set; }
         public virtual DbSet<GroupMember> GroupMembers { get; set; }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //    => optionsBuilder.UseSqlServer(
-        //        "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
                 "Data Source=ABITHA;Initial Catalog=JobPortal_Application;Integrated Security=True;Trust Server Certificate=True");
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+    //        modelBuilder.Entity<AuthUser>()
+    //.HasOne(a => a.SystemUser)
+    //.WithOne(s => s.AuthUser)
+    //.HasForeignKey<AuthUser>(a => a.SystemUserId)
+    //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
+
+
             modelBuilder.Entity<CompanyUser>(entity =>
             {
                 entity.ToTable("CompanyUser");
@@ -58,6 +62,9 @@ namespace Domain.Models
                     .HasForeignKey(d => d.Company)
                     .HasConstraintName("FK_CompanyUser_JobProviderCompany");
             });
+
+      
+
 
             modelBuilder.Entity<Industry>(entity =>
             {

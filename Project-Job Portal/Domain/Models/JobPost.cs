@@ -18,6 +18,7 @@ public partial class JobPost
     public virtual JobCategory Category { get; set; }
     public virtual JobProviderCompany Company { get; set; }
     public virtual CompanyUser PostedByNavigation { get; set; }
+    public string Status { get; set; } = "Pending";//new Line Added by me
 
     public virtual ICollection<JobResponsibility> JobResponsibilities { get; set; } = new List<JobResponsibility>();
 }

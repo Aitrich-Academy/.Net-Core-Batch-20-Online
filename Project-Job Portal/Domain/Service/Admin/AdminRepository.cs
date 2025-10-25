@@ -8,19 +8,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Domain.Service.Admin.DTOs;
+
+
 namespace Domain.Service.Admin
 {
     public class AdminRepository : IAdminRepository
     {
-        //private readonly List<Domain.Models.JobSeeker> _jobSeeker;
-        //HireMeNowDbContext _context;
-        //IMapper _mapper;
 
-        //public AdminRepository(HireMeNowDbContext context, IMapper mapper)
-        //{
-        //    _context = context;
-        //    _mapper = mapper;
-        //}
+        private readonly List<Domain.Models.JobSeeker> _jobSeeker;
+        HireMeNowDbContext _context;
+        IMapper _mapper;
+
+        public AdminRepository(HireMeNowDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
 
         public async Task<bool> AddAsync(Skill skill)
         {
@@ -142,6 +146,97 @@ namespace Domain.Service.Admin
             return true;
         }
 
+        //Add Industry
+        public void AddIndustry(Industry industry)
+        {
+            _context.Industries.Add(industry);
+            _context.SaveChangesAsync();
+        }
+        //Get Industry
+
+        public async Task<List<Industry>> GetAllIndustriesAsync()
+        {
+            return await _context.Industries.ToListAsync();
+        }
+
+
+        public async Task<Industry?> GetIndustryByIdAsync(Guid id)
+        {
+            return await _context.Industries.FindAsync(id);
+            
+        }
+
+        //get IndustryCount
+        public async Task<int> GetIndustryCountAsync()
+        {
+            return await _context.Industries.CountAsync();
+        }
+
+
+        //Edit Industry
+        public async Task<Industry> UpdateIndustryAsync(Industry industry)
+        {
+            _context.Industries.Update(industry);
+            await _context.SaveChangesAsync();
+            return industry;
+        }
+
+        //patch Industry
+        public async Task<Industry?> PatchIndustryAsync(Guid id, Industry updatedData)
+        {
+            var existing = await _context.Industries.FindAsync(id);
+            if (existing == null)
+                return null;
+
+            // ✅ Update only if values are provided in request
+            if (!string.IsNullOrWhiteSpace(updatedData.Name))
+                existing.Name = updatedData.Name;
+
+            if (!string.IsNullOrWhiteSpace(updatedData.Description))
+                existing.Description = updatedData.Description;
+
+            await _context.SaveChangesAsync();
+
+            // ✅ Return the latest saved entity (with existing or updated values)
+            return existing;
+        }
+
+        //Delete Industry
+        public async Task<bool> DeleteIndustryAsync(Guid id)
+        {
+            var existing = await _context.Industries.FindAsync(id);
+            if (existing == null)
+                return false;
+
+            _context.Industries.Remove(existing);
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
+       
+        public async Task<IEnumerable<JobPost>> GetPendingJobsAsync()
+        {
+            return await _context.JobPosts
+                .Where(j => j.Status == "Pending")
+                .ToListAsync();
+        }
+
+
+        public async Task<bool> ApproveJobAsync(Guid jobId)
+        {
+            var job = await _context.JobPosts.FindAsync(jobId);
+            if (job == null) return false;
+
+            job.Status = "Approved";
+            _context.JobPosts.Update(job);
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
         public async Task<bool> RemoveLocationAsync(Guid locationId)
         {
             var locationToRemove = await _context.Locations.FindAsync(locationId);
@@ -152,6 +247,18 @@ namespace Domain.Service.Admin
             return true;
         }
       
+
+        public async Task<bool> RejectJobAsync(Guid jobId)
+        {
+            var job = await _context.JobPosts.FindAsync(jobId);
+            if (job == null) return false;
+
+            job.Status = "Rejected";
+            _context.JobPosts.Update(job);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
 
     }
 }

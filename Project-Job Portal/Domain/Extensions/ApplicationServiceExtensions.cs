@@ -18,13 +18,12 @@ namespace Domain.Extensions
             services.AddDbContext<HireMeNowDbContext>(options =>
                options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
             );
-
-            //services.AddScoped<IAdminServices, AdminService>();
-            //services.AddScoped<IAdminRepository, AdminRepository>();
-            //services.AddScoped<ILoginRequestService, LoginRequestService>(); // ✅ Register service
-            //services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
-            //services.AddScoped<IAuthUserRepository, AuthUserRepository>();
-
+            // Register repositories and services
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IAdminServices, AdminService>();
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
+            services.AddScoped<IAuthUserRepository, AuthUserRepository>();
             return services;
         }
     }

@@ -6,6 +6,8 @@ using Domain.Service.Login.Interfaces;
 using Domain.Service.Profile.DTOs;
 using Job_Portal.API.Admin.Request_Objects;
 using Job_Portal.Controllers;
+using Domain.Service.Admin;
+using Domain.Service.Login.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,44 +16,45 @@ namespace Job_Portal.API.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
+
     [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
-        
-        //    private readonly IAdminServices _adminService;
-        //    private readonly IMapper _mapper;
-        //    IAdminRepository _adminRepository;
-        //    private IMapper mapper;
-        //private readonly ILoginRequestService _loginRequestService;
-           
 
-            //public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory,ILoginRequestService loginRequestService)
-            //{
-            //    _mapper = mapper;
-            //    _adminService = adminService;
-            //    _adminRepository = adminRepostory;
-            //_loginRequestService = loginRequestService;
-             
-            //}
+        private readonly IAdminServices _adminService;
+        private readonly IMapper _mapper;
+        IAdminRepository _adminRepository;
+        private IMapper mapper;
+        private readonly ILoginRequestService _loginRequestService;
 
-        //[AllowAnonymous]
-        //[HttpPost]
-       
 
-        //[Route("Admin/login")]
+        public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService)
+        {
+            _mapper = mapper;
+            _adminService = adminService;
+            _adminRepository = adminRepostory;
+            _loginRequestService = loginRequestService;
 
-        //public ActionResult Login(AdminLoginRequests logdata)
-        //{
+        }
 
-        //    var user = _loginRequestService.Adminlogin(logdata.Email, logdata.Password);
+        [AllowAnonymous]
+        [HttpPost]
 
-        //    if (user == null)
-        //    {
-        //        return BadRequest("Login Failed");
-        //    }
 
-        //    return Ok(user);
-        //}
+        [Route("Admin/login")]
+
+        public ActionResult Login(AdminLoginRequests logdata)
+        {
+
+            var user = _loginRequestService.Adminlogin(logdata.Email, logdata.Password);
+
+            if (user == null)
+            {
+                return BadRequest("Login Failed");
+            }
+
+            return Ok(user);
+        }
         [HttpPost("skillAdd")]
         public async Task<IActionResult> AddSkill(SkillRequest skill)
         {
@@ -115,8 +118,6 @@ namespace Job_Portal.API.Admin
             return Ok(skills);
         }
 
-
-
         [HttpDelete("skillRemove/{skillId}")]
         public async Task<IActionResult> RemoveSkill(Guid skillId)
         {
@@ -132,6 +133,111 @@ namespace Job_Portal.API.Admin
                 return NotFound("Skill not found or failed to delete");
             }
         }
+
+        [HttpPost("AddIndustry")]
+        
+        public async Task<IActionResult> AddIndustry([FromBody] IndustryObjectDto request)
+        {
+            // Map API DTO → Domain DTO
+            var domainRequest = _mapper.Map<IndustryDto>(request);
+
+            var domainResult = await _adminService.AddIndustryAsync(domainRequest);
+
+            // Map Domain DTO → API DTO
+            var apiResponse = _mapper.Map<IndustryObjectDto>(domainResult);
+            return Ok(apiResponse);
+        }
+
+
+        [HttpGet]
+        [Route("GetAllIndustries")]
+
+        
+        public async Task<IActionResult> GetAllIndustries()
+        {
+            var domainIndustries = await _adminService.GetAllIndustriesAsync();
+
+            // Map Domain DTO → API DTO
+            var apiResponse = _mapper.Map<List<IndustryObjectDto>>(domainIndustries);
+
+            return Ok(apiResponse);
+        }
+
+
+        [HttpGet("GetIndustryById/{id}")]
+        
+        public async Task<IActionResult> GetIndustryById(Guid id)
+        {
+            var industry = await _adminService.GetIndustryByIdAsync(id);
+
+            if (industry == null)
+                return NotFound("Industry not found");
+
+            return Ok(industry);
+        }
+
+        [HttpGet("GetIndustryCount")]
+        
+        public async Task<IActionResult> GetIndustryCount()
+        {
+            var count = await _adminService.GetIndustryCountAsync();
+            return Ok(count);
+        }
+
+
+        [HttpPut("EditIndustry/{id}")]
+        
+        public async Task<IActionResult> EditIndustry(Guid id, [FromBody] IndustryObjectDto request)
+        {
+            var dto = _mapper.Map<IndustryDto>(request);
+            var updated = await _adminService.UpdateIndustryAsync(id, dto);
+
+            if (updated == null)
+                return NotFound("Industry not found.");
+
+            return Ok(updated);
+        }
+
+
+        [HttpPatch("PatchIndustry/{id}")]
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchIndustry(Guid id, [FromBody] PatchIndustryDto request)
+        {
+            if (request == null)
+                return BadRequest("Invalid request data.");
+
+            var updatedData = _mapper.Map<IndustryDto>(request);
+            var updated = await _adminService.PatchIndustryAsync(id, updatedData);
+
+            if (updated == null)
+                return NotFound("Industry not found.");
+
+            // ✅ Return the actual updated data (including existing name if unchanged)
+            return Ok(new
+            {
+                updated.Id,
+                updated.Name,
+                updated.Description
+            });
+        }
+
+
+        [HttpDelete("DeleteIndustry/{id}")]
+
+        public async Task<IActionResult> DeleteIndustry(Guid id)
+        {
+            var deleted = await _adminService.DeleteIndustryAsync(id);
+
+            if (!deleted)
+                return NotFound("Industry not found.");
+
+            return Ok(new { Message = "Industry deleted successfully." });
+        }
+
+
+
+
         [HttpPost("locationAdd")]
         public async Task<IActionResult> AddLocation(LocationRequest location)
         {
@@ -202,9 +308,31 @@ namespace Job_Portal.API.Admin
             else
                 return NotFound("Location not found or failed to delete");
         }
+       
+        //Permission
+        
+        [HttpPatch("ApproveJob/{id}")]
+        public async Task<IActionResult> ApproveJob(Guid id)
+        {
+            var result = await _adminService.ApproveJobAsync(id);
+            if (!result) return NotFound();
+            return Ok("Job approved successfully");
+        }
+
+      
+        [HttpPatch("RejectJob/{id}")]
+        public async Task<IActionResult> RejectJob(Guid id)
+        {
+            var result = await _adminService.RejectJobAsync(id);
+            if (!result) return NotFound();
+            return Ok("Job rejected successfully");
+        }
+
+        //Logout
+
         [Authorize(Roles = "Admin")]
         [HttpPost("logout")]
-       
+
         public async Task<IActionResult> Logout()
         {
             // Extract the AdminId from the JWT claims
@@ -224,5 +352,12 @@ namespace Job_Portal.API.Admin
         }
 
 
+
+
+
     }
+
+
+
+
 }

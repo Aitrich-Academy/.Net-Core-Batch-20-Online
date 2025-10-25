@@ -7,9 +7,9 @@ namespace Domain.Models;
 [Table("AuthUser")]
 public partial class AuthUser: SystemUser
 {
-    //public Guid Id { get; set; }
+   // public Guid Id { get; set; }
 
-    //public Guid SystemUserId { get; set; }
+  // public Guid SystemUserId { get; set; }
 
     //public string Password { get; set; } = null!;
 
@@ -19,7 +19,7 @@ public partial class AuthUser: SystemUser
 
     public string? Password { get; set; }
     //for chat
-    public string? ConnectionId { get; set; }
+   public string? ConnectionId { get; set; }
     public bool? OnlineStatus { get; set; } = false;
 
 }

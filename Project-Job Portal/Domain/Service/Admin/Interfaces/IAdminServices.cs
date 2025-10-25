@@ -1,3 +1,4 @@
+
 ﻿using Domain.Models;
 using Domain.Service.Admin.DTOs;
 using Domain.Service.Profile.DTOs;
@@ -6,11 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Service.JobProvider.DTOs;
+
 
 namespace Domain.Service.Admin.Interfaces
 {
     public interface IAdminServices
     {
+
         Task<bool> AddSkillAsync(SkillDto skill);
 
         Task<bool> RemoveSkillAsync(Guid skillId);
@@ -26,8 +30,18 @@ namespace Domain.Service.Admin.Interfaces
         Task<IEnumerable<LocationDto>> GetAllLocationsAsync();
         Task<LocationDto?> GetLocationByIdAsync(Guid id);
       
+        Task<IndustryDto> AddIndustryAsync(IndustryDto request);
+        Task<List<IndustryDto>> GetAllIndustriesAsync();
+        Task<IndustryDto> GetIndustryByIdAsync(Guid id);
 
+        Task<int> GetIndustryCountAsync();
+        Task<IndustryDto?> UpdateIndustryAsync(Guid id, IndustryDto dto);
+        Task<Industry?> PatchIndustryAsync(Guid id, IndustryDto updatedData);
+        Task<bool> DeleteIndustryAsync(Guid id);
 
+        Task<IEnumerable<JobDto>> GetPendingJobsAsync();
+        Task<bool> ApproveJobAsync(Guid jobId);
+        Task<bool> RejectJobAsync(Guid jobId);
 
 
 
