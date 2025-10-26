@@ -1,76 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Domain.Models;
+﻿using Domain.Models;
 using Domain.Service.JobProvider.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.VisualBasic;
-using static System.Net.WebRequestMethods;
+using AutoMapper;
+using JobSeekerModel = Domain.Models.JobSeeker; // <--- Alias fix
 
 namespace Domain.Service.JobProvider
 {
     public class JobProviderRepository : IJobProviderRepository
     {
         private readonly HireMeNowDbContext _context;
+        private readonly IMapper _mapper;
 
-        public JobProviderRepository(HireMeNowDbContext context)
+        public JobProviderRepository(HireMeNowDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // ================== JobProvider / Authentication ==================
-        public async Task<JobProviderCompany?> GetJobProviderByIdAsync(Guid jobProviderId)
-        {
-            return await _context.JobProviderCompanies
-                .Include(jp => jp.CompanyUsers)
-                .Include(jp => jp.JobPosts)
-                .FirstOrDefaultAsync(jp => jp.Id == jobProviderId);
-        }
-
-        public async Task<JobProviderCompany?> GetJobProviderByEmailAsync(string email)
-        {
-            return await _context.JobProviderCompanies.FirstOrDefaultAsync(jp => jp.Email == email);
-        }
-
-        public async Task<JobProviderCompany> AddJobProviderAsync(JobProviderCompany jobProvider)
-        {
-            _context.JobProviderCompanies.Add(jobProvider);
-            await _context.SaveChangesAsync();
-            return jobProvider;
-        }
-
-        public async Task<bool> EmailExistsAsync(string email)
-        {
-            return await _context.JobProviderCompanies.AnyAsync(jp => jp.Email == email);
-        }
-
-        // ================== Email Verification / OTP ==================
-        public async Task<EmailVerification> AddEmailVerificationAsync(EmailVerification verification)
-        {
-            _context.EmailVerifications.Add(verification);
-            await _context.SaveChangesAsync();
-            return verification;
-        }
-
-        public async Task<EmailVerification?> GetEmailVerificationAsync(Guid jobProviderId, string otp)
-        {
-            return await _context.EmailVerifications
-                .Where(ev => ev.JobProviderId == jobProviderId && ev.OTP == otp)
-                .OrderByDescending(ev => ev.CreatedAt)
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task UpdateEmailVerificationAsync(EmailVerification verification)
-        {
-            _context.EmailVerifications.Update(verification);
-            await _context.SaveChangesAsync();
-        }
-
+      
 
         // ================== Profile Picture ==================
         public async Task AddProfilePictureAsync(Guid jobProviderId, string filePath)
@@ -178,10 +125,121 @@ namespace Domain.Service.JobProvider
             return "Logout successful. Please clear your token on the client side.";
 
         }
-// ================== Save Changes ==================
-public async Task<int> SaveChangesAsync()
+        // ================== Save Changes ==================
+        public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+
+
+
+        //// -------------------------
+        //// JOB POST METHODS
+        //// -------------------------
+
+        //public async Task<Guid> CreateJobPostAsync(JobPost jobPost)
+        //{
+        //    jobPost.Id = Guid.NewGuid();
+        //    jobPost.PostedDate = DateTime.UtcNow;
+
+        //    await _context.JobPosts.AddAsync(jobPost);
+        //    await _context.SaveChangesAsync();
+
+        //    return jobPost.Id;
+        //}
+
+        //public async Task<JobPost?> GetJobByIdAsync(Guid id)
+        //{
+        //    return await _context.JobPosts
+        //                         .Include(jp => jp.Company)
+        //                         .Include(jp => jp.Location)
+        //                         //.Include(jp => jp.Category)
+        //                         .Include(jp => jp.Industry)
+        //                         .Include(jp => jp.JobResponsibilities)
+        //                         .FirstOrDefaultAsync(jp => jp.Id == id);
+        //}
+
+        //public async Task<bool> UpdateJobByIdAsync(Guid id, JobPost updatedJob)
+        //{
+        //    var existingJob = await _context.JobPosts.FindAsync(id);
+        //    if (existingJob == null) return false;
+
+        //    // Only update fields present in updatedJob
+        //    if (!string.IsNullOrEmpty(updatedJob.JobTitle))
+        //        existingJob.JobTitle = updatedJob.JobTitle;
+
+        //    if (!string.IsNullOrEmpty(updatedJob.JobSummary))
+        //        existingJob.JobSummary = updatedJob.JobSummary;
+
+        //    if (updatedJob.LocationId != Guid.Empty)
+        //        existingJob.LocationId = updatedJob.LocationId;
+
+        //    if (updatedJob.IndustryId != Guid.Empty)
+        //        existingJob.IndustryId = updatedJob.IndustryId;
+
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
+
+        //public async Task<bool> PatchJobByIdAsync(Guid id, decimal? salary)
+        //{
+        //    var existingJob = await _context.JobPosts.FindAsync(id);
+        //    if (existingJob == null) return false;
+
+        //    if (salary.HasValue)
+        //        existingJob.Salary = salary.Value;
+
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
+
+        //public async Task<bool> DeleteJobByIdAsync(Guid id)
+        //{
+        //    var existingJob = await _context.JobPosts.FindAsync(id);
+        //    if (existingJob == null) return false;
+
+        //    _context.JobPosts.Remove(existingJob);
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
+
+        //public async Task<List<JobPost>> GetAllJobsAsync()
+        //{
+        //    return await _context.JobPosts
+        //                         .Include(jp => jp.Company)
+        //                         .Include(jp => jp.Location)
+        //                         .Include(jp => jp.Industry)
+        //                         .ToListAsync();
+        //}
+
+        // -------------------------
+        // JOB APPLICATION METHODS
+        // -------------------------
+
+
+        public async Task<List<JobApplication>> GetApplicantsByJobIdAsync(Guid jobId)
+        {
+            return await _context.JobApplications
+                                 .Include(a => a.Seeker)      // ✅ Include navigation, not ID
+                                 .Include(a => a.JobPost)
+                                     // optional: if you need resume info too
+                                 .Where(a => a.JobPostId == jobId)
+                                 .ToListAsync();
+        }
+
+        public async Task<JobApplication?> GetApplicantByApplicationIdAsync(Guid applicationId)
+        {
+            return await _context.JobApplications
+                                 .Include(a => a.Seeker)      // ✅ Include navigation
+                                 .Include(a => a.JobPost)
+                                   // optional
+                                 .FirstOrDefaultAsync(a => a.Id == applicationId);
+        }
+
+
+        public async Task<int> GetApplicationCountAsync()
+        {
+            return await _context.JobApplications.CountAsync();
         }
     }
 }

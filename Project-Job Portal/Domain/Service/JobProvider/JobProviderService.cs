@@ -2,133 +2,37 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Mail;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Helpers;
+using AutoMapper;
+using Domain.Helper;
 using Domain.Models;
+using Domain.Service.JobProvider.Dto;
 using Domain.Service.JobProvider.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using JobSeekerModel = Domain.Models.JobSeeker;
 
 namespace Domain.Service.JobProvider
 {
     public class JobProviderService : IJobProviderService
     {
-        private readonly HireMeNowDbContext _context;
+        private readonly IJobProviderRepository _repository;
+        private readonly HireMeNowDbContext _context; // add this
+        private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        private readonly IEmailService _emailService;
-        public JobProviderService(HireMeNowDbContext context, IConfiguration configuration, IEmailService emailService)
+        
+        public JobProviderService(IJobProviderRepository repository, HireMeNowDbContext context, IMapper mapper, IConfiguration configuration)
         {
+            _repository = repository;
             _context = context;
-            _configuration = configuration;
-            _emailService = emailService;
-        }
-        // ================== Authentication ==================
-        public async Task<(Guid JobProviderId, string Message)> RegisterAsync(string name, string email, string password)
-        {
-            var exists = await _context.JobProviderCompanies.AnyAsync(jp => jp.Email == email);
-            if (exists) return (Guid.Empty, "Email already exists");
-
-            // Ensure a default or dummy location exists
-            var defaultLocation = await _context.Locations.FirstOrDefaultAsync();
-            if (defaultLocation == null)
-            {
-                // Create one if not found
-                defaultLocation = new Location
-                {
-                    Id = Guid.NewGuid(),
-                    City = "Unknown",
-                    State = "Unknown",
-                    Country = "Unknown"
-                };
-                _context.Locations.Add(defaultLocation);
-                await _context.SaveChangesAsync();
-
-
-
-
-
-            }
-
-            var jobProvider = new JobProviderCompany
-            {
-                Id = Guid.NewGuid(),
-                LegalName = name,
-                Email = email,
-                Address = string.Empty,
-                Summary = string.Empty,
-                Website = string.Empty,
-                Location = defaultLocation.Id // ✅ Fix: set valid FK value
-            };
-
-            _context.JobProviderCompanies.Add(jobProvider);
-            await _context.SaveChangesAsync();
-
-            return (jobProvider.Id, "Registration successful");
-        }
-        public async Task<(string Token, Guid JobProviderId, string Message)> LoginAsync(string email, string password)
-        {
-            var jobProvider = await _context.JobProviderCompanies.FirstOrDefaultAsync(jp => jp.Email == email);
-            if (jobProvider == null) return (null!, Guid.Empty, "Invalid credentials");
-
-            var token = JwtHelper.GenerateToken(
-                jobProvider.Id,
-                jobProvider.Email,
-                _configuration["AuthSettings:Token"],
-                60
-            );
-
-            return (token, jobProvider.Id, "Login successful");
+            _mapper = mapper;
+            _configuration = configuration;   // ✅ Added
+           
         }
 
-
-        // ================== Send OTP ==================
-        // ================== OTP ==================
-        public async Task<string> SendOtpAsync(Guid jobProviderId)
-        {
-            var jobProvider = await _context.JobProviderCompanies.FindAsync(jobProviderId);
-            if (jobProvider == null) return "JobProvider not found";
-
-            var otp = new Random().Next(100000, 999999).ToString();
-
-            var verification = new EmailVerification
-            {
-                Id = Guid.NewGuid(),
-                JobProviderId = jobProviderId,
-                OTP = otp,
-                ExpiryTime = DateTime.UtcNow.AddMinutes(5),
-                IsVerified = false,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            _context.EmailVerifications.Add(verification);
-            await _context.SaveChangesAsync();
-
-            // Optionally send email
-            await _emailService.SendEmailAsync(jobProvider.Email, "Your OTP", $"Your OTP is: {otp}");
-
-            return $"OTP sent to {jobProvider.Email}";
-        }
-        public async Task<string> VerifyOtpAsync(Guid jobProviderId, string otp)
-        {
-            var record = await _context.EmailVerifications
-                .Where(x => x.JobProviderId == jobProviderId && x.OTP == otp)
-                .OrderByDescending(x => x.CreatedAt)
-                .FirstOrDefaultAsync();
-
-            if (record == null) return "Invalid OTP";
-            if (record.IsVerified) return "OTP already verified";
-            if (record.ExpiryTime < DateTime.UtcNow) return "OTP expired";
-
-            record.IsVerified = true;
-            await _context.SaveChangesAsync();
-
-            return "OTP verified successfully";
-        }
-
+       
 
         // ================== Profile Picture ==================
         public async Task<string> AddProfilePictureAsync(Guid jobProviderId, IFormFile file)
@@ -266,7 +170,7 @@ namespace Domain.Service.JobProvider
             {
                 Id = Guid.NewGuid(),
                 FirstName = memberName,
-                Role = Enums.Role.Member,
+                Role = Enums.Role.MEMBER,
                 Email = email,
                 Phone = phone,
                 CompanyNavigation = company
@@ -297,7 +201,7 @@ namespace Domain.Service.JobProvider
             if (member == null) return "Company member not found";
 
             member.FirstName = memberName;
-            member.Role = Enums.Role.Member; // or set based on designation
+            member.Role = Enums.Role.MEMBER; // or set based on designation
             member.Email = email;
             member.Phone = phone;
 
@@ -310,7 +214,7 @@ namespace Domain.Service.JobProvider
             var member = await _context.CompanyUsers.FindAsync(memberId);
             if (member == null) return "Company member not found";
 
-            member.Role = Enums.Role.Member; // Or map from designation
+            member.Role = Enums.Role.MEMBER; // Or map from designation
             await _context.SaveChangesAsync();
             return "Company member designation updated successfully";
         }
@@ -336,5 +240,94 @@ namespace Domain.Service.JobProvider
         }
 
 
+        //// -------------------------
+        //// JOB POST METHODS
+        //// -------------------------
+
+        //public async Task<Guid> CreateJobPostAsync(JobPostDto jobPostDto)
+        //{
+        //    // Fetch existing related entities
+        //    var location = await _context.Locations.FindAsync(jobPostDto.LocationId);
+        //    var industry = await _context.Industries.FindAsync(jobPostDto.IndustryId);
+        //    var company = await _context.JobProviderCompanies.FindAsync(jobPostDto.CompanyId);
+        //    var user = await _context.CompanyUsers.FindAsync(jobPostDto.PostedBy);
+
+        //    // Throw exceptions if any required entity is missing
+        //    if (location == null) throw new Exception("Location not found");
+        //    if (industry == null) throw new Exception("Industry not found");
+        //    if (company == null) throw new Exception("Company not found");
+        //    if (user == null) throw new Exception("User not found");
+
+        //    // Map DTO to entity
+        //    var jobPost = _mapper.Map<JobPost>(jobPostDto);
+
+        //    // Attach existing entities
+        //    jobPost.Location = location;
+        //    jobPost.Industry = industry;
+        //    jobPost.Company = company;
+        //    jobPost.PostedByNavigation = user;
+
+        //    // Set defaults
+        //    jobPost.Id = Guid.NewGuid();
+        //    jobPost.PostedDate = DateTime.UtcNow;
+        //    jobPost.Experience ??= "Not specified";
+        //    jobPost.JobType ??= "Full-Time";
+
+        //    // Save to DB
+        //    await _repository.CreateJobPostAsync(jobPost);
+
+        //    // Return the Id
+        //    return jobPost.Id;
+        //}
+        //public async Task<JobPostDto?> GetJobByIdAsync(Guid id)
+        //{
+        //    var jobPost = await _repository.GetJobByIdAsync(id);
+        //    return _mapper.Map<JobPostDto?>(jobPost);
+        //}
+
+        //public async Task<bool> UpdateJobByIdAsync(Guid id, JobPostDto updatedJobDto)
+        //{
+        //    var updatedJob = _mapper.Map<JobPost>(updatedJobDto);
+        //    return await _repository.UpdateJobByIdAsync(id, updatedJob);
+        //}
+
+        //public async Task<bool> PatchJobByIdAsync(Guid id, decimal? salary)
+        //{
+        //    return await _repository.PatchJobByIdAsync(id, salary);
+        //}
+
+        //public async Task<bool> DeleteJobByIdAsync(Guid id)
+        //{
+        //    return await _repository.DeleteJobByIdAsync(id);
+        //}
+
+        //public async Task<List<JobPostDto>> GetAllJobsAsync()
+        //{
+        //    var jobs = await _repository.GetAllJobsAsync();
+        //    return _mapper.Map<List<JobPostDto>>(jobs);
+        //}
+
+        // -------------------------
+        // JOB APPLICATION METHODS
+        // -------------------------
+
+
+        public async Task<List<ApplicantDto>> GetApplicantsByJobIdAsync(Guid jobId)
+        {
+            var applications = await _repository.GetApplicantsByJobIdAsync(jobId);
+            return _mapper.Map<List<ApplicantDto>>(applications);
+        }
+
+        public async Task<ApplicantDto?> GetApplicantByApplicationIdAsync(Guid applicationId)
+        {
+            var application = await _repository.GetApplicantByApplicationIdAsync(applicationId);
+            return _mapper.Map<ApplicantDto?>(application);
+        }
+
+        public async Task<int> GetApplicationCountAsync()
+        {
+            return await _repository.GetApplicationCountAsync();
+        }
     }
 }
+

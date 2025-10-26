@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models;
-
 [Table("AuthUser")]
-public partial class AuthUser: SystemUser
+public partial class AuthUser : SystemUser
 {
     //public Guid Id { get; set; }
 
@@ -17,8 +16,10 @@ public partial class AuthUser: SystemUser
 
     //public virtual SystemUser SystemUser { get; set; } = null!;
 
+    public Guid? JobProviderId { get; set; }
     public string? Password { get; set; }
     //for chat
+
     public string? ConnectionId { get; set; }
     public bool? OnlineStatus { get; set; } = false;
 

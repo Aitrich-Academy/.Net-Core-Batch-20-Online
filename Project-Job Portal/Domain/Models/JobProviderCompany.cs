@@ -1,4 +1,6 @@
-﻿using Domain.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Models;
+using Microsoft.AspNetCore.Http;
 
 public partial class JobProviderCompany
 {
@@ -9,9 +11,13 @@ public partial class JobProviderCompany
     public string Summary { get; set; }
     public string Website { get; set; }
 
-    public Guid Location { get; set; }
-    public virtual Location LocationNavigation { get; set; }
+    public Guid? Location { get; set; } // ✅ Nullable
+    public virtual Location? LocationNavigation { get; set; }
 
+    public byte[]? ProfilePictureData { get; set; }
+
+    [NotMapped] // EF should ignore this property
+    public IFormFile? ProfilePictureFile { get; set; }
     public virtual ICollection<JobPost> JobPosts { get; set; } = new List<JobPost>();
 
     public virtual ICollection<CompanyUser> CompanyUsers { get; set; } = new List<CompanyUser>();

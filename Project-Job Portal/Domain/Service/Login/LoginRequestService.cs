@@ -3,14 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Domain.Service.Authuser.Interfaces;
+using Domain.Service.Login.DTO;
+using Domain.Service.Login.Interfaces;
 
 namespace Domain.Service.Login
 {
-    public class LoginRequestService 
+    public class LoginRequestService : ILoginRequestService
     {
-       
+        private readonly ILoginRequestRepository _loginRepository;
+        private readonly IAuthUserRepository _authUserRepository;
+        private readonly IMapper _mapper;
 
+        public LoginRequestService(
+            ILoginRequestRepository loginRepository,
+            IMapper mapper,
+            IAuthUserRepository authUserRepository)
+        {
+            _loginRepository = loginRepository;
+            _mapper = mapper;
+            _authUserRepository = authUserRepository;
+        }
 
+        // ==============================
+        // Login Method for JobProvider
+        // ==============================
+        public JobProviderLoginDto Login(string email, string password)
+        {
+            var user = _loginRepository.GetUserByEmail(email);
+            if (user == null)
+                return null;
 
+            // Verify hashed password
+            if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+                return null;
+
+            var dto = _mapper.Map<JobProviderLoginDto>(user);
+            dto.Token = _authUserRepository.CreateToken(user);
+
+            return dto;
+        }
     }
 }
+

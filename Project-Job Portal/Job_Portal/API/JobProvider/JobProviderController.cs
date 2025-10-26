@@ -1,5 +1,12 @@
-﻿using Domain.Service.JobProvider;
+﻿using AutoMapper;
+using Domain.Service.JobProvider;
+using Domain.Service.JobProvider.Dto;
 using Domain.Service.JobProvider.Interfaces;
+using Domain.Service.Login.DTO;
+using Domain.Service.Login.Interfaces;
+using Domain.Service.SignUp;
+using Domain.Service.SignUp.DTO;
+using Domain.Service.SignUp.Interface;
 using Job_Portal.API.JobProvider.RequestObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,53 +18,81 @@ namespace Job_Portal.API.JobProvider
     public class JobProviderController : ControllerBase
     {
         private readonly IJobProviderService _service;
+        private readonly IMapper _mapper;
+        private readonly ISignUpRequestService _signUpRequestService;
+        private readonly ILoginRequestService _loginService;
 
-        public JobProviderController(IJobProviderService service)
+        public JobProviderController(IJobProviderService service, IMapper mapper, ISignUpRequestService signUpRequestService, ILoginRequestService loginService)
         {
             _service = service;
+            _signUpRequestService = signUpRequestService;
+            _loginService = loginService;
+            _mapper = mapper;
         }
 
-        // ================== Authentication ==================
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        // 1) Submit signup request
+        [HttpPost("signup")]
+        public IActionResult Signup([FromBody] SignUpRequestDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var (id, message) = await _service.RegisterAsync(request.Name, request.Email, request.Password);
-            return Ok(new { JobProviderId = id, Message = message });
+            _signUpRequestService.CreateSignupRequest(dto);
+            return Ok(new { message = "Signup request submitted successfully. Await verification." });
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+
+
+        // 2) Verify / approve signup request
+        [HttpGet("{signUpRequestId}/verify-email")]
+        public async Task<IActionResult> Verify(Guid id)
+        {
+            bool result = await _signUpRequestService.VerifyEmailAsync(id);
+            if (!result)
+                return NotFound(new { message = "Signup request not found or already verified." });
+
+            return Ok(new { message = "Signup request verified successfully." });
+        }
+
+        // 3) Set Password
+        [HttpPost("job-provider/sign-up/{signUpRequestId}/set-password")]
+        public async Task<IActionResult> SetPassword(Guid signUpRequestId, [FromBody] SetPasswordRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Password))
+                return BadRequest(new { message = "Password is required." });
+
+            try
+            {
+                await _signUpRequestService.SetPasswordForLoginAsync(signUpRequestId, request);
+                return Ok(new { message = "Password set successfully. You can now login." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+
+        // 3) Login method
+
+        [HttpPost("job-provider/Login")]
+
+
+        public ActionResult<JobProviderLoginDto> Login([FromBody] JobProviderLoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var (token, id, message) = await _service.LoginAsync(request.Email, request.Password);
-            return Ok(new { Token = token, JobProviderId = id, Message = message });
+            var result = _loginService.Login(request.Email, request.Password);
+
+            if (result == null)
+                return Unauthorized(new { Message = "Invalid email or password" });
+
+            return Ok(result);
         }
 
-        // ================== Email Verification / OTP ==================
-        [HttpPost("{jobProviderId}/send-otp")]
-        public async Task<IActionResult> SendOtp(Guid jobProviderId)
-        {
-            var message = await _service.SendOtpAsync(jobProviderId);
-            return Ok(new { Message = message });
-        }
-
-        [HttpPost("{jobProviderId}/verify-otp")]
-        public async Task<IActionResult> VerifyOtp(Guid jobProviderId, [FromBody] VerifyOtpRequest request)
-        {
-            var message = await _service.VerifyOtpAsync(jobProviderId, request.OTP);
-            return Ok(new { Message = message });
-        }
-
-        public class VerifyOtpRequest
-        {
-            public string OTP { get; set; } = null!;
-        }
 
         // ================== Profile Picture ==================
         [HttpPost("{jobProviderId}/profile-picture")]
@@ -138,14 +173,16 @@ namespace Job_Portal.API.JobProvider
             var (memberId, message) = await _service.AddCompanyMemberAsync(companyId, request.MemberName, request.Designation, request.Email, request.Phone);
             return Ok(new { MemberId = memberId, Message = message });
         }
-
         [HttpGet("company/member/{memberId}")]
         public async Task<IActionResult> GetCompanyMemberById(Guid memberId)
         {
             var member = await _service.GetCompanyMemberByIdAsync(memberId);
+
+            if (member == null)
+                return NotFound(new { Message = "Company member not found" });
+
             return Ok(member);
         }
-
         // ✅ GET ALL COMPANY MEMBERS
         [HttpGet("company-members")]
         public async Task<IActionResult> GetAllCompanyMembers()
@@ -153,7 +190,7 @@ namespace Job_Portal.API.JobProvider
             var members = await _service.GetAllCompanyMembersAsync();
             return Ok(members);
         }
-    
+
 
 
         [HttpPut("company/member/{memberId}")]
@@ -175,7 +212,7 @@ namespace Job_Portal.API.JobProvider
         {
             var message = await _service.DeleteCompanyMemberAsync(memberId);
             return Ok(new { Message = message });
-      }
+        }
 
 
         [HttpPost("logout/{jobProviderId}")]
@@ -185,14 +222,37 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { Message = result });
         }
 
+       
+        // -------------------------
+        // JOB APPLICATION ENDPOINTS
+        // -------------------------
 
+        [HttpGet("jobs/{jobId}/applicants")]
+        public async Task<IActionResult> GetApplicantsByJobId(Guid jobId)
+        {
+            var applicants = await _service.GetApplicantsByJobIdAsync(jobId);
+            if (applicants == null || !applicants.Any())
+                return NotFound(new { message = "No applicants found for this job" });
 
+            return Ok(applicants);
+        }
 
+        [HttpGet("applications/{applicationId}")]
+        public async Task<IActionResult> GetApplicantByApplicationId(Guid applicationId)
+        {
+            var applicant = await _service.GetApplicantByApplicationIdAsync(applicationId);
+            if (applicant == null)
+                return NotFound(new { message = "Applicant not found" });
 
+            return Ok(applicant);
+        }
+
+        [HttpGet("applications/count")]
+        public async Task<IActionResult> GetApplicationCount()
+        {
+            var count = await _service.GetApplicationCountAsync();
+            return Ok(new { totalApplications = count });
+        }
+                               
     }
-
-
-
-
-
 }

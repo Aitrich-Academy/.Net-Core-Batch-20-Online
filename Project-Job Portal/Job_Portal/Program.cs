@@ -1,4 +1,3 @@
-using System.Text;
 using Domain.Extensions;
 using Domain.Service.JobProvider.Interfaces;
 using Domain.Service.JobProvider;
@@ -8,6 +7,9 @@ using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+
+using Domain.Helper;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,10 +25,8 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddControllers();
 
 // Register repository and service
-builder.Services.AddScoped<IJobProviderRepository, JobProviderRepository>();
-builder.Services.AddScoped<IJobProviderService, JobProviderService>();
-builder.Services.AddScoped<IEmailService, EmailService>();
 
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -79,6 +79,8 @@ builder.Services.AddHttpLogging(logging =>
     logging.ResponseBodyLogLimit = 4096;
 
 });
+
+
 
 var app = builder.Build();
 

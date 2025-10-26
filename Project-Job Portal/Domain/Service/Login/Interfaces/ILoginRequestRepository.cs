@@ -8,6 +8,6 @@ namespace Domain.Service.Login.Interfaces
 {
     public interface ILoginRequestRepository
     {
-        
+        Models.AuthUser GetUserByEmail(string email);
     }
 }

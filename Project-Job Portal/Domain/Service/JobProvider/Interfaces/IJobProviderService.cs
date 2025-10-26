@@ -4,19 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Models;
+using Domain.Service.JobProvider.Dto;
 using Microsoft.AspNetCore.Http;
+using JobSeekerModel = Domain.Models.JobSeeker;
 
 namespace Domain.Service.JobProvider.Interfaces
 {
     public interface IJobProviderService
     {
-        // ================== Authentication ==================
-        Task<(Guid JobProviderId, string Message)> RegisterAsync(string name, string email, string password);
-        Task<(string Token, Guid JobProviderId, string Message)> LoginAsync(string email, string password);
 
-        Task<string> SendOtpAsync(Guid jobProviderId);             // Send OTP to JobProvider's email
-        Task<string> VerifyOtpAsync(Guid jobProviderId, string otp); // Verify OTP using JobProviderId
-
+        
 
         // ================== Profile Picture ==================
         Task<string> AddProfilePictureAsync(Guid jobProviderId, IFormFile file);
@@ -45,5 +42,24 @@ namespace Domain.Service.JobProvider.Interfaces
 
         Task<string> LogoutAsync(Guid jobProviderId);
 
+
+        //// -------------------------
+        //// JOB POST METHODS
+        //// -------------------------
+        //Task<Guid> CreateJobPostAsync(JobPostDto jobPost);
+        //Task<JobPostDto?> GetJobByIdAsync(Guid id);
+        //Task<bool> UpdateJobByIdAsync(Guid id, JobPostDto updatedJob);
+        //Task<bool> PatchJobByIdAsync(Guid id, decimal? salary);
+        //Task<bool> DeleteJobByIdAsync(Guid id);
+        //Task<List<JobPostDto>> GetAllJobsAsync();
+
+        // -------------------------
+        // JOB APPLICATION METHODS
+        // -------------------------
+
+        Task<List<ApplicantDto>> GetApplicantsByJobIdAsync(Guid jobId);
+        Task<ApplicantDto?> GetApplicantByApplicationIdAsync(Guid applicationId);
+
+        Task<int> GetApplicationCountAsync();
     }
 }
