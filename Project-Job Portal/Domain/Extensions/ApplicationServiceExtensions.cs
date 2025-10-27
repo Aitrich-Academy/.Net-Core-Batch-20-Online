@@ -1,6 +1,18 @@
 ﻿using Domain.Models;
+<<<<<<< HEAD
 using Domain.Service.JobProvider.Interfaces;
 using Domain.Service.JobProvider;
+=======
+using Domain.Service;
+using Domain.Service.Authuser;
+using Domain.Service.Authuser.Interfaces;
+using Domain.Service.JobSeeker;
+using Domain.Service.JobSeeker.Interfaces;
+using Domain.Service.Login;
+using Domain.Service.Login.Interfaces;
+using Domain.Service.Profile;
+using Domain.Service.Profile.Interface;
+>>>>>>> a4a742265a37d480c4305bd8081a8bd2d21d9341
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +38,7 @@ namespace Domain.Extensions
                options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
             );
 
+<<<<<<< HEAD
             services.AddScoped<IAuthUserRepository, AuthUserRepository>();
             services.AddScoped<IAuthUserService, AuthUserService>();
 
@@ -48,6 +61,17 @@ namespace Domain.Extensions
             services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
 
             services.AddHttpContextAccessor();
+=======
+            services.AddScoped<IAuthUserService, AuthUserService>();
+            services.AddScoped<IAuthUserRepository, AuthUserRepository>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
+            services.AddScoped<IJobSeekerRepository, JobSeekerRepository>();
+            services.AddScoped<IJobSeekerService, JobSeekerService>();
+            services.AddScoped<IJobSeekerProfileRepository, ProfileRepository>();
+            services.AddScoped<IJobSeekerProfileService, ProfileService>();
+>>>>>>> a4a742265a37d480c4305bd8081a8bd2d21d9341
 
             return services;
         }

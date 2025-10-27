@@ -19,8 +19,8 @@ namespace Domain.Models;
 
         public Guid? JobseekerProfileId { get; set; }
 
-        public Guid? JobPostId { get; set; }
+       public Guid? JobPostId { get; set; }
 
-        public virtual JobPost? JobPost { get; set; }
+       public virtual JobPost? JobPost { get; set; }
         public JobSeekerProfile JobSeekerProfile { get; set; }  
     }

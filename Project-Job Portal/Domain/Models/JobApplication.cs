@@ -25,6 +25,7 @@ namespace Domain.Models
         public Guid ApplicantId { get; set; }
         public virtual JobSeeker Seeker { get; set; } // navigation property
 
+<<<<<<< HEAD
         [ForeignKey(nameof(Resume))]
         public Guid ResumeId { get; set; }
         public virtual Resume Resume { get; set; }
@@ -32,6 +33,17 @@ namespace Domain.Models
         public string CoverLetter { get; set; }
 
         public DateTime DateSubmitted { get; set; }
+=======
+        public string? CoverLetter { get; set; }
+
+        public DateTime Datesubmitted { get; set; }
+        //public Status status { get; set; }
+
+        public virtual JobSeeker Seeker { get; set; }
+        public virtual JobPost JobPost { get; set; }
+
+
+>>>>>>> a4a742265a37d480c4305bd8081a8bd2d21d9341
     }
 
 }

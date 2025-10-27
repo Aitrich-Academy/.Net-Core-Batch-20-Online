@@ -14,7 +14,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+<<<<<<< HEAD
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+=======
+>>>>>>> a4a742265a37d480c4305bd8081a8bd2d21d9341
     <PackageReference Include="MailKit" Version="4.14.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
@@ -35,8 +38,13 @@
   <ItemGroup>
     <Folder Include="Service\Admin\DTOs\" />
     <Folder Include="Service\Admin\Interfaces\" />
+<<<<<<< HEAD
     <Folder Include="Service\JobSeeker\DTOs\" />
     <Folder Include="Service\JobSeeker\Interfaces\" />
+=======
+    <Folder Include="Service\JobProvider\DTOs\" />
+    <Folder Include="Service\JobProvider\Interfaces\" />
+>>>>>>> a4a742265a37d480c4305bd8081a8bd2d21d9341
   </ItemGroup>
 
 </Project>

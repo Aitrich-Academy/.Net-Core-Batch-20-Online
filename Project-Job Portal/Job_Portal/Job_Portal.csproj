@@ -22,13 +22,18 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MimeKit" Version="4.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.12" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="API\Admin\Request Objects\" />
+<<<<<<< HEAD
     <Folder Include="API\JobSeeker\RequestObjects\" />
+=======
+    <Folder Include="API\JobProvider\RequestObjects\" />
+>>>>>>> a4a742265a37d480c4305bd8081a8bd2d21d9341
   </ItemGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class _1 : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -222,26 +222,28 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobSeekerProfile",
+                name: "JobSeekerProfiles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ResumeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     JobSeekerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProfileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProfileSummary = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    SeekerImage = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Resume = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    ProfileSummary = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ResumeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobSeekerProfile", x => x.Id);
+                    table.PrimaryKey("PK_JobSeekerProfiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JobSeekerProfile_JobSeekers_JobSeekerId",
+                        name: "FK_JobSeekerProfiles_JobSeekers_JobSeekerId",
                         column: x => x.JobSeekerId,
                         principalTable: "JobSeekers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_JobSeekerProfile_Resume_ResumeId",
+                        name: "FK_JobSeekerProfiles_Resume_ResumeId",
                         column: x => x.ResumeId,
                         principalTable: "Resume",
                         principalColumn: "Id");
@@ -301,9 +303,9 @@ namespace Domain.Migrations
                 {
                     table.PrimaryKey("PK_JobSeekerProfileSkill", x => new { x.JobSeekerProfileId, x.SkillId });
                     table.ForeignKey(
-                        name: "FK_JobSeekerProfileSkill_JobSeekerProfile_JobSeekerProfileId",
+                        name: "FK_JobSeekerProfileSkill_JobSeekerProfiles_JobSeekerProfileId",
                         column: x => x.JobSeekerProfileId,
-                        principalTable: "JobSeekerProfile",
+                        principalTable: "JobSeekerProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -332,7 +334,7 @@ namespace Domain.Migrations
                     table.ForeignKey(
                         name: "FK_WorkExperience_JobSeekerProfile",
                         column: x => x.JobSeekerProfileId,
-                        principalTable: "JobSeekerProfile",
+                        principalTable: "JobSeekerProfiles",
                         principalColumn: "Id");
                 });
 
@@ -495,9 +497,9 @@ namespace Domain.Migrations
                         principalTable: "JobPost",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Qualification_JobSeekerProfile_JobseekerProfileId",
+                        name: "FK_Qualification_JobSeekerProfiles_JobseekerProfileId",
                         column: x => x.JobseekerProfileId,
-                        principalTable: "JobSeekerProfile",
+                        principalTable: "JobSeekerProfiles",
                         principalColumn: "Id");
                 });
 
@@ -608,13 +610,13 @@ namespace Domain.Migrations
                 column: "JobPost");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobSeekerProfile_JobSeekerId",
-                table: "JobSeekerProfile",
+                name: "IX_JobSeekerProfiles_JobSeekerId",
+                table: "JobSeekerProfiles",
                 column: "JobSeekerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobSeekerProfile_ResumeId",
-                table: "JobSeekerProfile",
+                name: "IX_JobSeekerProfiles_ResumeId",
+                table: "JobSeekerProfiles",
                 column: "ResumeId");
 
             migrationBuilder.CreateIndex(
@@ -705,7 +707,7 @@ namespace Domain.Migrations
                 name: "JobPost");
 
             migrationBuilder.DropTable(
-                name: "JobSeekerProfile");
+                name: "JobSeekerProfiles");
 
             migrationBuilder.DropTable(
                 name: "CompanyUser");
