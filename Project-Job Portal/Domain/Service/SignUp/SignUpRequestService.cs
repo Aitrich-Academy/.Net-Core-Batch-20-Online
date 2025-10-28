@@ -25,13 +25,13 @@ namespace Domain.Service.SignUp
     {
         private readonly ISignUpRequestRepository _signUpRequestRepository;
         private readonly IAuthUserRepository _authUserRepository;
-        private readonly IEmailService _emailService;
+        private readonly IProviderEmailService _emailService;
         private readonly HireMeNowDbContext _context;
 
         public SignUpRequestService(
             ISignUpRequestRepository signUpRequestRepository,
             IAuthUserRepository authUserRepository,
-            IEmailService emailService,
+            IProviderEmailService emailService,
             HireMeNowDbContext context)
         {
             _signUpRequestRepository = signUpRequestRepository;
@@ -75,8 +75,35 @@ namespace Domain.Service.SignUp
             signupRequest.Status = Status.VERIFIED;
             _signUpRequestRepository.UpdateSignupRequest(signupRequest);
 
+            // ✅ Step 1: Create JobProviderCompany with unique ID
+            var jobProvider = new JobProviderCompany
+            {
+                Id = Guid.NewGuid(),                   // ✅ Must generate a new unique ID
+                LegalName = signupRequest.UserName,    // or another suitable name
+                Email = signupRequest.Email,
+                Address = "Not Provided",
+                Summary = "Newly verified job provider.",
+                Website = string.Empty,
+                Location = null
+            };
+
+            _context.JobProviderCompanies.Add(jobProvider);
+            await _context.SaveChangesAsync();
+
+            // ✅ Step 2: Link AuthUser → JobProviderCompany
+            var authUser = await _context.AuthUsers
+                .FirstOrDefaultAsync(u => u.Email == signupRequest.Email);
+
+            if (authUser != null)
+            {
+                authUser.JobProviderId = jobProvider.Id;
+                await _context.SaveChangesAsync();
+            }
+
             return true;
         }
+
+
 
         // 3️⃣ Create Job Provider (after verification)
 

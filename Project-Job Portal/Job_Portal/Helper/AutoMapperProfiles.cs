@@ -18,6 +18,9 @@ namespace Job_Portal.Helper
             CreateMap<JobSeekerModel, JobSeekerDto>().ReverseMap();
             CreateMap<JobProviderCompany, AuthUser>().ReverseMap();
             CreateMap<JobProviderLoginDto, AuthUser>().ReverseMap();
+            CreateMap<AuthUser, JobProviderLoginDto>()
+           .ForMember(dest => dest.JobProviderId, opt => opt.MapFrom(src => src.JobProviderId));
+
 
             // JobPost → JobPostDto
             CreateMap<JobPost, JobPostDto>()

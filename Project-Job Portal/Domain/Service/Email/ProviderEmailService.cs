@@ -16,11 +16,11 @@ using SmtpClient = System.Net.Mail.SmtpClient;
 
     namespace Domain.Service.Email
     {
-        public class EmailService : IEmailService
+        public class ProviderEmailService : IProviderEmailService
         {
             private readonly MailSettings _mailSettings;
 
-            public EmailService(IOptions<MailSettings> mailSettings)
+            public ProviderEmailService(IOptions<MailSettings> mailSettings)
             {
                 _mailSettings = mailSettings.Value;
             }

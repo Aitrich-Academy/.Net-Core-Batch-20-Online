@@ -2,6 +2,7 @@
 using Domain.Service.Jobs.Dto;
 using Domain.Service.Jobs.Interfaces;
 using Job_Portal.API.Jobs.RequestObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,7 @@ namespace Job_Portal.API.Jobs
         // JOB POST ENDPOINTS
         // -------------------------
 
+        [Authorize]
         [HttpPost("jobs")]
         public async Task<IActionResult> CreateJobPost([FromBody] CreateJobPostRequest request)
         {
@@ -33,6 +35,8 @@ namespace Job_Portal.API.Jobs
             return Ok(new { jobId, message = "Job created successfully" });
         }
 
+
+        [Authorize]
         [HttpGet("jobs/{id}")]
         public async Task<IActionResult> GetJobById(Guid id)
         {
@@ -43,6 +47,8 @@ namespace Job_Portal.API.Jobs
             return Ok(job);
         }
 
+
+        [Authorize]
         [HttpPut("jobs/{id}")]
         public async Task<IActionResult> UpdateJobById(Guid id, [FromBody] UpdateJobPostRequest request)
         {
@@ -53,6 +59,9 @@ namespace Job_Portal.API.Jobs
             return Ok(new { message = "Job updated successfully" });
         }
 
+
+
+        [Authorize]
         [HttpPatch("jobs/{id}")]
         public async Task<IActionResult> PatchJobById(Guid id, [FromBody] PatchJobPostRequest request)
         {
@@ -61,6 +70,8 @@ namespace Job_Portal.API.Jobs
             return Ok(new { message = "Job updated successfully" });
         }
 
+
+        [Authorize]
         [HttpDelete("jobs/{id}")]
         public async Task<IActionResult> DeleteJobById(Guid id)
         {
@@ -71,6 +82,8 @@ namespace Job_Portal.API.Jobs
             return Ok(new { message = "Job deleted successfully" });
         }
 
+
+        [Authorize]
         [HttpGet("jobs")]
         public async Task<IActionResult> GetAllJobs()
         {

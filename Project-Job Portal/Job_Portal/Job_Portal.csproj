@@ -29,11 +29,11 @@
 
   <ItemGroup>
     <Folder Include="API\Admin\Request Objects\" />
-<<<<<<< HEAD
+
     <Folder Include="API\JobSeeker\RequestObjects\" />
-=======
+
     <Folder Include="API\JobProvider\RequestObjects\" />
->>>>>>> a4a742265a37d480c4305bd8081a8bd2d21d9341
+
   </ItemGroup>
 
   <ItemGroup>

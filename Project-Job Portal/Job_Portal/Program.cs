@@ -1,14 +1,12 @@
-<<<<<<< HEAD
+
 using Domain.Extensions;
 using Domain.Service.JobProvider.Interfaces;
 using Domain.Service.JobProvider;
-=======
 using System.Security.Claims;
 using System.Text;
 using Domain.Extensions;
 using Domain.Mail;
 using Domain.Models;
->>>>>>> a4a742265a37d480c4305bd8081a8bd2d21d9341
 using Job_Portal.Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
@@ -18,14 +16,19 @@ using Swashbuckle.AspNetCore.Filters;
 
 using Domain.Helper;
 using System.Text;
+using Job_Portal.API.JobSeeker.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<Domain.Helper.MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddAutoMapper(typeof(SeekerProfiles));
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
+builder.Services.AddAutoMapper(typeof(SeekerProfile));
 
 
 
@@ -35,7 +38,7 @@ builder.Services.AddControllers();
 
 // Register repository and service
 
-builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<Domain.Helper.MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

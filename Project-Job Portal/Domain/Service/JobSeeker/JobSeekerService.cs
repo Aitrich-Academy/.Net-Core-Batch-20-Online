@@ -89,8 +89,8 @@ namespace Domain.Service.JobSeeker
             {
                 var entity = mapper.Map<JobApplication>(requestDto);
                 entity.Id = Guid.NewGuid();
-                entity.Applicant = jobSeekerId;
-                entity.Datesubmitted = DateTime.UtcNow;
+                entity.ApplicantId = jobSeekerId;
+                entity.DateSubmitted = DateTime.UtcNow;
 
                 return await jobSeekerRepository.CreateJobApplicationAsync(entity);
             }
@@ -111,11 +111,11 @@ namespace Domain.Service.JobSeeker
             return appliedJobs.Select(j => new AppliedJobDto
             {
                 JobApplicationId = j.Id,
-                JobPostId = j.JobPost_id,
+                JobPostId = j.JobPostId,
                 JobTitle = j.JobPost.JobTitle,
                 JobSummary = j.JobPost.JobSummary,
                 PostedDate = j.JobPost.PostedDate,
-                AppliedDate = j.Datesubmitted
+                AppliedDate = j.DateSubmitted
             }).ToList();
         }
 
@@ -125,11 +125,11 @@ namespace Domain.Service.JobSeeker
             return appliedJobs.Select(j => new AppliedJobDto
             {
                 JobApplicationId = j.Id,
-                JobPostId = j.JobPost_id,
+                JobPostId = j.JobPostId,
                 JobTitle = j.JobPost.JobTitle,
                 JobSummary = j.JobPost.JobSummary,
                 PostedDate = j.JobPost.PostedDate,
-                AppliedDate = j.Datesubmitted
+                AppliedDate = j.DateSubmitted
             }).ToList();
         }
 

@@ -8,6 +8,7 @@ using Domain.Service.SignUp;
 using Domain.Service.SignUp.DTO;
 using Domain.Service.SignUp.Interface;
 using Job_Portal.API.JobProvider.RequestObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -95,6 +96,8 @@ namespace Job_Portal.API.JobProvider
 
 
         // ================== Profile Picture ==================
+
+        [Authorize]
         [HttpPost("{jobProviderId}/profile-picture")]
         public async Task<IActionResult> AddProfilePicture(Guid jobProviderId, [FromForm] ProfilePictureRequest request)
         {
@@ -102,13 +105,21 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { Message = message });
         }
 
-        [HttpPut("{jobProviderId}/profile-picture")]
+        [Authorize]
+        [HttpPut("update-profile-picture/{jobProviderId}")]
+     
         public async Task<IActionResult> UpdateProfilePicture(Guid jobProviderId, [FromForm] ProfilePictureRequest request)
         {
-            var message = await _service.UpdateProfilePictureAsync(jobProviderId, request.File);
-            return Ok(new { Message = message });
+            if (request.File == null || request.File.Length == 0)
+                return BadRequest("Please upload a valid image file.");
+
+            var result = await _service.UpdateProfilePictureAsync(jobProviderId, request.File);
+            return Ok(new { message = result });
         }
 
+
+
+        [Authorize]
         [HttpDelete("{jobProviderId}/profile-picture")]
         public async Task<IActionResult> DeleteProfilePicture(Guid jobProviderId)
         {
@@ -116,14 +127,19 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { Message = message });
         }
 
+
+
+        [Authorize]
         [HttpGet("{jobProviderId}/profile-picture")]
         public async Task<IActionResult> GetProfilePicture(Guid jobProviderId)
         {
-            var url = await _service.GetProfilePictureAsync(jobProviderId);
-            return Ok(new { ProfilePictureUrl = url });
+            return await _service.GetProfilePictureAsync(jobProviderId);
         }
 
         // ================== Company ==================
+
+
+        [Authorize]
         [HttpPost("{jobProviderId}/company")]
         public async Task<IActionResult> AddCompany(Guid jobProviderId, [FromBody] AddCompanyRequest request)
         {
@@ -131,6 +147,8 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { CompanyId = companyId, Message = message });
         }
 
+
+        [Authorize]
         [HttpGet("company/{companyId}")]
         public async Task<IActionResult> GetCompanyById(Guid companyId)
         {
@@ -138,6 +156,9 @@ namespace Job_Portal.API.JobProvider
             return Ok(company);
         }
         // ✅ GET ALL COMPANIES
+
+
+        [Authorize]
         [HttpGet("companies")]
         public async Task<IActionResult> GetAllCompanies()
         {
@@ -145,6 +166,8 @@ namespace Job_Portal.API.JobProvider
             return Ok(companies);
         }
 
+
+        [Authorize]
         [HttpPut("company/{companyId}")]
         public async Task<IActionResult> UpdateCompany(Guid companyId, [FromBody] UpdateCompanyRequest request)
         {
@@ -152,6 +175,8 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { Message = message });
         }
 
+
+        [Authorize]
         [HttpPatch("company/{companyId}")]
         public async Task<IActionResult> PatchCompany(Guid companyId, [FromBody] PatchCompanyRequest request)
         {
@@ -159,6 +184,9 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { Message = message });
         }
 
+
+
+        [Authorize]
         [HttpDelete("company/{companyId}")]
         public async Task<IActionResult> DeleteCompany(Guid companyId)
         {
@@ -167,12 +195,18 @@ namespace Job_Portal.API.JobProvider
         }
 
         // ================== Company Member ==================
+
+
+        [Authorize]
         [HttpPost("company/{companyId}/member")]
         public async Task<IActionResult> AddCompanyMember(Guid companyId, [FromBody] AddCompanyMemberRequest request)
         {
             var (memberId, message) = await _service.AddCompanyMemberAsync(companyId, request.MemberName, request.Designation, request.Email, request.Phone);
             return Ok(new { MemberId = memberId, Message = message });
         }
+
+
+        [Authorize]
         [HttpGet("company/member/{memberId}")]
         public async Task<IActionResult> GetCompanyMemberById(Guid memberId)
         {
@@ -184,6 +218,10 @@ namespace Job_Portal.API.JobProvider
             return Ok(member);
         }
         // ✅ GET ALL COMPANY MEMBERS
+
+
+
+        [Authorize]
         [HttpGet("company-members")]
         public async Task<IActionResult> GetAllCompanyMembers()
         {
@@ -192,7 +230,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-
+        [Authorize]
         [HttpPut("company/member/{memberId}")]
         public async Task<IActionResult> UpdateCompanyMember(Guid memberId, [FromBody] UpdateCompanyMemberRequest request)
         {
@@ -200,6 +238,8 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { Message = message });
         }
 
+
+        [Authorize]
         [HttpPatch("company/member/{memberId}")]
         public async Task<IActionResult> PatchCompanyMember(Guid memberId, [FromBody] PatchCompanyMemberRequest request)
         {
@@ -207,6 +247,8 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { Message = message });
         }
 
+
+        [Authorize]
         [HttpDelete("company/member/{memberId}")]
         public async Task<IActionResult> DeleteCompanyMember(Guid memberId)
         {
@@ -215,6 +257,8 @@ namespace Job_Portal.API.JobProvider
         }
 
 
+
+        [Authorize]
         [HttpPost("logout/{jobProviderId}")]
         public async Task<IActionResult> Logout(Guid jobProviderId)
         {
@@ -222,11 +266,13 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { Message = result });
         }
 
-       
+
         // -------------------------
         // JOB APPLICATION ENDPOINTS
         // -------------------------
 
+
+        [Authorize]
         [HttpGet("jobs/{jobId}/applicants")]
         public async Task<IActionResult> GetApplicantsByJobId(Guid jobId)
         {
@@ -237,6 +283,8 @@ namespace Job_Portal.API.JobProvider
             return Ok(applicants);
         }
 
+
+        [Authorize]
         [HttpGet("applications/{applicationId}")]
         public async Task<IActionResult> GetApplicantByApplicationId(Guid applicationId)
         {
@@ -247,6 +295,8 @@ namespace Job_Portal.API.JobProvider
             return Ok(applicant);
         }
 
+
+        [Authorize]
         [HttpGet("applications/count")]
         public async Task<IActionResult> GetApplicationCount()
         {

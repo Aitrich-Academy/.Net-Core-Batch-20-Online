@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Domain.Models;
 using Domain.Service.JobProvider.Dto;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using JobSeekerModel = Domain.Models.JobSeeker;
 
 namespace Domain.Service.JobProvider.Interfaces
@@ -13,13 +14,14 @@ namespace Domain.Service.JobProvider.Interfaces
     public interface IJobProviderService
     {
 
+        // ================== Profile Picture ==================
+       
+            Task<string> AddProfilePictureAsync(Guid jobProviderId, IFormFile file);
+            Task<string> UpdateProfilePictureAsync(Guid jobProviderId, IFormFile file);
+            Task<string> DeleteProfilePictureAsync(Guid jobProviderId);
+            Task<FileContentResult?> GetProfilePictureAsync(Guid jobProviderId);
         
 
-        // ================== Profile Picture ==================
-        Task<string> AddProfilePictureAsync(Guid jobProviderId, IFormFile file);
-        Task<string> UpdateProfilePictureAsync(Guid jobProviderId, IFormFile file);
-        Task<string> DeleteProfilePictureAsync(Guid jobProviderId);
-        Task<string> GetProfilePictureAsync(Guid jobProviderId);
 
         // ================== Company ==================
         Task<(Guid CompanyId, string Message)> AddCompanyAsync(Guid jobProviderId, string companyName, string location, string industry, string websiteUrl);

@@ -44,27 +44,36 @@ namespace Domain.Service.Jobs
             if (company == null) throw new Exception("Company not found");
             if (user == null) throw new Exception("User not found");
 
-            // Map DTO to entity
-            var jobPost = _mapper.Map<JobPost>(jobPostDto);
+            // ✅ Manual mapping to avoid AutoMapper null errors
+            var jobPost = new JobPost
+            {
+                Id = Guid.NewGuid(),
+                JobTitle = jobPostDto.JobTitle ?? "Untitled Job",
+                JobSummary = jobPostDto.JobSummary ?? "No summary provided",
+                PostedDate = DateTime.UtcNow,
+                Salary = jobPostDto.Salary ?? 0,
+                Experience = jobPostDto.Experience ?? "Not specified",
+                ApplicationDeadline = jobPostDto.ApplicationDeadline ?? DateTime.UtcNow.AddDays(30),
+                JobType = jobPostDto.JobType ?? "Full-Time",
+                LocationId = jobPostDto.LocationId,
+                IndustryId = jobPostDto.IndustryId,
+                CompanyId = jobPostDto.CompanyId,
+                PostedBy = jobPostDto.PostedBy
+            };
 
-            // Attach existing entities
+            // ✅ Attach navigation entities
             jobPost.Location = location;
             jobPost.Industry = industry;
             jobPost.Company = company;
             jobPost.PostedByNavigation = user;
 
-            // Set defaults
-            jobPost.Id = Guid.NewGuid();
-            jobPost.PostedDate = DateTime.UtcNow;
-            jobPost.Experience ??= "Not specified";
-            jobPost.JobType ??= "Full-Time";
-
-            // Save to DB
+            // ✅ Save to DB
             await _repository.CreateJobPostAsync(jobPost);
 
-            // Return the Id
             return jobPost.Id;
         }
+
+
         public async Task<JobPostDto?> GetJobByIdAsync(Guid id)
         {
             var jobPost = await _repository.GetJobByIdAsync(id);

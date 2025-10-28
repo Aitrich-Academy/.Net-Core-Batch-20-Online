@@ -2,6 +2,7 @@
 using Domain.Service.JobProvider.Dto;
 using Domain.Service.JobProvider.Interfaces;
 using Job_Portal.API.JobProvider.RequestObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,8 @@ namespace Job_Portal.API.JobProvider
 
 
         // 28. Schedule Interview
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> ScheduleInterview([FromBody] ScheduleInterviewRequest request)
         {
@@ -31,6 +34,8 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { interviewId, message = "Interview scheduled successfully" });
         }
 
+
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllScheduledInterviews()
         {
@@ -38,6 +43,8 @@ namespace Job_Portal.API.JobProvider
             return Ok(interviews);
         }
 
+
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetInterviewById(Guid id)
         {
@@ -46,6 +53,8 @@ namespace Job_Portal.API.JobProvider
         }
 
         // 30. Update Interview
+
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateInterview(Guid id, [FromBody] UpdateInterviewRequest request)
         {
@@ -57,6 +66,8 @@ namespace Job_Portal.API.JobProvider
         }
 
         // 31. Patch Interview (time only)
+
+        [Authorize]
         [HttpPatch("{id}")]
         public async Task<IActionResult> PatchInterview(Guid id, [FromBody] PatchInterviewRequest request)
         {
@@ -67,6 +78,8 @@ namespace Job_Portal.API.JobProvider
         }
 
         // 32. Update Interview Status
+
+        [Authorize]
         [HttpPut("{id}/status")]
         public async Task<IActionResult> UpdateInterviewStatus(Guid id, [FromBody] UpdateInterviewStatusRequest request)
         {
@@ -82,6 +95,8 @@ namespace Job_Portal.API.JobProvider
         }
 
         // 33. Delete Interview
+
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInterview(Guid id)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Service.Email.Interface
 {
-    public interface IEmailService
+    public interface IProviderEmailService
     {
         Task SendEmailAsync(string toEmail, string subject, string body);
     }
