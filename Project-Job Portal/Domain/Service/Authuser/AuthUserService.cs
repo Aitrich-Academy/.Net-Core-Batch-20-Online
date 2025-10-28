@@ -4,10 +4,15 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+
+using Domain.Service.Authuser.Interfaces;
+using Microsoft.AspNetCore.Http;
+
 using Domain.Models;
 using Domain.Service.Authuser.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Domain.Service.Authuser
 {
@@ -15,6 +20,14 @@ namespace Domain.Service.Authuser
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAuthUserRepository _userRepository;
+
+
+        public AuthUserService(IHttpContextAccessor httpContextAccessor, IAuthUserRepository userRepository)
+        {
+            _httpContextAccessor = httpContextAccessor;
+            _userRepository = userRepository;
+        }
+
         private readonly HireMeNowDbContext _context;
 
         public AuthUserService(IHttpContextAccessor httpContextAccessor, IAuthUserRepository userRepository, HireMeNowDbContext context)
@@ -22,6 +35,7 @@ namespace Domain.Service.Authuser
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
             _context = context;
+
         }
 
         public string GetUserId()

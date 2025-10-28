@@ -7,6 +7,7 @@ using Domain.Models;
 using Domain.Service.Login.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Domain.Service.Login
 {
     public class LoginRequestRepository : ILoginRequestRepository
@@ -18,6 +19,13 @@ namespace Domain.Service.Login
             _context = dbContext;
         }
 
+        public AuthUser GetUserByEmail(string email)
+        {
+            var user = _context.AuthUsers
+                .FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
+            return user;
+        }
+
         public async Task<AuthUser?> GetUserByEmailAsync(string email)
         {
             return await _context.AuthUsers.FirstOrDefaultAsync(e => e.Email == email);
@@ -27,6 +35,7 @@ namespace Domain.Service.Login
         {
             return await _context.AuthUsers
                 .FirstOrDefaultAsync(e => e.Email == email && e.Password == password);
+
         }
     }
 }

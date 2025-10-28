@@ -11,5 +11,6 @@ namespace Domain.Service.Login.Interfaces
     {
         Task<AuthUser?> GetUserByEmailAsync(string email);
         Task<AuthUser?> GetUserByEmailAndPasswordAsync(string email, string password);
+        Models.AuthUser GetUserByEmail(string email);
     }
 }

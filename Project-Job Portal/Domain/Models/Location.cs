@@ -7,11 +7,13 @@ public partial class Location
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; } = null!;
-
-    public string Discription { get; set; } = null!;
+    public string? Name { get; set; }           // was non-nullable
+    public string? Discription { get; set; }    // was non-nullable
 
     public virtual ICollection<JobPost> JobPosts { get; set; } = new List<JobPost>();
-
     public virtual ICollection<JobProviderCompany> JobProviderCompanies { get; set; } = new List<JobProviderCompany>();
+
+    public string? City { get; set; }           // make nullable
+    public string? State { get; set; }          // make nullable
+    public string? Country { get; set; }        // make nullable
 }

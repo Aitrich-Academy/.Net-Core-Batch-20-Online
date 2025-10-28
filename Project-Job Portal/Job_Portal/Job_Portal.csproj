@@ -29,7 +29,11 @@
 
   <ItemGroup>
     <Folder Include="API\Admin\Request Objects\" />
+
+    <Folder Include="API\JobSeeker\RequestObjects\" />
+
     <Folder Include="API\JobProvider\RequestObjects\" />
+
   </ItemGroup>
 
   <ItemGroup>

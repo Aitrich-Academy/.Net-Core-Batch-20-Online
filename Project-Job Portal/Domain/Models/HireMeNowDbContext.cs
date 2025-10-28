@@ -16,10 +16,11 @@ namespace Domain.Models
         }
 
         public virtual DbSet<AuthUser> AuthUsers { get; set; }
+     
         public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
         public virtual DbSet<CompanyUser> CompanyUsers { get; set; }
         public virtual DbSet<Industry> Industries { get; set; }
-        public virtual DbSet<JobCategory> JobCategories { get; set; }
+        //public virtual DbSet<JobCategory> JobCategories { get; set; }
         public virtual DbSet<JobPost> JobPosts { get; set; }
         public virtual DbSet<JobProviderCompany> JobProviderCompanies { get; set; }
         public virtual DbSet<JobResponsibility> JobResponsibilities { get; set; }
@@ -42,8 +43,9 @@ namespace Domain.Models
         public virtual DbSet<GroupMember> GroupMembers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer(
-                "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
+            => optionsBuilder.UseSqlServer 
+            (
+                "Data Source=SRUTHI;Initial Catalog=JOBPORTALFINAL;Integrated Security=True;Trust Server Certificate=True");
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -85,6 +87,9 @@ namespace Domain.Models
                 entity.Property(e => e.JobTitle).HasMaxLength(10).IsFixedLength();
                 entity.Property(e => e.PostedDate).HasColumnType("datetime");
 
+                // ✅ Fix the warning for decimal precision
+                entity.Property(e => e.Salary).HasColumnType("decimal(18,2)");
+
                 entity.HasOne(d => d.Location)
                     .WithMany(p => p.JobPosts)
                     .HasForeignKey(d => d.LocationId)
@@ -94,25 +99,25 @@ namespace Domain.Models
                 entity.HasOne(d => d.PostedByNavigation)
                     .WithMany(p => p.JobPosts)
                     .HasForeignKey(d => d.PostedBy)
-                    .OnDelete(DeleteBehavior.Restrict) //  changed
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_JobPost_CompanyUser");
 
                 entity.HasOne(d => d.Industry)
                     .WithMany(p => p.JobPosts)
                     .HasForeignKey(d => d.IndustryId)
-                    .OnDelete(DeleteBehavior.Restrict) //  changed
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_JobPost_Industry");
 
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.JobPosts)
-                    .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.Restrict) //  changed
-                    .HasConstraintName("FK_JobPost_JobCategory");
+                // entity.HasOne(d => d.Category)
+                //     .WithMany(p => p.JobPosts)
+                //     .HasForeignKey(d => d.CategoryId)
+                //     .OnDelete(DeleteBehavior.Restrict)
+                //     .HasConstraintName("FK_JobPost_JobCategory");
 
                 entity.HasOne(d => d.Company)
                     .WithMany(p => p.JobPosts)
                     .HasForeignKey(d => d.CompanyId)
-                    .OnDelete(DeleteBehavior.Restrict) //  changed
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_JobPost_JobProviderCompany");
             });
 
@@ -178,6 +183,10 @@ namespace Domain.Models
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.Discription).HasMaxLength(10).IsFixedLength();
                 entity.Property(e => e.Name).HasMaxLength(10).IsFixedLength();
+
+                entity.Property(e => e.City).HasMaxLength(100).IsUnicode(false);
+                entity.Property(e => e.State).HasMaxLength(100).IsUnicode(false);
+                entity.Property(e => e.Country).HasMaxLength(100).IsUnicode(false);
             });
 
             modelBuilder.Entity<Qualification>(entity =>
