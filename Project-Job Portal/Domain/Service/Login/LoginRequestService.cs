@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Service.Authuser.Interfaces;
+
 
 namespace Domain.Service.Login
 {
@@ -57,6 +59,16 @@ namespace Domain.Service.Login
             return true;
         }
 
+      
+        public async Task<JobSeekerLoginDto?> LoginJS(string email, string password)
+        {
+            var user = await loginRepository.GetUserByEmailAndPasswordAsync(email, password);
+            if (user == null)
+                return null;
 
+            var userDto = mapper.Map<JobSeekerLoginDto>(user);
+            userDto.Token = authUserRepository.CreateToken(user);
+            return userDto;
+        }
     }
 }

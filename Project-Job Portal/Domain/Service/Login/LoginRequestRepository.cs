@@ -14,6 +14,7 @@ namespace Domain.Service.Login
     public class LoginRequestRepository : ILoginRequestRepository
     {
         private readonly HireMeNowDbContext _context;
+
         public LoginRequestRepository(HireMeNowDbContext context)
         {
             _context = context;
@@ -33,6 +34,17 @@ namespace Domain.Service.Login
             }
         }
 
+
+        public async Task<AuthUser?> GetUserByEmailAsync(string email)
+        {
+            return await _context.AuthUsers.FirstOrDefaultAsync(e => e.Email == email);
+        }
+
+        public async Task<AuthUser?> GetUserByEmailAndPasswordAsync(string email, string password)
+        {
+            return await _context.AuthUsers
+                .FirstOrDefaultAsync(e => e.Email == email && e.Password == password);
+        }
 
     }
 }

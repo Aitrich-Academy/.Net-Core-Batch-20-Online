@@ -11,13 +11,14 @@ using Domain.Service.Login.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Domain.Service.JobSeeker.Interfaces;
 
 namespace Job_Portal.API.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "ADMIN")]
     public class AdminController : ControllerBase
     {
 
@@ -26,14 +27,15 @@ namespace Job_Portal.API.Admin
         IAdminRepository _adminRepository;
         private IMapper mapper;
         private readonly ILoginRequestService _loginRequestService;
+        private readonly IJobSeekerRepository _jobSeekerRepository;
 
-
-        public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService)
+        public AdminController(IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService,IJobSeekerRepository jobSeekerRepository)
         {
             _mapper = mapper;
             _adminService = adminService;
             _adminRepository = adminRepostory;
             _loginRequestService = loginRequestService;
+            _jobSeekerRepository = jobSeekerRepository;
 
         }
 
@@ -327,6 +329,49 @@ namespace Job_Portal.API.Admin
             if (!result) return NotFound();
             return Ok("Job rejected successfully");
         }
+
+
+
+
+        // ✅ 1. Get all JobSeekerProfiles
+        [Authorize(Roles = "ADMIN")]
+        [HttpGet("GetAllJobSeekers")]
+        public async Task<IActionResult> GetAllJobSeekers()
+        {
+            var jobSeekers = await _jobSeekerRepository.GetAllAsync();
+            return Ok(jobSeekers);
+        }
+
+        // ✅ 2. Get JobSeekerProfile by Id
+        [HttpGet("GetJobSeekerById/{id}")]
+        public async Task<IActionResult> GetJobSeekerById(Guid id)
+        {
+            var jobSeekerProfile = await _jobSeekerRepository.GetByIdAsync(id);
+            if (jobSeekerProfile == null)
+                return NotFound($"JobSeekerProfile with ID {id} not found.");
+
+            return Ok(jobSeekerProfile);
+        }
+
+        // ✅ 3. Delete JobSeekerProfile by Id
+        [HttpDelete("DeleteJobSeekerById/{id}")]
+        public async Task<IActionResult> DeleteJobSeekerById(Guid id)
+        {
+            var deleted = await _jobSeekerRepository.DeleteAsync(id);
+            if (!deleted)
+                return NotFound($"JobSeekerProfile with ID {id} not found or already deleted.");
+
+            return Ok($"JobSeekerProfile with ID {id} deleted successfully.");
+        }
+
+        // ✅ 4. Get total JobSeeker count
+        [HttpGet("GetJobSeekerCount")]
+        public async Task<IActionResult> GetJobSeekerCount()
+        {
+            var count = await _jobSeekerRepository.GetCountAsync();
+            return Ok(new { TotalJobSeekers = count });
+        }
+
 
         //Logout
 
