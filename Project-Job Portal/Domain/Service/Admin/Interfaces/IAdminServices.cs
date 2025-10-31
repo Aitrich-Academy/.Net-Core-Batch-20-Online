@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Domain.Service.JobProvider.DTOs;
 
 
@@ -40,6 +41,23 @@ namespace Domain.Service.Admin.Interfaces
         Task<bool> DeleteIndustryAsync(Guid id);
 
         Task<IEnumerable<JobDto>> GetPendingJobsAsync();
+
+        Task<JobCategoryDto> CreateJobCategoryAsync(JobCategoryDto dto);
+        Task<IEnumerable<JobCategoryDto>> GetAllJobCategoryAsync();
+        Task<JobCategoryDto?> GetJobCategoryByIdAsync(Guid id);
+        Task<bool> UpdateJobCategoryAsync(Guid id, JobCategoryDto dto);
+        Task<bool> PatchJobCategoryAsync(Guid id, JobCategoryDto dto);
+        Task<bool> DeleteJobCategoryAsync(Guid id);
+
+        Task<int> GetJobCountAsync();
+        Task<JobPost?> GetJobByNameAsync(string jobTitle);
+
+        Task<IEnumerable<JobProviderDto>> GetAllProviders();
+        Task<JobProviderDto> GetJobProviderByIdAsync(Guid id);
+
+        Task<int> GetJobProviderCountAsync();
+
+        Task<bool> DeleteJobProviderAsync(Guid id);
         Task<bool> ApproveJobAsync(Guid jobId);
         Task<bool> RejectJobAsync(Guid jobId);
 

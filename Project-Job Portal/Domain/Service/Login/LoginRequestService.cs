@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Service.Authuser.Interfaces;
+using Domain.Service.Login.DTO;
+
 
 
 namespace Domain.Service.Login
@@ -58,8 +60,25 @@ namespace Domain.Service.Login
             await _context.SaveChangesAsync();
             return true;
         }
+        public JobProviderLoginDto Login(string email, string password)
+        {
+            var user = loginRepository.GetUserByEmail(email);
+            if (user == null)
+                return null;
 
-      
+            // Verify hashed password
+            if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+                return null;
+
+            var dto = mapper.Map<JobProviderLoginDto>(user);
+            dto.JobProviderId = user.JobProviderId;
+            dto.Token = authUserRepository.CreateToken(user);
+
+            return dto;
+        }
+
+
+
         public async Task<JobSeekerLoginDto?> LoginJS(string email, string password)
         {
             var user = await loginRepository.GetUserByEmailAndPasswordAsync(email, password);

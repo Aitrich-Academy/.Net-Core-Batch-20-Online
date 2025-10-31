@@ -5,7 +5,7 @@ namespace Job_Portal.API.JobSeeker.RequestObjects
     public class ApplyJobRequest
     {
         [Required]
-        public Guid JobPost_Id { get; set; }
+        public Guid JobPostId { get; set; } // ✅ matches entity exactly
 
     }
 }

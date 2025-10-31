@@ -24,12 +24,13 @@ namespace Domain.Models
 		[ForeignKey(nameof(Application))]
 		public Guid? ApplicationId { get; set; }
 
-		public DateTime? Date { get; set; }
+        public DateTime DateScheduled { get; set; }
 
-
-		//public JobInterviewStatus Status { get; set; }
-		//[ForeignKey(nameof(CompanyUser))]
-		public Guid? SheduledBy { get; set; }
+        public string? Mode { get; set; }
+        public string? Status { get; set; }
+        //public JobInterviewStatus Status { get; set; }
+        //[ForeignKey(nameof(CompanyUser))]
+        public Guid? SheduledBy { get; set; }
 
 		public virtual CompanyUser? CompanyUser { get; set; }
 

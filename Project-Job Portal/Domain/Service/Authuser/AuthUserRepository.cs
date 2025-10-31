@@ -29,40 +29,40 @@ namespace Domain.Service.Authuser
 
         }
 
-        //public string? CreateToken(AuthUser user)
-        //{
-        //    if (user == null)
-        //        throw new ArgumentNullException(nameof(user), "User object cannot be null.");
+        public string? CreateToken(AuthUser user)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user), "User object cannot be null.");
 
-        //    string tokenSecret = _configuration.GetSection("AuthSettings:Token").Value;
-        //    if (string.IsNullOrEmpty(tokenSecret))
-        //        throw new InvalidOperationException("Token secret is missing or empty in configuration.");
+            string tokenSecret = _configuration.GetSection("AuthSettings:Token").Value;
+            if (string.IsNullOrEmpty(tokenSecret))
+                throw new InvalidOperationException("Token secret is missing or empty in configuration.");
 
-        //    // Update connection info
-        //    user.ConnectionId = Guid.NewGuid().ToString();
-        //    user.OnlineStatus = true;
-        //    _context.SaveChanges();
+            // Update connection info
+            user.ConnectionId = Guid.NewGuid().ToString();
+            user.OnlineStatus = true;
+            _context.SaveChanges();
 
-        //    List<Claim> claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimTypes.Name, user.FirstName ?? string.Empty),
-        //        new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
-        //        new Claim(ClaimTypes.Sid, user.Id.ToString()),
-        //        new Claim(ClaimTypes.Role, user.Role.ToString()),
-        //        new Claim("ConnectionId", user.ConnectionId ?? string.Empty)
-        //    };
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.FirstName ?? string.Empty),
+                new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
+                new Claim(ClaimTypes.Sid, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim("ConnectionId", user.ConnectionId ?? string.Empty)
+            };
 
-        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenSecret));
-        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenSecret));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-        //    var token = new JwtSecurityToken(
-        //        claims: claims,
-        //        expires: DateTime.Now.AddDays(1),
-        //        signingCredentials: creds
-        //    );
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: creds
+            );
 
-        //    return new JwtSecurityTokenHandler().WriteToken(token);
-        //}
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
 
 
 
@@ -81,8 +81,30 @@ namespace Domain.Service.Authuser
         }
 
 
+        // Add Auth User for Job Provider
+        public async Task<AuthUser> AddAuthUserJP(AuthUser authUser)
 
-        
+        {
+            authUser.Role = Enums.Role.JOB_PROVIDER;
+
+            await _context.AuthUsers.AddAsync(authUser);
+
+            Models.JobSeeker jobSeeker = _mapper.Map<Models.JobSeeker>(authUser);
+            await _context.JobSeekers.AddAsync(jobSeeker);
+            JobSeekerProfile jp = new();
+            jp.Id = Guid.NewGuid();
+            jp.JobSeekerId = jobSeeker.Id;
+            await _context.JobSeekerProfiles.AddAsync(jp);
+            _context.SaveChanges();
+            return authUser;
+        }
+
+        public async Task AddUserAsync(AuthUser user)
+        {
+            await _context.AuthUsers.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
+
 
 
     }

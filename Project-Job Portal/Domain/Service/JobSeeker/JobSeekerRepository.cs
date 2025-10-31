@@ -53,14 +53,14 @@ namespace Domain.Service.JobSeeker
         public async Task<bool> HasAlreadyAppliedAsync(Guid jobSeekerId, Guid jobPostId)
         {
             return await _context.JobApplications
-                .AnyAsync(a => a.Applicant == jobSeekerId && a.JobPost_id == jobPostId);
+                .AnyAsync(a => a.ApplicantId == jobSeekerId && a.JobPostId == jobPostId);
         }
 
         public async Task<List<JobApplication>> GetAppliedJobsAsync(Guid jobSeekerId)
         {
             return await _context.JobApplications
                 .Include(j => j.JobPost)
-                .Where(j => j.Applicant == jobSeekerId)
+                .Where(j => j.ApplicantId == jobSeekerId)
                 .ToListAsync();
         }
 
@@ -68,7 +68,7 @@ namespace Domain.Service.JobSeeker
         {
             return await _context.JobApplications
                 .Include(j => j.JobPost)
-                .Where(j => j.Applicant == jobSeekerId &&
+                .Where(j => j.ApplicantId == jobSeekerId &&
                             j.JobPost.JobTitle.Contains(jobTitle))
                 .ToListAsync();
         }
@@ -78,7 +78,7 @@ namespace Domain.Service.JobSeeker
             try
             {
                 var appliedJob = await _context.JobApplications
-                    .FirstOrDefaultAsync(j => j.Id == jobApplicationId && j.Applicant == jobSeekerId);
+                    .FirstOrDefaultAsync(j => j.Id == jobApplicationId && j.ApplicantId == jobSeekerId);
 
                 if (appliedJob == null)
                     return false;

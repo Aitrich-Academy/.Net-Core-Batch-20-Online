@@ -1,7 +1,7 @@
 
-﻿using System.Security.Claims;
 using AutoMapper;
 using Domain.Service.Authuser.Interfaces;
+using Domain.Service.JobProvider.Interfaces;
 using Domain.Service.JobSeeker;
 using Domain.Service.JobSeeker.DTOs;
 using Domain.Service.JobSeeker.Interfaces;
@@ -9,6 +9,7 @@ using Domain.Service.Login.Interfaces;
 using Job_Portal.API.JobSeeker.RequestObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
 
 namespace Job_Portal.API.JobSeeker
 {
@@ -18,16 +19,18 @@ namespace Job_Portal.API.JobSeeker
     public class JobSeekerController : ControllerBase
     {
         public IJobSeekerService jobSeekerService { get; set; }
+        private readonly IInterviewService _interviewService;
 
         //public IJobProviderService jobProviderService;
         public ILoginRequestService loginRequestService { get; set; }
         public IAuthUserService  authUserService { get; set; }
         public IMapper mapper { get; set; }
-        public JobSeekerController(IJobSeekerService _jobSeekerService, IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService/*, IJobProviderService _jobProviderService*/)
+        public JobSeekerController(IInterviewService interviewService,IJobSeekerService _jobSeekerService, IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService/*, IJobProviderService _jobProviderService*/)
         {
             jobSeekerService = _jobSeekerService;
             loginRequestService = _loginRequestService;
             authUserService = _authUserService;
+            _interviewService = interviewService;
             mapper = _mapper;
             //jobProviderService = _jobProviderService;
         }
@@ -136,7 +139,7 @@ namespace Job_Portal.API.JobSeeker
             var userId = authUserService.GetUserId();
             var jobSeekerId = Guid.Parse(userId);
 
-            bool alreadyApplied = await jobSeekerService.HasAlreadyAppliedAsync(jobSeekerId, request.JobPost_Id);
+            bool alreadyApplied = await jobSeekerService.HasAlreadyAppliedAsync(jobSeekerId, request.JobPostId);
             if (alreadyApplied)
                 return BadRequest(new { message = "You have already applied for this job." });
 
@@ -263,26 +266,17 @@ namespace Job_Portal.API.JobSeeker
 
      
         [HttpGet("Get scheduled-interviews")]
-        [Authorize]
-        public async Task<IActionResult> GetScheduledInterviews()
+      
+        public async Task<IActionResult> GetAllScheduledInterviews()
         {
-            var userIdString = authUserService.GetUserId();
-
-            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid jobSeekerId))
-                return Unauthorized("Invalid user ID.");
-
-            var interviews = await jobSeekerService.GetScheduledInterviewsAsync(jobSeekerId);
-
-            if (interviews == null || !interviews.Any())
-                return NotFound("No scheduled interviews found.");
-
+            var interviews = await _interviewService.GetAllScheduledInterviewsAsync();
             return Ok(interviews);
         }
 
 
 
 
-     
+
         [HttpPost("Logout")]
         [Authorize]
         public async Task<IActionResult> Logout()

@@ -53,7 +53,7 @@ namespace Domain.Service.Profile
         public async Task<bool> HasAppliedJobsAsync(Guid jobSeekerId)
         {
             return await _context.JobApplications
-                .AnyAsync(a => a.Applicant == jobSeekerId);
+                .AnyAsync(a => a.ApplicantId == jobSeekerId);
         }
 
         public async Task<bool> DeleteProfileAsync(Guid jobSeekerId)

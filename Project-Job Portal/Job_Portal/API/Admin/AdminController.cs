@@ -203,7 +203,7 @@ namespace Job_Portal.API.Admin
 
         [HttpPatch("PatchIndustry/{id}")]
 
-        [HttpPatch("{id}")]
+    
         public async Task<IActionResult> PatchIndustry(Guid id, [FromBody] PatchIndustryDto request)
         {
             if (request == null)
@@ -310,9 +310,58 @@ namespace Job_Portal.API.Admin
             else
                 return NotFound("Location not found or failed to delete");
         }
-       
+
+        [HttpPost("AddJobCategory")]
+        public async Task<IActionResult> Create([FromBody] CreateJobCategoryDto dto)
+        {
+            var jobCategoryDto = _mapper.Map<JobCategoryDto>(dto);
+            var addedCategory = await _adminService.CreateJobCategoryAsync(jobCategoryDto);
+
+            // Return the DTO directly
+            return Ok(addedCategory);
+        }
+
+        [HttpGet("GetAllJobCategory")]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _adminService.GetAllJobCategoryAsync();
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetJobCategoryById/{id}")]
+        public async Task<IActionResult> GetJobCategoryById(Guid id)
+        {
+            var result = await _adminService.GetJobCategoryByIdAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+        [HttpPatch("PatchJobCategory/{id}")]
+        public async Task<IActionResult> PatchJobCategory(Guid id, [FromBody] PatchJobCategoryDTO dto)
+        {
+            var mapper = _mapper.Map<JobCategoryDto>(dto);
+            var result = await _adminService.PatchJobCategoryAsync(id, mapper);
+            if (!result)
+                return NotFound("Job category not found.");
+
+            return Ok("Job category updated successfully.");
+        }
+
+
+        [HttpDelete("DeleteJobCategory/{id}")]
+
+        public async Task<IActionResult> DeleteJobCategory(Guid id)
+        {
+            var deleted = await _adminService.DeleteJobCategoryAsync(id);
+
+            if (!deleted)
+                return NotFound("JobCategory not found.");
+
+            return Ok(new { Message = "JobCategory deleted successfully." });
+        }
+
         //Permission
-        
+
         [HttpPatch("ApproveJob/{id}")]
         public async Task<IActionResult> ApproveJob(Guid id)
         {
@@ -330,52 +379,6 @@ namespace Job_Portal.API.Admin
             return Ok("Job rejected successfully");
         }
 
-
-
-
-        // ✅ 1. Get all JobSeekerProfiles
-        [Authorize(Roles = "ADMIN")]
-        [HttpGet("GetAllJobSeekers")]
-        public async Task<IActionResult> GetAllJobSeekers()
-        {
-            var jobSeekers = await _jobSeekerRepository.GetAllAsync();
-            return Ok(jobSeekers);
-        }
-
-        // ✅ 2. Get JobSeekerProfile by Id
-        [HttpGet("GetJobSeekerById/{id}")]
-        public async Task<IActionResult> GetJobSeekerById(Guid id)
-        {
-            var jobSeekerProfile = await _jobSeekerRepository.GetByIdAsync(id);
-            if (jobSeekerProfile == null)
-                return NotFound($"JobSeekerProfile with ID {id} not found.");
-
-            return Ok(jobSeekerProfile);
-        }
-
-        // ✅ 3. Delete JobSeekerProfile by Id
-        [HttpDelete("DeleteJobSeekerById/{id}")]
-        public async Task<IActionResult> DeleteJobSeekerById(Guid id)
-        {
-            var deleted = await _jobSeekerRepository.DeleteAsync(id);
-            if (!deleted)
-                return NotFound($"JobSeekerProfile with ID {id} not found or already deleted.");
-
-            return Ok($"JobSeekerProfile with ID {id} deleted successfully.");
-        }
-
-        // ✅ 4. Get total JobSeeker count
-        [HttpGet("GetJobSeekerCount")]
-        public async Task<IActionResult> GetJobSeekerCount()
-        {
-            var count = await _jobSeekerRepository.GetCountAsync();
-            return Ok(new { TotalJobSeekers = count });
-        }
-
-
-        //Logout
-
-        [Authorize(Roles = "Admin")]
         [HttpPost("logout")]
 
         public async Task<IActionResult> Logout()
@@ -395,9 +398,6 @@ namespace Job_Portal.API.Admin
 
             return Ok("Logout successful.");
         }
-
-
-
 
 
     }

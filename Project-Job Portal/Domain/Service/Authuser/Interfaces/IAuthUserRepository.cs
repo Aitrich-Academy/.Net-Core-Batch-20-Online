@@ -12,6 +12,8 @@ namespace Domain.Service.Authuser.Interfaces
     {
         Task<AuthUser> AddAuthUserJS(AuthUser authUser);
         string? CreateToken(AuthUser user);
+        Task<AuthUser> AddAuthUserJP(AuthUser authUser);
+        Task AddUserAsync(AuthUser authUser);
 
     }
 }

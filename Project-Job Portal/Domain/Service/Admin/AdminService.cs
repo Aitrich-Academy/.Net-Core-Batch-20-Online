@@ -177,6 +177,66 @@ namespace Domain.Service.Admin
             return await _adminRepository.RemoveLocationAsync(locationId);
         }
 
+        public async Task<JobCategoryDto> CreateJobCategoryAsync(JobCategoryDto dto)
+        {
+            dto.Id = Guid.NewGuid();
+            var mappeddto = _mapper.Map<JobCategory>(dto);
+
+            var created = await _adminRepository.AddJobCategoryAsync(mappeddto);
+
+            return _mapper.Map<JobCategoryDto>(created);
+
+        }
+
+        //getAllJobcategory
+        public async Task<IEnumerable<JobCategoryDto>> GetAllJobCategoryAsync()
+        {
+            var categories = await _adminRepository.GetAllJobCategoryAsync();
+            return _mapper.Map<IEnumerable<JobCategoryDto>>(categories);
+        }
+
+        //GetJobCategoryById
+        public async Task<JobCategoryDto?> GetJobCategoryByIdAsync(Guid id)
+        {
+            var category = await _adminRepository.GetJobCategoryByIdAsync(id);
+            var categories = _mapper.Map<JobCategoryDto>(category);
+            return categories;
+        }
+
+        //UpdateJobCategory
+        public async Task<bool> UpdateJobCategoryAsync(Guid id, JobCategoryDto dto)
+        {
+            var existing = await _adminRepository.GetJobCategoryByIdAsync(id);
+
+            if (existing == null) return false;
+
+     existing.Name = dto.Name;
+     existing.Description = dto.Description;
+
+     return await _adminRepository.UpdateJobCategoryAsync(existing);
+ }
+        // patch JobserviceCategory
+        public async Task<bool> PatchJobCategoryAsync(Guid id, JobCategoryDto dto)
+        {
+            var existing = await _adminRepository.GetJobCategoryByIdAsync(id);
+            if (existing == null)
+                return false;
+
+            if (!string.IsNullOrEmpty(dto.Name) && dto.Name.ToLower() != "string")
+                existing.Name = dto.Name;
+
+            if (!string.IsNullOrEmpty(dto.Description) && dto.Description.ToLower() != "string")
+                existing.Description = dto.Description;
+
+            return await _adminRepository.PatchJobCategoryAsync(existing);
+        }
+
+        //Delete JobCategory
+        public async Task<bool> DeleteJobCategoryAsync(Guid id)
+        {
+            return await _adminRepository.DeleteJobCategoryAsync(id);
+        }
+
 
 
         public async Task<IEnumerable<JobDto>> GetPendingJobsAsync()
@@ -184,6 +244,51 @@ namespace Domain.Service.Admin
             var jobs = await _adminRepository.GetPendingJobsAsync();
             return _mapper.Map<IEnumerable<JobDto>>(jobs);
         }
+
+
+        public async Task<int> GetJobCountAsync()
+        {
+            return await _adminRepository.GetJobCountAsync();
+        }
+
+        public async Task<JobPost?> GetJobByNameAsync(string jobTitle)
+        {
+            return await _adminRepository.GetJobByNameAsync(jobTitle);
+        }
+
+
+        public async Task<IEnumerable<JobProviderDto>> GetAllProviders()
+        {
+            var jobProviders = await _adminRepository.GetAllProviders(); // wait for the async result
+            var mappedProviders = _mapper.Map<IEnumerable<JobProviderDto>>(jobProviders);
+            return mappedProviders;
+        }
+
+
+        //Get GetjobproviderbyidById
+        public async Task<JobProviderDto> GetJobProviderByIdAsync(Guid id)
+        {
+            var Jobprovider = await _adminRepository.GetJobProviderByIdAsync(id);
+
+            if (Jobprovider == null)
+                return null;
+
+            return _mapper.Map<JobProviderDto>(Jobprovider);
+        }
+
+        //JobproviderCount
+        public async Task<int> GetJobProviderCountAsync()
+        {
+            return await _adminRepository.GetJobProviderCountAsync();
+        }
+
+
+        //Delete JobProvider
+        public async Task<bool> DeleteJobProviderAsync(Guid id)
+        {
+            return await _adminRepository.DeleteJobProviderAsync(id);
+        }
+
 
         public async Task<bool> ApproveJobAsync(Guid jobId)
         {

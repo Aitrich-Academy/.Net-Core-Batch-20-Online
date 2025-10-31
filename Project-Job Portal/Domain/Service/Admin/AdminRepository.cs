@@ -124,6 +124,9 @@ namespace Domain.Service.Admin
 
             existingLocation.Name = updatedLocation.Name;
             existingLocation.Description = updatedLocation.Description;
+            existingLocation.City = updatedLocation.City;
+            existingLocation.State = updatedLocation.State;
+            existingLocation.Country = updatedLocation.Country;
 
             _context.Locations.Update(existingLocation);
             await _context.SaveChangesAsync();
@@ -140,6 +143,12 @@ namespace Domain.Service.Admin
 
             if (!string.IsNullOrEmpty(updatedLocation.Description))
                 existingLocation.Description = updatedLocation.Description;
+            if (!string.IsNullOrEmpty(updatedLocation.Description))
+                existingLocation.State = updatedLocation.State;
+            if (!string.IsNullOrEmpty(updatedLocation.Description))
+                existingLocation.Country = updatedLocation.Country;
+            if (!string.IsNullOrEmpty(updatedLocation.Description))
+                existingLocation.City = updatedLocation.City;
 
             _context.Locations.Update(existingLocation);
             await _context.SaveChangesAsync();
@@ -222,6 +231,101 @@ namespace Domain.Service.Admin
                 .Where(j => j.Status == "Pending")
                 .ToListAsync();
         }
+        public async Task<bool> RemoveLocationAsync(Guid locationId)
+        {
+            var locationToRemove = await _context.Locations.FindAsync(locationId);
+            if (locationToRemove == null) return false;
+
+            _context.Locations.Remove(locationToRemove);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<JobCategory> AddJobCategoryAsync(JobCategory category)
+        {
+            _context.JobCategories.Add(category);
+            await _context.SaveChangesAsync();
+            return category;
+        }
+
+
+        //GetAllCategory
+        public async Task<IEnumerable<JobCategory>> GetAllJobCategoryAsync()
+        {
+            return await _context.JobCategories.ToListAsync();
+        }
+
+        //GetCategoryById
+        public async Task<JobCategory?> GetJobCategoryByIdAsync(Guid id)
+        {
+            return await _context.JobCategories.FindAsync(id);
+        }
+
+        //updateJobCategory
+        public async Task<bool> UpdateJobCategoryAsync(JobCategory category)
+        {
+            _context.JobCategories.Update(category);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        //PatchJobCategory
+        public async Task<bool> PatchJobCategoryAsync(JobCategory category)
+        {
+
+
+            _context.JobCategories.Update(category);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        //Delete JobCategory
+        public async Task<bool> DeleteJobCategoryAsync(Guid id)
+        {
+            var existing = await _context.JobCategories.FindAsync(id);
+            if (existing == null)
+                return false;
+
+            _context.JobCategories.Remove(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<int> GetJobCountAsync()
+        {
+            return await _context.JobPosts.CountAsync();
+        }
+
+        public async Task<JobPost?> GetJobByNameAsync(string jobTitle)
+        {
+
+
+            var Job = await _context.JobPosts.FirstOrDefaultAsync(x => x.JobTitle == jobTitle);
+            return Job;
+        }
+
+
+        public async Task<IEnumerable<JobProviderCompany>> GetAllProviders()
+        {
+            return await _context.JobProviderCompanies.ToListAsync();
+        }
+        public async Task<JobProviderCompany?> GetJobProviderByIdAsync(Guid id)
+        {
+            return await _context.JobProviderCompanies.FindAsync(id);
+
+        }
+
+        public async Task<int> GetJobProviderCountAsync()
+        {
+            return await _context.JobProviderCompanies.CountAsync();
+        }
+        public async Task<bool> DeleteJobProviderAsync(Guid id)
+        {
+            var existing = await _context.JobProviderCompanies.FindAsync(id);
+            if (existing == null)
+                return false;
+
+            _context.JobProviderCompanies.Remove(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
 
         public async Task<bool> ApproveJobAsync(Guid jobId)
@@ -237,15 +341,7 @@ namespace Domain.Service.Admin
         }
 
 
-        public async Task<bool> RemoveLocationAsync(Guid locationId)
-        {
-            var locationToRemove = await _context.Locations.FindAsync(locationId);
-            if (locationToRemove == null) return false;
-
-            _context.Locations.Remove(locationToRemove);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+      
       
 
         public async Task<bool> RejectJobAsync(Guid jobId)

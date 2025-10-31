@@ -39,6 +39,21 @@ namespace Domain.Service.Admin.Interfaces
 
 
         Task<IEnumerable<JobPost>> GetPendingJobsAsync();
+
+        Task<JobCategory> AddJobCategoryAsync(JobCategory category);
+        Task<IEnumerable<JobCategory>> GetAllJobCategoryAsync();
+        Task<JobCategory?> GetJobCategoryByIdAsync(Guid id);
+        Task<bool> UpdateJobCategoryAsync(JobCategory category);
+        Task<bool> PatchJobCategoryAsync(JobCategory category);
+        Task<bool> DeleteJobCategoryAsync(Guid id);
+        Task<int> GetJobCountAsync();
+        Task<JobPost?> GetJobByNameAsync(string jobTitle);
+
+        Task<IEnumerable<JobProviderCompany>> GetAllProviders();
+        Task<JobProviderCompany?> GetJobProviderByIdAsync(Guid id);
+        Task<int> GetJobProviderCountAsync();
+
+        Task<bool> DeleteJobProviderAsync(Guid id);
         Task<bool> ApproveJobAsync(Guid jobId);
         Task<bool> RejectJobAsync(Guid jobId);
 
