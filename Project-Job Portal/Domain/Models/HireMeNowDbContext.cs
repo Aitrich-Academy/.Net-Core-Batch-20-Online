@@ -1,10 +1,14 @@
 ﻿using System;
-using Domain.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Domain.Models;
 
 namespace Domain.Models
 {
-    public partial class HireMeNowDbContext : DbContext
+    public partial class HireMeNowDbContext:DbContext
     {
         public HireMeNowDbContext()
         {
@@ -32,6 +36,7 @@ namespace Domain.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<SystemUser> SystemUsers { get; set; }
+        public virtual DbSet<JobSeekerProfileSkill> JobSeekerProfileSkills { get; set; }
 
         public virtual DbSet<SavedJob> SavedJobs { get; set; }
         public virtual DbSet<Interview> Interviews { get; set; }
@@ -40,24 +45,19 @@ namespace Domain.Models
         public virtual DbSet<MessageGroup> MessageGroups { get; set; }
         public virtual DbSet<GroupMember> GroupMembers { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //    => optionsBuilder.UseSqlServer(
-        //        "Data Source=DESKTOP-J6RITF7;Initial Catalog=JobPortal;Integrated Security=True;Trust Server Certificate=True");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder.UseSqlServer(
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //    => optionsBuilder.UseSqlServer(
-        //        "Data Source=VIJISHA;Initial Catalog=JobPortalProjectOriginal;Integrated Security=True;Trust Server Certificate=True");
+                "Data Source=VIJISHA;Initial Catalog=JobPortalProjectOriginal;Integrated Security=True;Trust Server Certificate=True");
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-    //        modelBuilder.Entity<AuthUser>()
-    //.HasOne(a => a.SystemUser)
-    //.WithOne(s => s.AuthUser)
-    //.HasForeignKey<AuthUser>(a => a.SystemUserId)
-    //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
-
-
-
+            //        modelBuilder.Entity<AuthUser>()
+            //.HasOne(a => a.SystemUser)
+            //.WithOne(s => s.AuthUser)
+            //.HasForeignKey<AuthUser>(a => a.SystemUserId)
+            //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
 
 
             modelBuilder.Entity<CompanyUser>(entity =>
@@ -70,8 +70,6 @@ namespace Domain.Models
                     .HasForeignKey(d => d.Company)
                     .HasConstraintName("FK_CompanyUser_JobProviderCompany");
             });
-
-      
 
 
             modelBuilder.Entity<Industry>(entity =>
@@ -161,23 +159,42 @@ namespace Domain.Models
                     .HasConstraintName("FK_JobResponsibility_JobPost");
             });
 
-            modelBuilder.Entity<JobSeekerProfile>(entity =>
-            {
-                entity.ToTable("JobSeekerProfile");
-                entity.Property(e => e.Id).ValueGeneratedNever();
+            //modelBuilder.Entity<JobSeekerProfile>(entity =>
+            //{
+            //    entity.ToTable("JobSeekerProfile");
+            //    entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.HasOne(d => d.Resume)
-                    .WithMany(p => p.JobSeekerProfiles)
-                    .HasForeignKey(d => d.ResumeId);
+            //    entity.HasOne(d => d.Resume)
+            //        .WithMany(p => p.JobSeekerProfiles)
+            //        .HasForeignKey(d => d.ResumeId);
+            //});
+
+
+
+            modelBuilder.Entity<WorkExperience>(entity =>
+            {
+                entity.HasOne(w => w.JobSeekerProfile)
+               .WithMany(p => p.WorkExperiences)
+               .HasForeignKey(w => w.JobSeekerProfileId)
+               .OnDelete(DeleteBehavior.Cascade);
             });
+
+
+
+
 
             modelBuilder.Entity<Location>(entity =>
             {
                 entity.ToTable("Location");
                 entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.Property(e => e.Discription).HasMaxLength(10).IsFixedLength();
-                entity.Property(e => e.Name).HasMaxLength(10).IsFixedLength();
+                entity.Property(e => e.Description)
+                      .HasMaxLength(25)
+                      .IsFixedLength();
+                entity.Property(e => e.Name)
+                      .HasMaxLength(25)
+                      .IsFixedLength();
             });
+
 
             modelBuilder.Entity<Qualification>(entity =>
             {
@@ -227,22 +244,31 @@ namespace Domain.Models
             });
 
             // Many-to-many: JobSeekerProfile <-> Skill
+            // Many-to-many: JobSeekerProfile <-> Skill
             modelBuilder.Entity<JobSeekerProfileSkill>()
                 .HasKey(jps => new { jps.JobSeekerProfileId, jps.SkillId });
 
             modelBuilder.Entity<JobSeekerProfileSkill>()
                 .HasOne(jps => jps.JobSeekerProfile)
                 .WithMany(jp => jp.JobSeekerProfileSkills)
-                .HasForeignKey(jps => jps.JobSeekerProfileId);
+                .HasForeignKey(jps => jps.JobSeekerProfileId)
+                .OnDelete(DeleteBehavior.Restrict); // 👈 added to prevent multiple cascade paths
 
             modelBuilder.Entity<JobSeekerProfileSkill>()
                 .HasOne(jps => jps.Skill)
                 .WithMany(s => s.JobSeekerProfileSkills)
-                .HasForeignKey(jps => jps.SkillId);
+                .HasForeignKey(jps => jps.SkillId)
+                .OnDelete(DeleteBehavior.Cascade); // optional - keep cascade only here
 
             OnModelCreatingPartial(modelBuilder);
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
+
+
 }
+
+        
+

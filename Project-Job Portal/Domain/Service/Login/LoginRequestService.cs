@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Domain.Service.Authuser.Interfaces;
+using Domain.Service.Login.DTOs;
+using Domain.Service.Login.Interfaces;
+using AutoMapper;
 using Domain.Service.Authuser;
 using Domain.Service.Login.DTOs;
 using Domain.Service.Login.Interfaces;
@@ -11,6 +15,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Service.Login
 {
+    //public class LoginRequestService : ILoginRequestService
+    //{
+    //    private readonly ILoginRequestRepository _loginRepository;
+    //    private readonly IAuthUserRepository _authUserRepository;
+    //    private readonly IMapper _mapper;
+
+    //    public LoginRequestService(ILoginRequestRepository loginRepository, IMapper mapper, IAuthUserRepository authUserRepository)
+    //    {
+    //        _loginRepository = loginRepository;
+    //        _mapper = mapper;
+    //        _authUserRepository = authUserRepository;
+    //    }
     public class LoginRequestService : ILoginRequestService
     {
         ILoginRequestRepository loginRepository;
@@ -45,6 +61,15 @@ namespace Domain.Service.Login
 
 
 
+        public async Task<JobSeekerLoginDto?> LoginJS(string email, string password)
+        {
+            var user = await loginRepository.GetUserByEmailAndPasswordAsync(email, password);
+            if (user == null)
+                return null;
 
+            var userDto = mapper.Map<JobSeekerLoginDto>(user);
+            userDto.Token = authUserRepository.CreateToken(user);
+            return userDto;
+        }
     }
 }

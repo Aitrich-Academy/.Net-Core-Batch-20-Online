@@ -1,6 +1,16 @@
 ﻿using Domain.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public interface IAuthUserRepository
+namespace Domain.Service.Authuser.Interfaces
 {
-    string? CreateToken(AuthUser user);
+    public interface IAuthUserRepository
+    {
+        Task<AuthUser> AddAuthUserJS(AuthUser authUser);
+        string? CreateToken(AuthUser user);
+
+    }
 }

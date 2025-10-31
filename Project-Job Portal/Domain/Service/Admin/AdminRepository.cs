@@ -123,7 +123,7 @@ namespace Domain.Service.Admin
 
 
         //Add Category
-        public async Task<JobCategory> AddAsync(JobCategory category)
+        public async Task<JobCategory> AddJobCategoryAsync(JobCategory category)
         {
             _context.JobCategories.Add(category);
             await _context.SaveChangesAsync();
@@ -132,7 +132,7 @@ namespace Domain.Service.Admin
 
 
         //GetAllCategory
-        public async Task<IEnumerable<JobCategory>> GetAllAsync()
+        public async Task<IEnumerable<JobCategory>> GetAllJobCategoryAsync()
         {
             return await _context.JobCategories.ToListAsync();
         }
@@ -169,6 +169,51 @@ namespace Domain.Service.Admin
                 return false;
 
             _context.JobCategories.Remove(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
+        public async Task<int> GetJobCountAsync()
+        {
+            return await _context.JobPosts.CountAsync();
+        }
+
+        public async Task<JobPost?> GetJobByNameAsync(string jobTitle)
+        {
+            
+
+            var Job = await _context.JobPosts.FirstOrDefaultAsync(x => x.JobTitle == jobTitle);
+            return Job;
+        }
+
+
+        public async Task<IEnumerable<JobProviderCompany>> GetAllProviders()
+        {
+            return await _context.JobProviderCompanies.ToListAsync();
+        }
+
+
+        public async Task<JobProviderCompany?> GetJobProviderByIdAsync(Guid id)
+        {
+            return await _context.JobProviderCompanies.FindAsync(id);
+
+        }
+
+        public async Task<int> GetJobProviderCountAsync()
+        {
+            return await _context.JobProviderCompanies.CountAsync();
+        }
+
+
+        //Delete Industry
+        public async Task<bool> DeleteJobProviderAsync(Guid id)
+        {
+            var existing = await _context.JobProviderCompanies.FindAsync(id);
+            if (existing == null)
+                return false;
+
+            _context.JobProviderCompanies.Remove(existing);
             await _context.SaveChangesAsync();
             return true;
         }

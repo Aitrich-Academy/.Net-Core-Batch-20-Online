@@ -42,6 +42,14 @@ namespace Job_Portal.API.Admin.Helper
 
 
 
+            //CreateMap<JobProviderRequestDto, JobProviderDto>().ReverseMap();
+            //CreateMap<JobProviderDto, JobProviderCompany>().ReverseMap();
+            //CreateMap<JobProviderCompany, JobProviderRequestDto>().ReverseMap();
+
+            CreateMap<JobProviderCompany, JobProviderDto>().ReverseMap();
+            CreateMap<JobProviderCompany, JobProviderRequestDto>().ReverseMap();
+            CreateMap<JobProviderDto, JobProviderRequestDto>().ReverseMap();
+
 
         }
 

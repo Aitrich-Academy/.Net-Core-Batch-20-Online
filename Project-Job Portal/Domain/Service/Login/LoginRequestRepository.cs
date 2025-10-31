@@ -25,7 +25,12 @@ namespace Domain.Service.Login
             return await _context.AuthUsers
                 .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
         }
+        public async Task<AuthUser?> GetUserByEmailAndPasswordAsync(string email, string password)
+        {
+            return await _context.AuthUsers
+        .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
 
+        }
 
     }
 }
