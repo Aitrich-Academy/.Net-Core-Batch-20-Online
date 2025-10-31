@@ -16,11 +16,10 @@ namespace Domain.Models
         }
 
         public virtual DbSet<AuthUser> AuthUsers { get; set; }
-     
         public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
         public virtual DbSet<CompanyUser> CompanyUsers { get; set; }
         public virtual DbSet<Industry> Industries { get; set; }
-        //public virtual DbSet<JobCategory> JobCategories { get; set; }
+        public virtual DbSet<JobCategory> JobCategories { get; set; }
         public virtual DbSet<JobPost> JobPosts { get; set; }
         public virtual DbSet<JobProviderCompany> JobProviderCompanies { get; set; }
         public virtual DbSet<JobResponsibility> JobResponsibilities { get; set; }
@@ -43,13 +42,20 @@ namespace Domain.Models
         public virtual DbSet<GroupMember> GroupMembers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer 
-            (
-                "Data Source=SRUTHI;Initial Catalog=JOBPORTALFINAL;Integrated Security=True;Trust Server Certificate=True");
+            => optionsBuilder.UseSqlServer(
 
+                "Data Source=ABITHA;Initial Catalog=JobPortal_Project;Integrated Security=True;Trust Server Certificate=True");
 
+            
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+    //        modelBuilder.Entity<AuthUser>()
+    //.HasOne(a => a.SystemUser)
+    //.WithOne(s => s.AuthUser)
+    //.HasForeignKey<AuthUser>(a => a.SystemUserId)
+    //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
+
+
             modelBuilder.Entity<CompanyUser>(entity =>
             {
                 entity.ToTable("CompanyUser");
@@ -60,7 +66,6 @@ namespace Domain.Models
                     .HasForeignKey(d => d.Company)
                     .HasConstraintName("FK_CompanyUser_JobProviderCompany");
             });
-
 
 
             modelBuilder.Entity<Industry>(entity =>
@@ -87,9 +92,6 @@ namespace Domain.Models
                 entity.Property(e => e.JobTitle).HasMaxLength(10).IsFixedLength();
                 entity.Property(e => e.PostedDate).HasColumnType("datetime");
 
-                // ✅ Fix the warning for decimal precision
-                entity.Property(e => e.Salary).HasColumnType("decimal(18,2)");
-
                 entity.HasOne(d => d.Location)
                     .WithMany(p => p.JobPosts)
                     .HasForeignKey(d => d.LocationId)
@@ -99,25 +101,25 @@ namespace Domain.Models
                 entity.HasOne(d => d.PostedByNavigation)
                     .WithMany(p => p.JobPosts)
                     .HasForeignKey(d => d.PostedBy)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Restrict) //  changed
                     .HasConstraintName("FK_JobPost_CompanyUser");
 
                 entity.HasOne(d => d.Industry)
                     .WithMany(p => p.JobPosts)
                     .HasForeignKey(d => d.IndustryId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Restrict) //  changed
                     .HasConstraintName("FK_JobPost_Industry");
 
-                // entity.HasOne(d => d.Category)
-                //     .WithMany(p => p.JobPosts)
-                //     .HasForeignKey(d => d.CategoryId)
-                //     .OnDelete(DeleteBehavior.Restrict)
-                //     .HasConstraintName("FK_JobPost_JobCategory");
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.JobPosts)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.Restrict) //  changed
+                    .HasConstraintName("FK_JobPost_JobCategory");
 
                 entity.HasOne(d => d.Company)
                     .WithMany(p => p.JobPosts)
                     .HasForeignKey(d => d.CompanyId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Restrict) //  changed
                     .HasConstraintName("FK_JobPost_JobProviderCompany");
             });
 
@@ -181,13 +183,14 @@ namespace Domain.Models
             {
                 entity.ToTable("Location");
                 entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.Property(e => e.Discription).HasMaxLength(10).IsFixedLength();
-                entity.Property(e => e.Name).HasMaxLength(10).IsFixedLength();
-
-                entity.Property(e => e.City).HasMaxLength(100).IsUnicode(false);
-                entity.Property(e => e.State).HasMaxLength(100).IsUnicode(false);
-                entity.Property(e => e.Country).HasMaxLength(100).IsUnicode(false);
+                entity.Property(e => e.Description)
+                      .HasMaxLength(25)
+                      .IsFixedLength();
+                entity.Property(e => e.Name)
+                      .HasMaxLength(25)
+                      .IsFixedLength();
             });
+
 
             modelBuilder.Entity<Qualification>(entity =>
             {
@@ -237,20 +240,24 @@ namespace Domain.Models
             });
 
             // Many-to-many: JobSeekerProfile <-> Skill
+            // Many-to-many: JobSeekerProfile <-> Skill
             modelBuilder.Entity<JobSeekerProfileSkill>()
                 .HasKey(jps => new { jps.JobSeekerProfileId, jps.SkillId });
 
             modelBuilder.Entity<JobSeekerProfileSkill>()
                 .HasOne(jps => jps.JobSeekerProfile)
                 .WithMany(jp => jp.JobSeekerProfileSkills)
-                .HasForeignKey(jps => jps.JobSeekerProfileId);
+                .HasForeignKey(jps => jps.JobSeekerProfileId)
+                .OnDelete(DeleteBehavior.Restrict); // 👈 added to prevent multiple cascade paths
 
             modelBuilder.Entity<JobSeekerProfileSkill>()
                 .HasOne(jps => jps.Skill)
                 .WithMany(s => s.JobSeekerProfileSkills)
-                .HasForeignKey(jps => jps.SkillId);
+                .HasForeignKey(jps => jps.SkillId)
+                .OnDelete(DeleteBehavior.Cascade); // optional - keep cascade only here
 
             OnModelCreatingPartial(modelBuilder);
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

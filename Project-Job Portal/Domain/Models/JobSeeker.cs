@@ -29,7 +29,6 @@ public partial class JobSeeker
 
     public string? Title { get; set; }
 
-
     //public virtual SystemUser IdNavigation { get; set; } = null!;
 
     public virtual ICollection<SavedJob> SavedJobs { get; set; } = new List<SavedJob>();

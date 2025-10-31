@@ -1,38 +1,68 @@
-﻿using System;
+
+using AutoMapper;
+using Domain.Models;
+using Domain.Service.Login.DTOs;
+using Domain.Service.Login.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
 using Domain.Service.Authuser.Interfaces;
 using Domain.Service.Login.DTO;
 
-using Domain.Service.Login.DTOs;
 
-using Domain.Service.Login.Interfaces;
 
 namespace Domain.Service.Login
 {
     public class LoginRequestService : ILoginRequestService
     {
-        private readonly ILoginRequestRepository _loginRepository;
-        private readonly IAuthUserRepository _authUserRepository;
-        private readonly IMapper _mapper;
-          
-        public LoginRequestService(ILoginRequestRepository loginRepository, IMapper mapper, IAuthUserRepository authUserRepository)
 
+        private readonly HireMeNowDbContext _context;
+        ILoginRequestRepository loginRepository;
+        IMapper mapper;
+        IAuthUserRepository authUserRepository;
+        public LoginRequestService(ILoginRequestRepository _loginRepository, IMapper mapper, IAuthUserRepository _authUserRepository, HireMeNowDbContext context)
         {
-            _loginRepository = loginRepository;
-            _mapper = mapper;
-            _authUserRepository = authUserRepository;
+            this.loginRepository = _loginRepository;
+            this.mapper = mapper;
+            authUserRepository = _authUserRepository;
+            _context = context;
+
         }
 
-        // ==============================
-        // Login Method for JobProvider
-        // ==============================
+        public AdminLoginDTO Adminlogin(string email, string password)
+        {
+            var user = loginRepository.GetUserByEmail(email);
+            if (user == null)
+                return null;
+
+            if (password == user.Password)
+            {
+                var userReturn = mapper.Map<AdminLoginDTO>(user);
+                userReturn.Token = authUserRepository.CreateToken(user);
+                return userReturn;
+            }
+
+            return null;
+        }
+
+        public async Task<bool> LogoutAsync(Guid adminId)
+        {
+            var user = await _context.AuthUsers.FindAsync(adminId);
+            if (user == null)
+                return false;
+
+            user.OnlineStatus = false;
+            // 0 means offline
+            user.ConnectionId = null; // clear connection if any
+            await _context.SaveChangesAsync();
+            return true;
+        }
         public JobProviderLoginDto Login(string email, string password)
         {
-            var user = _loginRepository.GetUserByEmail(email);
+            var user = loginRepository.GetUserByEmail(email);
             if (user == null)
                 return null;
 
@@ -40,23 +70,24 @@ namespace Domain.Service.Login
             if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                 return null;
 
-            var dto = _mapper.Map<JobProviderLoginDto>(user);
+            var dto = mapper.Map<JobProviderLoginDto>(user);
             dto.JobProviderId = user.JobProviderId;
-            dto.Token = _authUserRepository.CreateToken(user);
+            dto.Token = authUserRepository.CreateToken(user);
 
             return dto;
         }
+
+
+
         public async Task<JobSeekerLoginDto?> LoginJS(string email, string password)
         {
-            var user = await _loginRepository.GetUserByEmailAndPasswordAsync(email, password);
+            var user = await loginRepository.GetUserByEmailAndPasswordAsync(email, password);
             if (user == null)
                 return null;
 
-            var userDto = _mapper.Map<JobSeekerLoginDto>(user);
-            userDto.Token = _authUserRepository.CreateToken(user);
+            var userDto = mapper.Map<JobSeekerLoginDto>(user);
+            userDto.Token = authUserRepository.CreateToken(user);
             return userDto;
-
         }
     }
 }
-

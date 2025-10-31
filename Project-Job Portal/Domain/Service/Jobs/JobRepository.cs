@@ -41,7 +41,7 @@ namespace Domain.Service.Jobs
             return await _context.JobPosts
                                  .Include(jp => jp.Company)
                                  .Include(jp => jp.Location)
-                                 //.Include(jp => jp.Category)
+                                 .Include(jp => jp.Category)
                                  .Include(jp => jp.Industry)
                                  .Include(jp => jp.JobResponsibilities)
                                  .FirstOrDefaultAsync(jp => jp.Id == id);

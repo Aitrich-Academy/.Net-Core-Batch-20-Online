@@ -89,17 +89,24 @@ namespace Domain.Service.Profile
                 .Include(p => p.JobSeekerProfileSkills)
                 .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
 
+            // ✅ If no profile exists, create one
             if (profile == null)
-                return false;
+            {
+                profile = new JobSeekerProfile
+                {
+                    Id = Guid.NewGuid(),
+                    JobSeekerId = jobSeekerId
+                };
+                _context.JobSeekerProfiles.Add(profile);
+            }
 
-
+            // Remove existing skills
             _context.JobSeekerProfileSkills.RemoveRange(profile.JobSeekerProfileSkills);
 
-
+            // Add new skills
             foreach (var skillId in skillIds)
             {
-                var skillExists = await _context.Skills.AnyAsync(s => s.Id == skillId);
-                if (skillExists)
+                if (await _context.Skills.AnyAsync(s => s.Id == skillId))
                 {
                     profile.JobSeekerProfileSkills.Add(new JobSeekerProfileSkill
                     {
@@ -112,6 +119,7 @@ namespace Domain.Service.Profile
             await _context.SaveChangesAsync();
             return true;
         }
+
 
         public async Task<bool> UpdateSkillsAsync(Guid jobSeekerId, List<Guid> newSkillIds)
         {

@@ -20,7 +20,7 @@ namespace Domain.Service.Jobs.Dto
 
         public Guid LocationId { get; set; }
         public Guid IndustryId { get; set; }
-        //public Guid CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
         public Guid CompanyId { get; set; }
         public Guid PostedBy { get; set; }
         // Optional: include navigation names for API convenience

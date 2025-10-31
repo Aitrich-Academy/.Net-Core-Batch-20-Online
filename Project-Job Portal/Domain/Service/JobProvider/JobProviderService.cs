@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Domain.Helper;
+//using Domain.Helper;
 using Domain.Models;
 using Domain.Service.JobProvider.Dto;
 using Domain.Service.JobProvider.Interfaces;
@@ -23,14 +23,14 @@ namespace Domain.Service.JobProvider
         private readonly HireMeNowDbContext _context; // add this
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        
+
         public JobProviderService(IJobProviderRepository repository, HireMeNowDbContext context, IMapper mapper, IConfiguration configuration)
         {
             _repository = repository;
             _context = context;
             _mapper = mapper;
             _configuration = configuration;   // ✅ Added
-           
+
         }
 
 

@@ -97,7 +97,7 @@ namespace Job_Portal.Helper
       .ForMember(dest => dest.ApplicantName,
           opt => opt.MapFrom(src => src.Seeker != null ? src.Seeker.FirstName + " " + (src.Seeker.LastName ?? "") : string.Empty))
       .ForMember(dest => dest.JobTitle, opt => opt.MapFrom(src => src.JobPost != null ? src.JobPost.JobTitle : string.Empty))
-      .ForMember(dest => dest.DateApplied, opt => opt.MapFrom(src => src.DateSubmitted))
+      .ForMember(dest => dest.DateApplied, opt => opt.MapFrom(src => src.Datesubmitted))
       .ForMember(dest => dest.CoverLetter, opt => opt.MapFrom(src => src.CoverLetter));
         }
 

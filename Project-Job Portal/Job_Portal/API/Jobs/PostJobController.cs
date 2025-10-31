@@ -10,6 +10,7 @@ namespace Job_Portal.API.Jobs
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "JOB_PROVIDER")]
     public class PostJobController : ControllerBase
     {
         private readonly IJobService _service;
@@ -26,7 +27,7 @@ namespace Job_Portal.API.Jobs
         // JOB POST ENDPOINTS
         // -------------------------
 
-        [Authorize]
+      
         [HttpPost("jobs")]
         public async Task<IActionResult> CreateJobPost([FromBody] CreateJobPostRequest request)
         {
@@ -36,7 +37,7 @@ namespace Job_Portal.API.Jobs
         }
 
 
-        [Authorize]
+      
         [HttpGet("jobs/{id}")]
         public async Task<IActionResult> GetJobById(Guid id)
         {
@@ -48,7 +49,6 @@ namespace Job_Portal.API.Jobs
         }
 
 
-        [Authorize]
         [HttpPut("jobs/{id}")]
         public async Task<IActionResult> UpdateJobById(Guid id, [FromBody] UpdateJobPostRequest request)
         {
@@ -61,7 +61,6 @@ namespace Job_Portal.API.Jobs
 
 
 
-        [Authorize]
         [HttpPatch("jobs/{id}")]
         public async Task<IActionResult> PatchJobById(Guid id, [FromBody] PatchJobPostRequest request)
         {
@@ -71,7 +70,6 @@ namespace Job_Portal.API.Jobs
         }
 
 
-        [Authorize]
         [HttpDelete("jobs/{id}")]
         public async Task<IActionResult> DeleteJobById(Guid id)
         {
@@ -83,7 +81,7 @@ namespace Job_Portal.API.Jobs
         }
 
 
-        [Authorize]
+      
         [HttpGet("jobs")]
         public async Task<IActionResult> GetAllJobs()
         {

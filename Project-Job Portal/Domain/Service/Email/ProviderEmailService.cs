@@ -1,56 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using Domain.Helper;
+using Domain.Mail;
 using Domain.Service.Email.Interface;
-using MailKit.Net.Smtp;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using MimeKit;
-using SmtpClient = System.Net.Mail.SmtpClient;
 
-
-    namespace Domain.Service.Email
+namespace Domain.Service.Email
+{
+    public class ProviderEmailService : IProviderEmailService
     {
-        public class ProviderEmailService : IProviderEmailService
+        private readonly MailSettings _mailSettings;
+
+        public ProviderEmailService(IOptionsMonitor<MailSettings> mailSettings)
         {
-            private readonly MailSettings _mailSettings;
+            // Use named option "Provider" for provider email
+            _mailSettings = mailSettings.Get("Provider");
+        }
 
-            public ProviderEmailService(IOptions<MailSettings> mailSettings)
+        public async Task SendEmailAsync(string toEmail, string subject, string body)
+        {
+            try
             {
-                _mailSettings = mailSettings.Value;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                using var smtp = new SmtpClient(_mailSettings.Host, _mailSettings.Port)
+                {
+                    Credentials = new NetworkCredential(_mailSettings.UserMail, _mailSettings.Password),
+                    EnableSsl = _mailSettings.UseSSL
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(_mailSettings.FromMail ?? _mailSettings.UserMail, _mailSettings.DisplayName),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                };
+
+                mailMessage.To.Add(toEmail);
+                await smtp.SendMailAsync(mailMessage);
             }
-
-            public async Task SendEmailAsync(string toEmail, string subject, string body)
+            catch (SmtpException smtpEx)
             {
-                try
-                {
-                    using var smtp = new SmtpClient(_mailSettings.Host, _mailSettings.Port)
-                    {
-                        Credentials = new NetworkCredential(_mailSettings.UserMail, _mailSettings.Password),
-                        EnableSsl = _mailSettings.EnableSsl // if added
-                    };
-
-                    var mailMessage = new MailMessage
-                    {
-                        From = new MailAddress(_mailSettings.UserMail, _mailSettings.DisplayName),
-                        Subject = subject,
-                        Body = body,
-                        IsBodyHtml = true
-                    };
-
-                    mailMessage.To.Add(toEmail);
-
-                    await smtp.SendMailAsync(mailMessage);
-                }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException("Failed to send email.", ex);
-                }
+                throw new InvalidOperationException($"SMTP error: {smtpEx.StatusCode} - {smtpEx.Message}", smtpEx);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to send email.", ex);
             }
         }
     }
+}

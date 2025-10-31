@@ -1,44 +1,33 @@
-
-using Domain.Extensions;
-using Domain.Service.JobProvider.Interfaces;
-using Domain.Service.JobProvider;
-using System.Security.Claims;
-using System.Text;
 using Domain.Extensions;
 using Domain.Mail;
 using Domain.Models;
+using Job_Portal.API.Admin.Helper;
+using Job_Portal.API.JobSeeker.Helper;
 using Job_Portal.Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
-
-using Domain.Helper;
+using System.Security.Claims;
 using System.Text;
-using Job_Portal.API.JobSeeker.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.Configure<Domain.Helper.MailSettings>(builder.Configuration.GetSection("MailSettings"));
-builder.Services.AddAutoMapper(typeof(SeekerProfiles));
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<MailSettings>("Provider", builder.Configuration.GetSection("ProviderMailSettings"));
+
+builder.Services.AddAutoMapper(typeof(SeekerProfiles));
+//builder.Services.Configure<Domain.Helper.MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 builder.Services.AddAutoMapper(typeof(SeekerProfile));
 
-
-
-
-// Add services to the container
-builder.Services.AddControllers();
-
-// Register repository and service
-
-builder.Services.Configure<Domain.Helper.MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -55,6 +44,7 @@ builder.Services.AddSwaggerGen(options =>
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -99,13 +89,6 @@ policy =>
 }));
 
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-        options.JsonSerializerOptions.WriteIndented = true;
-    });
-
 builder.Services.AddHttpLogging(logging =>
 {
     logging.LoggingFields = HttpLoggingFields.All;
@@ -115,8 +98,6 @@ builder.Services.AddHttpLogging(logging =>
     logging.ResponseBodyLogLimit = 4096;
 
 });
-
-
 
 var app = builder.Build();
 
@@ -129,6 +110,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();

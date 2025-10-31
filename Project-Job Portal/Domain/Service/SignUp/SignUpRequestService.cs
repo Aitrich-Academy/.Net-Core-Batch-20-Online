@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Domain.Enums;
-using Domain.Helper;
+//using Domain.Helper;
 using Domain.Models;
 using Domain.Service.Authuser.Interfaces;
 using Domain.Service.Email.Interface;
@@ -75,6 +75,7 @@ namespace Domain.Service.SignUp
             signupRequest.Status = Status.VERIFIED;
             _signUpRequestRepository.UpdateSignupRequest(signupRequest);
 
+            
             // ✅ Step 1: Create JobProviderCompany with unique ID
             var jobProvider = new JobProviderCompany
             {
@@ -85,6 +86,7 @@ namespace Domain.Service.SignUp
                 Summary = "Newly verified job provider.",
                 Website = string.Empty,
                 Location = null
+
             };
 
             _context.JobProviderCompanies.Add(jobProvider);

@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Domain.Service.JobProvider;
-using Domain.Service.JobProvider.Dto;
 using Domain.Service.JobProvider.Interfaces;
 using Domain.Service.Login.DTO;
 using Domain.Service.Login.Interfaces;
@@ -16,6 +14,7 @@ namespace Job_Portal.API.JobProvider
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "JOB_PROVIDER")]
     public class JobProviderController : ControllerBase
     {
         private readonly IJobProviderService _service;
@@ -31,7 +30,7 @@ namespace Job_Portal.API.JobProvider
             _mapper = mapper;
         }
 
-
+        [AllowAnonymous]
         // 1) Submit signup request
         [HttpPost("signup")]
         public IActionResult Signup([FromBody] SignUpRequestDto dto)
@@ -44,7 +43,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-
+        [AllowAnonymous]
         // 2) Verify / approve signup request
         [HttpGet("{signUpRequestId}/verify-email")]
         public async Task<IActionResult> Verify(Guid id)
@@ -55,7 +54,7 @@ namespace Job_Portal.API.JobProvider
 
             return Ok(new { message = "Signup request verified successfully." });
         }
-
+        [AllowAnonymous]
         // 3) Set Password
         [HttpPost("job-provider/sign-up/{signUpRequestId}/set-password")]
         public async Task<IActionResult> SetPassword(Guid signUpRequestId, [FromBody] SetPasswordRequest request)
@@ -77,6 +76,7 @@ namespace Job_Portal.API.JobProvider
 
 
         // 3) Login method
+        [AllowAnonymous]
 
         [HttpPost("job-provider/Login")]
 
@@ -97,7 +97,7 @@ namespace Job_Portal.API.JobProvider
 
         // ================== Profile Picture ==================
 
-        [Authorize]
+      
         [HttpPost("{jobProviderId}/profile-picture")]
         public async Task<IActionResult> AddProfilePicture(Guid jobProviderId, [FromForm] ProfilePictureRequest request)
         {
@@ -105,9 +105,9 @@ namespace Job_Portal.API.JobProvider
             return Ok(new { Message = message });
         }
 
-        [Authorize]
+      
         [HttpPut("update-profile-picture/{jobProviderId}")]
-     
+
         public async Task<IActionResult> UpdateProfilePicture(Guid jobProviderId, [FromForm] ProfilePictureRequest request)
         {
             if (request.File == null || request.File.Length == 0)
@@ -119,7 +119,7 @@ namespace Job_Portal.API.JobProvider
 
 
 
-        [Authorize]
+       
         [HttpDelete("{jobProviderId}/profile-picture")]
         public async Task<IActionResult> DeleteProfilePicture(Guid jobProviderId)
         {
@@ -129,7 +129,7 @@ namespace Job_Portal.API.JobProvider
 
 
 
-        [Authorize]
+        
         [HttpGet("{jobProviderId}/profile-picture")]
         public async Task<IActionResult> GetProfilePicture(Guid jobProviderId)
         {
@@ -139,7 +139,7 @@ namespace Job_Portal.API.JobProvider
         // ================== Company ==================
 
 
-        [Authorize]
+        
         [HttpPost("{jobProviderId}/company")]
         public async Task<IActionResult> AddCompany(Guid jobProviderId, [FromBody] AddCompanyRequest request)
         {
@@ -148,7 +148,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        [Authorize]
+        
         [HttpGet("company/{companyId}")]
         public async Task<IActionResult> GetCompanyById(Guid companyId)
         {
@@ -158,7 +158,7 @@ namespace Job_Portal.API.JobProvider
         // ✅ GET ALL COMPANIES
 
 
-        [Authorize]
+        
         [HttpGet("companies")]
         public async Task<IActionResult> GetAllCompanies()
         {
@@ -167,7 +167,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        [Authorize]
+       
         [HttpPut("company/{companyId}")]
         public async Task<IActionResult> UpdateCompany(Guid companyId, [FromBody] UpdateCompanyRequest request)
         {
@@ -176,7 +176,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        [Authorize]
+       
         [HttpPatch("company/{companyId}")]
         public async Task<IActionResult> PatchCompany(Guid companyId, [FromBody] PatchCompanyRequest request)
         {
@@ -186,7 +186,7 @@ namespace Job_Portal.API.JobProvider
 
 
 
-        [Authorize]
+      
         [HttpDelete("company/{companyId}")]
         public async Task<IActionResult> DeleteCompany(Guid companyId)
         {
@@ -197,7 +197,7 @@ namespace Job_Portal.API.JobProvider
         // ================== Company Member ==================
 
 
-        [Authorize]
+       
         [HttpPost("company/{companyId}/member")]
         public async Task<IActionResult> AddCompanyMember(Guid companyId, [FromBody] AddCompanyMemberRequest request)
         {
@@ -206,7 +206,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        [Authorize]
+ 
         [HttpGet("company/member/{memberId}")]
         public async Task<IActionResult> GetCompanyMemberById(Guid memberId)
         {
@@ -221,7 +221,7 @@ namespace Job_Portal.API.JobProvider
 
 
 
-        [Authorize]
+        
         [HttpGet("company-members")]
         public async Task<IActionResult> GetAllCompanyMembers()
         {
@@ -230,7 +230,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        [Authorize]
+        
         [HttpPut("company/member/{memberId}")]
         public async Task<IActionResult> UpdateCompanyMember(Guid memberId, [FromBody] UpdateCompanyMemberRequest request)
         {
@@ -239,7 +239,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        [Authorize]
+        
         [HttpPatch("company/member/{memberId}")]
         public async Task<IActionResult> PatchCompanyMember(Guid memberId, [FromBody] PatchCompanyMemberRequest request)
         {
@@ -248,7 +248,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        [Authorize]
+        
         [HttpDelete("company/member/{memberId}")]
         public async Task<IActionResult> DeleteCompanyMember(Guid memberId)
         {
@@ -258,7 +258,7 @@ namespace Job_Portal.API.JobProvider
 
 
 
-        [Authorize]
+       
         [HttpPost("logout/{jobProviderId}")]
         public async Task<IActionResult> Logout(Guid jobProviderId)
         {
@@ -272,7 +272,7 @@ namespace Job_Portal.API.JobProvider
         // -------------------------
 
 
-        [Authorize]
+       
         [HttpGet("jobs/{jobId}/applicants")]
         public async Task<IActionResult> GetApplicantsByJobId(Guid jobId)
         {
@@ -284,7 +284,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        [Authorize]
+        
         [HttpGet("applications/{applicationId}")]
         public async Task<IActionResult> GetApplicantByApplicationId(Guid applicationId)
         {
@@ -296,13 +296,13 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        [Authorize]
+        
         [HttpGet("applications/count")]
         public async Task<IActionResult> GetApplicationCount()
         {
             var count = await _service.GetApplicationCountAsync();
             return Ok(new { totalApplications = count });
         }
-                               
+
     }
 }

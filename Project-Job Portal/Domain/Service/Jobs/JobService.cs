@@ -37,12 +37,14 @@ namespace Domain.Service.Jobs
             var industry = await _context.Industries.FindAsync(jobPostDto.IndustryId);
             var company = await _context.JobProviderCompanies.FindAsync(jobPostDto.CompanyId);
             var user = await _context.CompanyUsers.FindAsync(jobPostDto.PostedBy);
+            var category = await _context.JobCategories.FindAsync(jobPostDto.CategoryId);
 
             // Throw exceptions if any required entity is missing
             if (location == null) throw new Exception("Location not found");
             if (industry == null) throw new Exception("Industry not found");
             if (company == null) throw new Exception("Company not found");
             if (user == null) throw new Exception("User not found");
+            if (category == null) throw new Exception("Job Category not found"); // ✅ Added
 
             // ✅ Manual mapping to avoid AutoMapper null errors
             var jobPost = new JobPost
@@ -58,7 +60,8 @@ namespace Domain.Service.Jobs
                 LocationId = jobPostDto.LocationId,
                 IndustryId = jobPostDto.IndustryId,
                 CompanyId = jobPostDto.CompanyId,
-                PostedBy = jobPostDto.PostedBy
+                PostedBy = jobPostDto.PostedBy,
+                CategoryId = jobPostDto.CategoryId // ✅ Added
             };
 
             // ✅ Attach navigation entities
@@ -66,6 +69,7 @@ namespace Domain.Service.Jobs
             jobPost.Industry = industry;
             jobPost.Company = company;
             jobPost.PostedByNavigation = user;
+            jobPost.Category = category; // ✅ Added
 
             // ✅ Save to DB
             await _repository.CreateJobPostAsync(jobPost);

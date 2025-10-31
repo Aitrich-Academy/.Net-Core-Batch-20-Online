@@ -16,21 +16,22 @@ namespace Domain.Models
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-
         [ForeignKey(nameof(JobPost))]
         public Guid JobPostId { get; set; }
-        public virtual JobPost JobPost { get; set; }
-
         [ForeignKey(nameof(Seeker))]
         public Guid ApplicantId { get; set; }
-        public virtual JobSeeker Seeker { get; set; }
-
         [ForeignKey(nameof(Resume))]
         public Guid? ResumeId { get; set; }
         public virtual Resume? Resume { get; set; }
 
         public string? CoverLetter { get; set; }
-        public DateTime DateSubmitted { get; set; }
-        public Status Status { get; set; }
+
+        public DateTime Datesubmitted { get; set; }
+        public Status status { get; set; }
+
+        public virtual JobSeeker Seeker { get; set; }
+        public virtual JobPost JobPost { get; set; }
+
+
     }
 }

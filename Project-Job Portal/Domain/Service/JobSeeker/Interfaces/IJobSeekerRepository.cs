@@ -24,6 +24,10 @@ namespace Domain.Service.JobSeeker.Interfaces
         Task<List<SavedJob>> GetSavedJobsByTitleAsync(Guid jobSeekerId, string title);
         Task<bool> RemoveSavedJobAsync(Guid jobSeekerId, Guid savedJobId);
         Task<IEnumerable<Interview>> GetAllByJobSeekerIdAsync(Guid jobSeekerId);
+        Task<JobSeekerProfile> GetByIdAsync(Guid id);
+        Task<IEnumerable<JobSeekerProfile>> GetAllAsync();
+        Task<bool> DeleteAsync(Guid id);
+        Task<int> GetCountAsync();
 
 
 

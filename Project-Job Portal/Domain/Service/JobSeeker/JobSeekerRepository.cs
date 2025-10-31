@@ -142,5 +142,38 @@ namespace Domain.Service.JobSeeker
                 .Where(i => i.interviewee == jobSeekerId)
                 .ToListAsync();
         }
+
+        //GetJobseekers
+        // ✅ Get JobSeekerProfile by Id (with related JobSeeker info)
+        public async Task<JobSeekerProfile> GetByIdAsync(Guid id)
+        {
+            return await _context.JobSeekerProfiles
+      .Include(p => p.JobSeeker) // keep this if JobSeeker exists
+      .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        // ✅ Get all JobSeekerProfiles (with related JobSeeker info)
+        public async Task<IEnumerable<JobSeekerProfile>> GetAllAsync()
+        {
+            return await _context.JobSeekerProfiles.ToListAsync();
+        }
+
+        // ✅ Delete a JobSeekerProfile by Id
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var profile = await _context.JobSeekerProfiles.FindAsync(id);
+            if (profile == null)
+                return false;
+
+            _context.JobSeekerProfiles.Remove(profile);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        // ✅ Get total JobSeekerProfiles count
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.JobSeekerProfiles.CountAsync();
+        }
     }
 }

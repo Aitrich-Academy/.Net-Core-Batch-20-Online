@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Enums
 {
-    
     public enum Status
     {
-           APPROVED, PENDING, VERIFIED, SCHEDULED, CREATED
+        PENDING ,VERIFIED,SHEDULED,CREATED
     }
 }
-
