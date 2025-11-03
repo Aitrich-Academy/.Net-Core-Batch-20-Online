@@ -1,3 +1,5 @@
+
+
 using Domain.Extensions;
 using Domain.Mail;
 using Domain.Models;
@@ -54,9 +56,33 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
                 .GetBytes(builder.Configuration.GetSection("AuthSettings:Token").Value)),
             ValidateIssuer = false,
-            ValidateAudience = false
+            ValidateAudience = false,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = async context =>
+            {
+                var db = context.HttpContext.RequestServices.GetRequiredService<HireMeNowDbContext>();
+                var userId = context.Principal.FindFirst(ClaimTypes.Sid)?.Value;
+                var tokenConnectionId = context.Principal.FindFirst("ConnectionId")?.Value;
+
+                if (Guid.TryParse(userId, out var guid))
+                {
+                    var user = await db.AuthUsers.FindAsync(guid);
+
+                    if (user == null || user.ConnectionId == null || user.ConnectionId != tokenConnectionId)
+                    {
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        await context.Response.WriteAsync("Session expired or invalid.");
+
+                    }
+                }
+            }
         };
     });
+
 
 builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins",
 policy =>
