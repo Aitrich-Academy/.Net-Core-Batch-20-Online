@@ -2,9 +2,11 @@
 using AutoMapper;
 using Domain.Service.Authuser.Interfaces;
 using Domain.Service.JobProvider.Interfaces;
+using Domain.Service.Jobs;
 using Domain.Service.JobSeeker;
 using Domain.Service.JobSeeker.DTOs;
 using Domain.Service.JobSeeker.Interfaces;
+using Domain.Service.Login.Interfaces;
 using Job_Portal.API.JobSeeker.RequestObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,18 +22,19 @@ namespace Job_Portal.API.JobSeeker
         public IJobSeekerService jobSeekerService { get; set; }
         private readonly IInterviewService _interviewService;
 
-        //public IJobProviderService jobProviderService;
+        public JobService jobService;
         public ILoginRequestService loginRequestService { get; set; }
         public IAuthUserService  authUserService { get; set; }
         public IMapper mapper { get; set; }
-        public JobSeekerController(IInterviewService interviewService,IJobSeekerService _jobSeekerService, IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService/*, IJobProviderService _jobProviderService*/)
+        public JobSeekerController(IInterviewService interviewService,IJobSeekerService _jobSeekerService, IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService , JobService _jobService)
         {
             jobSeekerService = _jobSeekerService;
             loginRequestService = _loginRequestService;
             authUserService = _authUserService;
             _interviewService = interviewService;
             mapper = _mapper;
-            //jobProviderService = _jobProviderService;
+            jobService = _jobService;
+             
         }
 
         [AllowAnonymous]
@@ -94,7 +97,7 @@ namespace Job_Portal.API.JobSeeker
         [HttpGet("GetAllJobs")]
         public async Task<IActionResult> GetAllJobs()
         {
-            var jobs = await jobProviderService.GetAllJobsAsync();
+            var jobs = await jobService.GetAllJobsAsync();
             if (jobs == null || !jobs.Any())
                 return NotFound("No jobs found.");
 
@@ -107,7 +110,7 @@ namespace Job_Portal.API.JobSeeker
         [HttpGet("GetJobById/{id}")]
         public async Task<IActionResult> GetJobById(Guid id)
         {
-            var job = await jobProviderService.GetJobByIdAsync(id);
+            var job = await jobService.GetJobByIdAsync(id);
             if (job == null)
                 return NotFound("Job not found.");
 

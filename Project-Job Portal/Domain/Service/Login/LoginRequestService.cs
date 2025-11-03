@@ -16,7 +16,7 @@ using Domain.Service.Login.DTO;
 
 namespace Domain.Service.Login
 {
-    public class LoginRequestService 
+    public class LoginRequestService : ILoginRequestService 
     {
 
         private readonly HireMeNowDbContext _context;

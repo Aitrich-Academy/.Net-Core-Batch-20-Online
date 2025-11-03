@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Service.Jobs.Dto;
 using Domain.Service.JobSeeker.DTOs;
 
 namespace Domain.Service.JobSeeker.Interfaces
@@ -18,7 +19,7 @@ namespace Domain.Service.JobSeeker.Interfaces
         Task<List<SavedJobDto>> GetSavedJobsByTitleAsync(Guid jobSeekerId, string title);
         Task<bool> RemoveSavedJobAsync(Guid jobSeekerId, Guid savedJobId);
         Task<IEnumerable<InterviewDto>> GetScheduledInterviewsAsync(Guid jobSeekerId);
-        //Task <JobDto?> GetJobByTitleAsync(string title);
+        Task <JobPostDto?> GetJobByTitleAsync(string title);
 
 
 
