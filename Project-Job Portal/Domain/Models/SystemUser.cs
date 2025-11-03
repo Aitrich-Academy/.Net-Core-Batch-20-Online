@@ -37,7 +37,7 @@ public partial class SystemUser
 
     //public int Role { get; set; }
 
-    //public virtual AuthUser? AuthUserIdNavigation { get; set; }
+  //  public virtual AuthUser? AuthUser { get; set; }
 
     //public virtual ICollection<AuthUser> AuthUserSystemUsers { get; set; } = new List<AuthUser>();
 

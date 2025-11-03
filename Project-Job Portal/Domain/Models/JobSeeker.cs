@@ -27,9 +27,9 @@ public partial class JobSeeker
     public byte[]? Image { get; set; } = null!;
     public int Role { get; set; }
 
-    
+    public string? Title { get; set; }
 
-	//public virtual SystemUser IdNavigation { get; set; } = null!;
+    //public virtual SystemUser IdNavigation { get; set; } = null!;
 
-	public virtual ICollection<SavedJob> SavedJobs { get; set; } = new List<SavedJob>();
+    public virtual ICollection<SavedJob> SavedJobs { get; set; } = new List<SavedJob>();
 }

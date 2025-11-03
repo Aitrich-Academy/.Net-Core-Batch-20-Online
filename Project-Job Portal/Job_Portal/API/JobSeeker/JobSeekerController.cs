@@ -1,528 +1,294 @@
-﻿using Domain.Models;
+﻿
+using AutoMapper;
+using Domain.Service.Authuser.Interfaces;
+using Domain.Service.JobProvider.Interfaces;
+using Domain.Service.JobSeeker;
+using Domain.Service.JobSeeker.DTOs;
 using Domain.Service.JobSeeker.Interfaces;
 using Job_Portal.API.JobSeeker.RequestObjects;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-using Domain.Service.JobSeeker.DTOs;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
 
 namespace Job_Portal.API.JobSeeker
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "JOB_SEEKER")]
     public class JobSeekerController : ControllerBase
     {
-        private readonly IJobSeekerProfileService _profileService;
-       // private readonly IMapper _mapper;
+        public IJobSeekerService jobSeekerService { get; set; }
+        private readonly IInterviewService _interviewService;
 
-        public JobSeekerController(IJobSeekerProfileService profileService)//, IMapper mapper)
+        //public IJobProviderService jobProviderService;
+        public ILoginRequestService loginRequestService { get; set; }
+        public IAuthUserService  authUserService { get; set; }
+        public IMapper mapper { get; set; }
+        public JobSeekerController(IInterviewService interviewService,IJobSeekerService _jobSeekerService, IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService/*, IJobProviderService _jobProviderService*/)
         {
-            _profileService = profileService;
-           // _mapper = mapper;
+            jobSeekerService = _jobSeekerService;
+            loginRequestService = _loginRequestService;
+            authUserService = _authUserService;
+            _interviewService = interviewService;
+            mapper = _mapper;
+            //jobProviderService = _jobProviderService;
         }
 
-      //  [Authorize(Roles = "JobSeeker")]
-        [HttpPost("create")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> CreateProfile([FromForm] CreateJobSeekerProfileRequest request)
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("Signup")]
+        public async Task<ActionResult> createJobSeekerSignupRequest(JobSeekerSignupRequest data)
         {
-             var jobSeekerId = User.FindFirstValue(ClaimTypes.NameIdentifier);  
-                                                                                    // Guid jobSeekerId = Guid.Parse("71A50ED5-C020-4301-8D1D-F1FE71C611BA");
-           var seekerId=User.FindFirst("JobSeekerId")?.Value;
-            if (jobSeekerId == null)
-                return Unauthorized("Invalid or missing JobSeeker ID in token.");
-            var seekerprofiledto = _mapper.Map<JobSeekerProfileDto>(request);
-            var result = await _profileService.CreateProfileAsync(seekerprofiledto,Guid.Parse(jobSeekerId));
-            return Ok(result);
+            var jobSeekerSignupRequestDto = mapper.Map<JobSeekerSignupRequestDto>(data);
+            jobSeekerService.CreateSignupRequest(jobSeekerSignupRequestDto);
+            return Ok(data);
         }
 
-      //  [Authorize(Roles = "JobSeeker")]
-        [HttpPut("update")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> UpdateProfile([FromForm] UpdateJobSeekerProfileRequest request)
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("Verify-email")]
+        public async Task<ActionResult> VerifyJobSeekerEmail(Guid jobSeekerSignupRequestId)
         {
-            var jobSeekerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                                                                                                   
-
-            if (jobSeekerId == null)
-                return Unauthorized("Invalid or missing JobSeeker ID in token.");
-
-            var seekerprofiledto = _mapper.Map<JobSeekerProfileDto>(request);
-
-            var result = await _profileService.UpdateProfileAsync(seekerprofiledto, Guid.Parse(jobSeekerId));
-            return Ok(result);
-        }
-
-        //[Authorize(Roles = "JobSeeker")]
-        [HttpPatch("patch")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PatchProfile([FromForm] PatchJobSeekerProfileRequest request)
-        {
-             var jobSeekerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                                                                                   
-
-            if (jobSeekerId == null)
-                return Unauthorized("Invalid or missing JobSeeker ID in token.");
-
-            var seekerprofiledto = _mapper.Map<JobSeekerProfileDto>(request);
-
-            var result = await _profileService.PatchProfileAsync(seekerprofiledto, Guid.Parse(jobSeekerId));
-
-            if (result == null)
-                return NotFound("Profile not found for this Job Seeker.");
-
-            return Ok(result);
-        }
-
-        //[Authorize(Roles = "JobSeeker")]
-        [HttpGet("view")]
-        public async Task<IActionResult> GetMyProfile()
-        {
-            var jobSeekerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                                                                     
-
-            if (jobSeekerId == null)
-                return Unauthorized("Invalid or missing JobSeeker ID in token.");
-
-            var result = await _profileService.GetProfileByJobSeekerIdAsync(Guid.Parse(jobSeekerId));
-
-            if (result == null)
-                return NotFound("Profile not found for this Job Seeker.");
-
-            return Ok(result);
-        }
-
-       // [Authorize(Roles = "JobSeeker")]
-        [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteMyProfile()
-        {
-             
-           var jobSeekerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-             
-
-            if (string.IsNullOrEmpty(jobSeekerId))
-                return Unauthorized("Invalid or missing JobSeeker ID in token.");
-
-            var result = await _profileService.DeleteProfileAsync(Guid.Parse(jobSeekerId));
-
-             
-            if (result.Contains("Cannot delete"))
-                return BadRequest(result);
-            if (result.Contains("not found"))
-                return NotFound(result);
-
-            return Ok(result);
-        }
-
-      //  [Authorize(Roles = "JobSeeker")]
-        [HttpGet("view-resume")]
-        public async Task<IActionResult> ViewMyResume()
-        {
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
- 
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized("Invalid token or missing JobSeeker ID.");
-
-            Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-             
-            if (jobSeekerId == null)
-                return Unauthorized("Invalid or missing JobSeeker ID in token.");
-
-            var resumeData = await _profileService.GetResumeByJobSeekerIdAsync(jobSeekerId);
-            if (resumeData == null)
-                return NotFound("Resume not found for this JobSeeker.");
-
-            
-            string contentType = "application/pdf"; // default to PDF
-            return File(resumeData, contentType, "Resume.pdf");
-        }
-
-      //  [Authorize]
-        [HttpGet("all-skills")]
-        public async Task<IActionResult> GetAllSkills()
-        {
-            var skills = await _profileService.GetAllSkillsAsync();
-            return Ok(skills.Select(s => new { s.Id, s.Name, s.Description }));
-        }
-
-        //  [Authorize(Roles = "JobSeeker")]
-        [HttpPost("add-skills")]
-        public async Task<IActionResult> AddSkills([FromBody] AddJobSeekerSkillsRequest request)
-        {
-
-            var Skilldto = _mapper.Map<JobseekerProfileSkillDto>(request); 
-
-            if (Skilldto.SkillIds == null || request.SkillIds.Count == 0)
-                return BadRequest("Please select at least one skill.");
-
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized("Invalid or missing JobSeeker ID.");
-
-            
-
-             Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-            var result = await _profileService.AddSkillsToJobSeekerAsync(jobSeekerId, Skilldto.SkillIds);
-            return Ok(result);
-        }
-
-        //[Authorize(Roles = "JobSeeker")]
-        [HttpPut("skills")]
-        public async Task<IActionResult> UpdateSkills([FromBody] UpdateSkillsRequest request)
-        {
-            var Skilldto = _mapper.Map<JobseekerProfileSkillDto>(request);
-
-            if (Skilldto.SkillIds == null || !request.SkillIds.Any())
-                return BadRequest("Please select at least one skill.");
- 
-
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized();
-
-            Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-            bool success = await _profileService.UpdateSkillsAsync(jobSeekerId, Skilldto.SkillIds);
-
-            if (!success)
-                return NotFound("JobSeeker profile not found.");
-
-            return Ok("Skills updated successfully.");
-        }
-
-       // [Authorize(Roles = "JobSeeker")]
-        [HttpPatch("skills")]
-        public async Task<IActionResult> PatchSkills([FromBody] PatchSkillsRequest request)
-        {
-            if ((request.AddSkillIds == null || !request.AddSkillIds.Any()) &&
-                (request.RemoveSkillIds == null || !request.RemoveSkillIds.Any()))
+            var isVerified = await jobSeekerService.VerifyEmailAsync(jobSeekerSignupRequestId);
+            if (isVerified)
             {
-                return BadRequest("Please provide skills to add or remove.");
+                return Ok();
             }
-
-          
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized();
-
-            Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-            bool success = await _profileService.PatchSkillsAsync(jobSeekerId, request.AddSkillIds, request.RemoveSkillIds);
-
-            if (!success)
-                return NotFound("JobSeeker profile not found.");
-
-            return Ok("Skills updated successfully (patch).");
-        }
-
-       // [Authorize(Roles = "JobSeeker")]
-        [HttpDelete("skills")]
-        public async Task<IActionResult> DeleteSkills([FromBody] DeleteSkillsRequest request)
-        {
-            if (request.SkillIds == null || !request.SkillIds.Any())
-                return BadRequest("Please provide at least one skill ID to delete.");
-
-            
-
-
-            Guid jobSeekerId = Guid.Parse("71A50ED5-C020-4301-8D1D-F1FE71C611BA");
-
-            if (jobSeekerId == null)
-                return Unauthorized("Invalid or missing JobSeeker ID in token.");
-
-            bool success = await _profileService.DeleteSkillsAsync(jobSeekerId, request.SkillIds);
-
-            if (!success)
-                return NotFound("No matching skills found for deletion.");
-
-            return Ok("Selected skills deleted successfully.");
-        }
-
-       // [Authorize(Roles = "JobSeeker")]
-        [HttpGet("skills")]
-        public async Task<IActionResult> GetJobSeekerSkills()
-        {
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized();
-
-            Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-           
-
-            var skills = await _profileService.GetSkillsByJobSeekerIdAsync(jobSeekerId);
-
-            if (skills == null || !skills.Any())
-                return Ok(new List<SkillDto>());
-
-            return Ok(skills);
+            return BadRequest();
         }
 
 
-        [HttpPost("AddWorkExperience")]
-        public async Task<IActionResult> AddWorkExperience([FromBody] AddWorkExperienceRequest request)
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("Set-password")]
+        public async Task<ActionResult> createJobSeekerSignupRequest(Guid jobSeekerSignupRequestId, [FromBody] string password)
         {
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized();
+            await jobSeekerService.CreateJobseeker(jobSeekerSignupRequestId, password);
+            return Ok("Password Set Successfully");
+        }
 
-            Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
 
-           
 
-            var dto = _mapper.Map<WorkExperienceDto>(request);
-            var result = await _profileService.AddWorkExperienceAsync(jobSeekerId, dto);
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("Login")]
+        public async Task<ActionResult> Login([FromBody] JobSeekerLoginRequest logdata)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid login request.");
 
+            var user = await loginRequestService.LoginJS(logdata.Email, logdata.Password);
+
+            if (user == null)
+                return Unauthorized("Invalid email or password.");
+
+            return Ok(user);
+        }
+
+
+//......................................................................................................................
+
+        [HttpGet("GetAllJobs")]
+        public async Task<IActionResult> GetAllJobs()
+        {
+            var jobs = await jobProviderService.GetAllJobsAsync();
+            if (jobs == null || !jobs.Any())
+                return NotFound("No jobs found.");
+
+            return Ok(jobs);
+        }
+
+
+
+
+        [HttpGet("GetJobById/{id}")]
+        public async Task<IActionResult> GetJobById(Guid id)
+        {
+            var job = await jobProviderService.GetJobByIdAsync(id);
+            if (job == null)
+                return NotFound("Job not found.");
+
+            return Ok(job);
+        }
+
+
+
+
+        [HttpGet("GetJobByTitle/{title}")]
+        public async Task<IActionResult> GetJobByTitle(string title)
+        {
+            var job = await jobSeekerService.GetJobByTitleAsync(title);
+            if (job == null)
+                return NotFound("Job not found.");
+
+            return Ok(job);
+        }
+
+
+//.....................................................................................................................................
+
+
+        [HttpPost]
+        [Route("Job-application")]
+        public async Task<IActionResult> ApplyJob([FromBody] ApplyJobRequest request)
+        {
+            var userId = authUserService.GetUserId();
+            var jobSeekerId = Guid.Parse(userId);
+
+            bool alreadyApplied = await jobSeekerService.HasAlreadyAppliedAsync(jobSeekerId, request.JobPostId);
+            if (alreadyApplied)
+                return BadRequest(new { message = "You have already applied for this job." });
+
+            var dto = mapper.Map<ApplyJobRequestDto>(request);
+            var result = await jobSeekerService.ApplyJobAsync(jobSeekerId, dto);
+
+            if (result)
+                return Ok(new { message = "Job Applied Successfully" });
+
+            return BadRequest(new { message = "Failed to apply for job." });
+        }
+
+
+
+
+        
+        [HttpGet]
+        [Route("Get Applied-jobs")]
+        public async Task<IActionResult> GetAppliedJobs()
+        {
+            var userId = authUserService.GetUserId();
+            var jobSeekerId = Guid.Parse(userId);
+
+            var appliedJobs = await jobSeekerService.GetAppliedJobsAsync(jobSeekerId);
+            return Ok(appliedJobs);
+        }
+
+
+
+
+       
+        [HttpGet]
+        [Route("Search applied-jobs by Title")]
+        public async Task<IActionResult> GetAppliedJobsByTitle([FromQuery] string title)
+        {
+            var userId = authUserService.GetUserId();
+            var jobSeekerId = Guid.Parse(userId);
+
+            var appliedJobs = await jobSeekerService.GetAppliedJobsByTitleAsync(jobSeekerId, title);
+            return Ok(appliedJobs);
+        }
+
+
+
+
+        
+        [HttpDelete]
+        [Route("Cancel job-application")]
+        public async Task<IActionResult> CancelAppliedJob(Guid jobApplicationId)
+        {
+            var jobSeekerId = Guid.Parse(authUserService.GetUserId());
+
+            var result = await jobSeekerService.CancelAppliedJobAsync(jobSeekerId, jobApplicationId);
+
+            if (result)
+                return Ok(new { Message = "Application cancelled successfully." });
+
+            return NotFound(new { Message = "Application not found or does not belong to the user." });
+        }
+
+
+
+
+      
+        [HttpPost("SaveJob")]
+        public async Task<IActionResult> SaveJob(Guid jobId)
+        {
+            var jobSeekerId = new Guid(authUserService.GetUserId());
+
+            var dto = new SavedJobDto
+            {
+                JobId = jobId,
+                DateSaved = DateTime.UtcNow
+            };
+            var result = await jobSeekerService.SaveJobAsync(jobSeekerId, dto);
+            if (result)
+                return Ok("Job saved successfully");
+
+            return BadRequest("Job does not exist or could not be saved.");
+        }
+
+
+
+
+        
+        [HttpGet("Get saved-jobs")]
+        public async Task<IActionResult> GetSavedJobs()
+        {
+            var jobSeekerId = Guid.Parse(authUserService.GetUserId());
+            var result = await jobSeekerService.GetSavedJobsAsync(jobSeekerId);
             return Ok(result);
         }
 
 
-        [HttpPut("UpdateWorkExperience")]
-        public async Task<IActionResult> UpdateWorkExperience([FromBody] UpdateWorkExperienceRequest request)
+
+
+       
+        [HttpGet("Search saved-jobs")]
+        public async Task<IActionResult> GetSavedJobsByTitle([FromQuery] string title)
         {
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized();
-
-            Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-          
-
-            var dto = _mapper.Map<WorkExperienceDto>(request);
-            var result = await _profileService.UpdateWorkExperienceAsync(jobSeekerId, dto);
-
+            var jobSeekerId = Guid.Parse(authUserService.GetUserId());
+            var result = await jobSeekerService.GetSavedJobsByTitleAsync(jobSeekerId, title);
             return Ok(result);
         }
 
 
-        [HttpPatch("PatchWorkExperience")]
-        public async Task<IActionResult> PatchWorkExperience([FromBody] PatchWorkExperienceRequest request)
+
+
+     
+        [HttpDelete("Remove saved-job")]
+        public async Task<IActionResult> RemoveSavedJob(Guid savedJobId)
         {
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized();
+            var jobSeekerId = Guid.Parse(authUserService.GetUserId());
+            var result = await jobSeekerService.RemoveSavedJobAsync(jobSeekerId, savedJobId);
 
-            Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
+            if (result)
+                return Ok(new { Message = "Saved job removed successfully" });
 
-            
-
-            var dto = _mapper.Map<WorkExperienceDto>(request);
-            var result = await _profileService.PatchWorkExperienceAsync(jobSeekerId, dto);
-
-            return Ok(result);
-        }
-
-        [HttpGet("ViewWorkexperience")]
-        public async Task<IActionResult> ViewWorkExperience()
-        {
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized();
-
-            Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-           
-
-            var result = await _profileService.GetWorkExperienceByJobSeekerIdAsync(jobSeekerId);
-
-            if (result == null || !result.Any())
-                return NotFound("No work experience found for this job seeker.");
-
-            return Ok(result);
-        }
-
-        [HttpDelete("DeleteWorkexperience")]
-        public async Task<IActionResult> DeleteWorkExperience(Guid id)
-        {
-            try
-            {
-                var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                    return Unauthorized();
-
-                Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-               
-
-                bool deleted = await _profileService.DeleteWorkExperienceAsync(id, jobSeekerId);
-
-                if (!deleted)
-                    return BadRequest("Failed to delete work experience.");
-
-                return Ok("Work experience deleted successfully.");
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Forbid(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
-            }
+            return NotFound(new { Message = "Saved job not found" });
         }
 
 
-        [HttpPost("AddQualification")]
-        public async Task<IActionResult> AddQualification([FromBody] QualificationAddRequest request)
+
+
+     
+        [HttpGet("Get scheduled-interviews")]
+      
+        public async Task<IActionResult> GetAllScheduledInterviews()
         {
-            var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                return Unauthorized("Job seeker ID not found in token.");
-
-            Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-             
-
-            var dto = _mapper.Map<QualificationDto>(request);
-            var result = await _profileService.AddQualificationAsync(jobSeekerId, dto);
-
-            return Ok(result);
+            var interviews = await _interviewService.GetAllScheduledInterviewsAsync();
+            return Ok(interviews);
         }
 
-        [HttpPut("UpdateQualification/{id}")]
-        public async Task<IActionResult> UpdateQualification(Guid id, [FromBody] QualificationUpdateRequest request)
+
+
+
+
+        [HttpPost("Logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
         {
-            try
-            {
-                var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                    return Unauthorized("Job seeker ID not found in token.");
+            var userIdString = authUserService.GetUserId();
 
-                Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
+                return Unauthorized("Invalid user ID.");
 
-               
-
-                var dto = _mapper.Map<QualificationDto>(request);
-                var updated = await _profileService.UpdateQualificationAsync(id, jobSeekerId, dto);
-
-                if (updated == null)
-                    return NotFound("Qualification not found.");
-
-                return Ok(updated);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Forbid(ex.Message);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
-            }
+            await authUserService.LogoutAsync(userId);
+            return Ok("Logout successful.");
         }
 
-        [HttpPatch("PatchQualification/{id}")]
-        public async Task<IActionResult> PatchQualification(Guid id,QualificationPatchRequest request)
-        {
-            try
-            {
-                var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                    return Unauthorized("Job seeker ID not found in token.");
-
-                Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-               
-
-                var dto = _mapper.Map<QualificationDto>(request);
-                var updated = await _profileService.PatchQualificationAsync(id, jobSeekerId, dto);
-
-                if (updated == null)
-                    return NotFound("Qualification not found.");
-
-                return Ok(updated);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Forbid(ex.Message);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
-            }
-        }
-
-        [HttpGet("ViewQualification")]
-        public async Task<IActionResult> ViewQualifications()
-        {
-            try
-            {
-               
-                var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                    return Unauthorized("Job seeker ID not found in token.");
-
-                Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-                 
-
-                var result = await _profileService.GetQualificationsByJobSeekerIdAsync(jobSeekerId);
-
-                if (result == null || !result.Any())
-                    return NotFound("No qualifications found for this job seeker.");
-
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
-            }
-        }
-
-        [HttpDelete("DeleteQualification/{qualificationId}")]
-        public async Task<IActionResult> DeleteQualification(Guid qualificationId)
-        {
-            try
-            {
-                var jobSeekerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (string.IsNullOrEmpty(jobSeekerIdClaim))
-                    return Unauthorized("Job seeker ID not found in token.");
-
-                Guid jobSeekerId = Guid.Parse(jobSeekerIdClaim);
-
-                //Guid jobSeekerId = Guid.Parse("71A50ED5-C020-4301-8D1D-F1FE71C611BA");
-
-                //if (jobSeekerId == null)
-
-                //    return Unauthorized("Invalid or missing JobSeeker ID in token.");
-
-                var result = await _profileService.DeleteQualificationAsync(qualificationId, jobSeekerId);
-                if (!result)
-                    return BadRequest("Failed to delete qualification.");
-
-                return Ok("Qualification deleted successfully.");
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Forbid(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
-            }
-        }
     }
 }
  

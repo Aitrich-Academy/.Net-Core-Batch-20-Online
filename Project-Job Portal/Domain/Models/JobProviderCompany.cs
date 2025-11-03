@@ -1,4 +1,6 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public partial class JobProviderCompany
 {
@@ -9,8 +11,13 @@ public partial class JobProviderCompany
     public string Summary { get; set; }
     public string Website { get; set; }
 
-    public Guid Location { get; set; }
-    public virtual Location LocationNavigation { get; set; }
+    public Guid? Location { get; set; }           // nullable
+    public virtual Location? LocationNavigation { get; set; } // nullable navigation
+
+    public byte[]? ProfilePictureData { get; set; }
+
+    [NotMapped]
+    public IFormFile? ProfilePictureFile { get; set; }
 
     public virtual ICollection<JobPost> JobPosts { get; set; } = new List<JobPost>();
 

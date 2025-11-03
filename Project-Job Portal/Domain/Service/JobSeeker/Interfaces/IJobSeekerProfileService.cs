@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Models;
 using Domain.Service.JobSeeker.DTOs;
- 
+using Domain.Service.Profile.DTOs;
+
 
 namespace Domain.Service.JobSeeker.Interfaces
 {

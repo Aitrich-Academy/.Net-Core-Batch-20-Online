@@ -17,16 +17,15 @@ namespace Domain.Models
         public Guid JobSeekerId { get; set; }
 
         public string? ProfileName { get; set; }
-
-        [Required]
-        public byte[] SeekerImage { get; set; }  
+        public byte[]? SeekerImage { get; set; }  
  
-        [Required]
-        public byte[] Resume { get; set; }
+        public byte[]? Resume { get; set; }
 
         public string? ProfileSummary { get; set; }
 
-        public virtual JobSeeker JobSeeker { get; set; }
+        [JsonIgnore]
+        public virtual JobSeeker? JobSeeker { get; set; }
+
 
         [JsonIgnore]
         public virtual ICollection<JobSeekerProfileSkill> JobSeekerProfileSkills { get; set; }
