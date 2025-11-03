@@ -44,7 +44,7 @@ namespace Domain.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
 
-                "Data Source=ABITHA;Initial Catalog=JobPortal_Project;Integrated Security=True;Trust Server Certificate=True");
+                "Data Source=ANOOD;Initial Catalog=JobPortal;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
 
             
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class Test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -170,7 +170,7 @@ namespace Domain.Migrations
                     Address = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Summary = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Website = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    Location = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Location = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ProfilePictureData = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
