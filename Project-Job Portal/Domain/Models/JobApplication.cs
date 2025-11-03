@@ -1,4 +1,5 @@
-﻿using System;
+﻿  
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,15 +25,11 @@ namespace Domain.Models
         public Guid? ResumeId { get; set; }
         public virtual Resume? Resume { get; set; }
 
-        [ForeignKey(nameof(Resume))]
-        public Guid Resume_id { get; set; }
-
-        public string CoverLetter { get; set; }
+        public string? CoverLetter { get; set; }
 
         public DateTime Datesubmitted { get; set; }
         public Status status { get; set; }
 
-        public virtual Resume Resume { get; set; }
         public virtual JobSeeker Seeker { get; set; }
         public virtual JobPost JobPost { get; set; }
 
