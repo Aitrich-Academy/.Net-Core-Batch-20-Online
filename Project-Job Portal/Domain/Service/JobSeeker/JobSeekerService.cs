@@ -11,11 +11,12 @@ using Domain.Models;
 using Domain.Service.JobSeeker.DTOs;
 using Domain.Service.JobSeeker.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Domain.Service.Profile.Interface;
 
 
 namespace Domain.Service.JobSeeker
 {
-    public  class JobSeekerService : IJobSeekerProfileService 
+    public  class JobSeekerService : IJobSeekerService  
     {
         IJobSeekerRepository jobSeekerRepository;
         //IJobProviderService jobProviderService;
