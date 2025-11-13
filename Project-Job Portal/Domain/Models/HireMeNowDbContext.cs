@@ -48,16 +48,26 @@ namespace Domain.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
 
-                "Data Source=VIJISHA;Initial Catalog=JobPortalProjectOriginal;Integrated Security=True;Trust Server Certificate=True");
+
+        //"Data Source=VIJISHA;Initial Catalog=JobPortalProjectOriginal;Integrated Security=True;Trust Server Certificate=True");
+        "Data Source=VIJISHA;Initial Catalog=JobportalFinalProject;Integrated Security=True;Trust Server Certificate=True");
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //        modelBuilder.Entity<AuthUser>()
-            //.HasOne(a => a.SystemUser)
-            //.WithOne(s => s.AuthUser)
-            //.HasForeignKey<AuthUser>(a => a.SystemUserId)
-            //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
+//<<<<<<< HEAD
+//            //        modelBuilder.Entity<AuthUser>()
+//            //.HasOne(a => a.SystemUser)
+//            //.WithOne(s => s.AuthUser)
+//            //.HasForeignKey<AuthUser>(a => a.SystemUserId)
+//            //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
+//=======
+//    //        modelBuilder.Entity<AuthUser>()
+//    //.HasOne(a => a.SystemUser)
+//    //.WithOne(s => s.AuthUser)
+//    //.HasForeignKey<AuthUser>(a => a.SystemUserId)
+//    //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
+//>>>>>>> b675f2f9f5b56abc974a76ee90ba683a593e0e36
 
 
             modelBuilder.Entity<CompanyUser>(entity =>

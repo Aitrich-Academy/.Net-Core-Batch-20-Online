@@ -53,14 +53,14 @@ namespace Domain.Service.JobSeeker
         public async Task<bool> HasAlreadyAppliedAsync(Guid jobSeekerId, Guid jobPostId)
         {
             return await _context.JobApplications
-                .AnyAsync(a => a.Applicant == jobSeekerId && a.JobPost_id == jobPostId);
+                .AnyAsync(a => a.ApplicantId == jobSeekerId && a.JobPostId == jobPostId);
         }
 
         public async Task<List<JobApplication>> GetAppliedJobsAsync(Guid jobSeekerId)
         {
             return await _context.JobApplications
                 .Include(j => j.JobPost)
-                .Where(j => j.Applicant == jobSeekerId)
+                .Where(j => j.ApplicantId == jobSeekerId)
                 .ToListAsync();
         }
 
@@ -68,7 +68,7 @@ namespace Domain.Service.JobSeeker
         {
             return await _context.JobApplications
                 .Include(j => j.JobPost)
-                .Where(j => j.Applicant == jobSeekerId &&
+                .Where(j => j.ApplicantId == jobSeekerId &&
                             j.JobPost.JobTitle.Contains(jobTitle))
                 .ToListAsync();
         }
@@ -78,7 +78,7 @@ namespace Domain.Service.JobSeeker
             try
             {
                 var appliedJob = await _context.JobApplications
-                    .FirstOrDefaultAsync(j => j.Id == jobApplicationId && j.Applicant == jobSeekerId);
+                    .FirstOrDefaultAsync(j => j.Id == jobApplicationId && j.ApplicantId == jobSeekerId);
 
                 if (appliedJob == null)
                     return false;
@@ -141,6 +141,53 @@ namespace Domain.Service.JobSeeker
                 .Include(i => i.Company)
                 .Where(i => i.interviewee == jobSeekerId)
                 .ToListAsync();
+        }
+
+        //GetJobseekers
+        // ✅ Get JobSeekerProfile by Id (with related JobSeeker info)
+        public async Task<JobSeekerProfile> GetByIdAsync(Guid id)
+        {
+            return await _context.JobSeekerProfiles
+      .Include(p => p.JobSeeker) // keep this if JobSeeker exists
+      .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        // ✅ Get all JobSeekerProfiles (with related JobSeeker info)
+        public async Task<IEnumerable<JobSeekerProfile>> GetAllAsync()
+        {
+            return await _context.JobSeekerProfiles.ToListAsync();
+        }
+
+        // ✅ Delete a JobSeekerProfile by Id
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            //var profile = await _context.JobSeekerProfiles.FindAsync(id);
+            //if (profile == null)
+            //    return false;
+
+            //_context.JobSeekerProfiles.Remove(profile);
+            //await _context.SaveChangesAsync();
+            //return true;
+
+            var profile = await _context.JobSeekerProfiles
+     .Include(p => p.JobSeekerProfileSkills)
+     .Include(p => p.Qualifications) // 👈 Add this
+     .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (profile != null)
+            {
+                _context.JobSeekerProfileSkills.RemoveRange(profile.JobSeekerProfileSkills);
+                _context.JobSeekerProfiles.Remove(profile);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+        // ✅ Get total JobSeekerProfiles count
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.JobSeekerProfiles.CountAsync();
         }
     }
 }

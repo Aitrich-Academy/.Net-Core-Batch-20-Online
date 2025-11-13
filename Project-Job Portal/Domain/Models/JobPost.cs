@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public partial class JobPost
 {
@@ -6,7 +7,11 @@ public partial class JobPost
     public string JobTitle { get; set; }
     public string JobSummary { get; set; }
     public DateTime PostedDate { get; set; }
-
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal Salary { get; set; }
+    public string Experience { get; set; } = null!;
+    public DateTime ApplicationDeadline { get; set; }
+    public string JobType { get; set; } = null!;
     public Guid LocationId { get; set; }
     public Guid IndustryId { get; set; }
     public Guid CategoryId { get; set; }
@@ -21,4 +26,5 @@ public partial class JobPost
     public string Status { get; set; } = "Pending";//new Line Added by me
 
     public virtual ICollection<JobResponsibility> JobResponsibilities { get; set; } = new List<JobResponsibility>();
+    public virtual ICollection<JobApplication> JobApplications { get; set; } = new List<JobApplication>();
 }

@@ -7,16 +7,16 @@ namespace Domain.Models;
 [Table("AuthUser")]
 public partial class AuthUser: SystemUser
 {
-   // public Guid Id { get; set; }
+    // public Guid Id { get; set; }
 
-  // public Guid SystemUserId { get; set; }
+    // public Guid SystemUserId { get; set; }
 
     //public string Password { get; set; } = null!;
 
     //public virtual SystemUser IdNavigation { get; set; } = null!;
 
     //public virtual SystemUser SystemUser { get; set; } = null!;
-
+    public Guid? JobProviderId { get; set; }
     public string? Password { get; set; }
     //for chat
    public string? ConnectionId { get; set; }

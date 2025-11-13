@@ -14,5 +14,6 @@ namespace Domain.Mail
         public string Host { get; set; }
         public int Port { get; set; }
         public bool UseSSL { get; set; }
+        public string FromMail { get; set; }
     }
 }

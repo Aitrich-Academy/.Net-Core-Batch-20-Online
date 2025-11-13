@@ -8,6 +8,7 @@ namespace Domain.Service.JobSeeker.DTOs
 {
     public class ApplyJobRequestDto
     {
-        public Guid JobPost_id { get; set; }
-    }
+        public Guid JobPostId { get; set; } // ✅ correct name (Id, not _id)
+    
+}
 }

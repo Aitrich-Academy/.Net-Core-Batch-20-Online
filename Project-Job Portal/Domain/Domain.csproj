@@ -1,3 +1,50 @@
+<!-- <Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="MailKit" Version="4.14.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.20">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.20">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MimeKit" Version="4.14.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.12" />
+  </ItemGroup>
+
+<<<<<<< HEAD
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Service\JobProvider\Interfaces\" />
+  </ItemGroup>
+=======
+
+	<ItemGroup>
+		<Folder Include="Migrations\" />
+		<Folder Include="Service\Admin\Interfaces\" />
+		<Folder Include="Service\JobProvider\DTOs\" />
+		<Folder Include="Service\JobSeeker\DTOs\" />
+		<Folder Include="Service\JobSeeker\Interfaces\" />
+	</ItemGroup>
+
+
+>>>>>>> b675f2f9f5b56abc974a76ee90ba683a593e0e36
+
+</Project> -->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -8,6 +55,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="MailKit" Version="4.14.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
@@ -27,7 +75,11 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Service\Admin\Interfaces\" />
     <Folder Include="Service\JobProvider\Interfaces\" />
+    <Folder Include="Service\JobProvider\DTOs\" />
+    <Folder Include="Service\JobSeeker\DTOs\" />
+    <Folder Include="Service\JobSeeker\Interfaces\" />
   </ItemGroup>
 
 </Project>

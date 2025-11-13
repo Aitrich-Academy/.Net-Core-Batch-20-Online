@@ -1,8 +1,8 @@
-using System.Security.Claims;
-using System.Text;
 using Domain.Extensions;
 using Domain.Mail;
 using Domain.Models;
+using Job_Portal.API.Admin.Helper;
+using Job_Portal.API.JobSeeker.Helper;
 using Job_Portal.Helper;
 using Job_Portal.API.Admin.Helper;
 //using Job_Portal.Helper;
@@ -11,14 +11,30 @@ using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+//builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+//builder.Services.Configure<MailSettings>("Provider", builder.Configuration.GetSection("ProviderMailSetti
+
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<MailSettings>("Provider", builder.Configuration.GetSection("ProviderMailSettings"));
+
+
+
 builder.Services.AddAutoMapper(typeof(SeekerProfiles));
+//builder.Services.Configure<Domain.Helper.MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
+builder.Services.AddAutoMapper(typeof(SeekerProfile));
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddControllers();
@@ -102,6 +118,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
