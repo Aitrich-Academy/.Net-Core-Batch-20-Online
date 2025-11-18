@@ -1,0 +1,48 @@
+.card-row {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.card {
+  text-align: center;
+  border-radius: 5%;
+  background-color: rgb(255, 255, 255);
+  height: 30%;
+  width: 20%;
+}
+
+.logo {
+  margin-top: 5%;
+  max-width: 100px;
+}
+
+h5, h6 {
+  margin: 0;
+}
+h6{
+  color: rgb(54, 54, 54);
+}
+
+.left-image {
+  max-width: 20px;
+  float: left;
+  padding-left: 15%;
+}
+
+.right-image {
+  max-width: 20px;
+  float: right;
+  padding-right: 15%;
+}
+
+.heading-info h5 {
+  margin: 0%;
+  font-size: 14px;
+  display: flex;
+}
+
+.heading-info p {
+  margin: 0;
+  font-size: 12px;
+  color: #888;
+}
