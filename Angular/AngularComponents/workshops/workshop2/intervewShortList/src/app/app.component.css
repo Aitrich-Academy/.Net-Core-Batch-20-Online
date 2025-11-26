@@ -1,0 +1,46 @@
+.sidebar {
+    width: 20%;
+    height: 100%;
+    background-color: #117EBD;
+    color: white;
+    padding-bottom: 9%;
+}
+
+.header {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    width: 78%;
+    height: 25%;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    
+}
+.content-container
+{
+    background-color: rgb(253, 247, 247);
+    width: 79%;
+    position: absolute;
+    top: 20%;
+    left: 20.5%;
+    height: 100%;
+    padding-bottom: 9.3%;
+}
+.content
+{
+    width: 70%;
+    position: absolute;
+    top: 9%;
+    left:6%;
+    height: 80%;
+    border: 1px solid black;
+    border-radius: 15%;
+    padding: 4%;
+}
+.footer{
+    background-color: #117EBD;
+    position:absolute;
+    top: 145%;
+    left:0%;
+    padding-right: 6%;
+}
