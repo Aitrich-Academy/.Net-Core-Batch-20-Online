@@ -10,7 +10,7 @@ public partial class Resume
 
     public string? Title { get; set; }
 
-    public byte[]? File { get; set; }
+    public string? File { get; set; }
     [JsonIgnore]
     public virtual ICollection<JobSeekerProfile> JobSeekerProfiles { get; set; } = new List<JobSeekerProfile>();
 }

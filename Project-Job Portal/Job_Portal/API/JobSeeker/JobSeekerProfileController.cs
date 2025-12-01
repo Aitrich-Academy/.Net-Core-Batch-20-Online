@@ -142,7 +142,7 @@ namespace Job_Portal.API.JobSeeker
 
 
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("View-Resume")]
         public async Task<IActionResult> ViewMyResume()
         {
@@ -169,6 +169,10 @@ namespace Job_Portal.API.JobSeeker
 
 
         [Authorize]
+
+
+
+
         [HttpGet("Get all-skills")]
         public async Task<IActionResult> GetAllSkills()
         {

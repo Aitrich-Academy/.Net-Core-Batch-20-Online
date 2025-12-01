@@ -18,27 +18,29 @@ namespace Job_Portal.API.Admin
     public class AdminFetchController : ControllerBase
     {
         private readonly IAdminServices _adminService;
-        
-        public IJobSeekerService jobSeekerService { get; set; }
-
         private readonly IMapper _mapper;
-        IAdminRepository _adminRepository;
-        private IMapper mapper;
+        private readonly IAdminRepository _adminRepository;
         private readonly ILoginRequestService _loginRequestService;
         private readonly IJobSeekerRepository _jobSeekerRepository;
         private readonly IJobProviderService _service;
-        public AdminFetchController( IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService,IJobProviderService service,IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService, IJobSeekerRepository jobSeekerRepository)
+
+        public AdminFetchController(
+            IMapper mapper,
+            ILoginRequestService loginRequestService,
+            IAuthUserService authUserService,
+            IJobProviderService service,
+            IAdminServices adminService,
+            IAdminRepository adminRepository,
+            IJobSeekerRepository jobSeekerRepository)
         {
             _mapper = mapper;
-          
             _adminService = adminService;
-            _adminRepository = adminRepostory;
+            _adminRepository = adminRepository;
             _loginRequestService = loginRequestService;
             _jobSeekerRepository = jobSeekerRepository;
             _service = service;
-            
-
         }
+
         // ✅ 1. Get all JobSeekerProfiles
         [Authorize(Roles = "ADMIN")]
         [HttpGet("GetAllJobSeekers")]
