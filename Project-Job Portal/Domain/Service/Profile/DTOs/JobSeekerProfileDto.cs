@@ -13,9 +13,13 @@ namespace Domain.Service.Profile.DTOs
         public Guid JobSeekerId { get; set; }
         public string? ProfileName { get; set; }
         public string? ProfileSummary { get; set; }
-         
-        // File uploads from Swagger (form-data)
+
+        // For Swagger uploads
         public IFormFile? SeekerImage { get; set; }
         public IFormFile? Resume { get; set; }
+
+        // For Swagger responses
+        public string? ImagePath { get; set; }  // will store wwwroot relative path like /Images/abc.jpg
+        public string? ResumePath { get; set; }
     }
 }

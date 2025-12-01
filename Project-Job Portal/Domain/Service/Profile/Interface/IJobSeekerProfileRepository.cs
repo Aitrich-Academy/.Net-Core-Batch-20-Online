@@ -16,7 +16,7 @@ namespace Domain.Service.Profile.Interface
         Task<JobSeekerProfile?> ViewProfileByJobSeekerIdAsync(Guid jobSeekerId);
         Task<bool> HasAppliedJobsAsync(Guid jobSeekerId);
         Task<bool> DeleteProfileAsync(Guid jobSeekerId);
-        Task<byte[]?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId);
+        Task<string?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId);
         Task<List<Skill>> GetAllSkillsAsync();
         Task<bool> AddSkillsToJobSeekerAsync(Guid jobSeekerId, List<Guid> skillIds);
         Task<bool> UpdateSkillsAsync(Guid jobSeekerId, List<Guid> newSkillIds);

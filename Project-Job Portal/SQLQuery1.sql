@@ -43,10 +43,7 @@ VALUES
 
 select * from CompanyUser;
 
-DECLARE @LocationId UNIQUEIDENTIFIER = (SELECT TOP 1 Id FROM Location);
-DECLARE @CategoryId UNIQUEIDENTIFIER = (SELECT TOP 1 Id FROM JobCategory);
-DECLARE @CompanyId UNIQUEIDENTIFIER = (SELECT TOP 1 Id FROM JobProviderCompany WHERE LegalName = 'Dummy Company');
-DECLARE @PostedBy UNIQUEIDENTIFIER = (SELECT TOP 1 Id FROM CompanyUser WHERE UserName = 'testuser');  -- merged into one
+
 
 
 INSERT INTO JobPost
