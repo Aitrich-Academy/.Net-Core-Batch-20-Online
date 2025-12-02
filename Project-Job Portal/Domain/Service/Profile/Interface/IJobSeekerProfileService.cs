@@ -19,7 +19,8 @@ namespace Domain.Service.Profile.Interface
 
         Task<string> DeleteProfileAsync(Guid jobSeekerId);
 
-        Task<byte[]?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId);
+        Task<string?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId);
+
 
         Task<List<Skill>> GetAllSkillsAsync();
         Task<string> AddSkillsToJobSeekerAsync(Guid jobSeekerId, List<Guid> skillIds);

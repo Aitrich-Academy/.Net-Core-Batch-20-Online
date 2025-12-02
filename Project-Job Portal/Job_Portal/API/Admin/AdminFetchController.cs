@@ -22,8 +22,7 @@ namespace Job_Portal.API.Admin
         public IJobSeekerService jobSeekerService { get; set; }
 
         private readonly IMapper _mapper;
-        IAdminRepository _adminRepository;
-        private IMapper mapper;
+        private readonly IAdminRepository _adminRepository;
         private readonly ILoginRequestService _loginRequestService;
         private readonly IJobSeekerRepository _jobSeekerRepository;
         private readonly IJobProviderService _service;
@@ -32,7 +31,7 @@ namespace Job_Portal.API.Admin
             _mapper = mapper;
 
             _adminService = adminService;
-            _adminRepository = adminRepostory;
+            _adminRepository = adminRepository;
             _loginRequestService = loginRequestService;
             _jobSeekerRepository = jobSeekerRepository;
             _service = service;

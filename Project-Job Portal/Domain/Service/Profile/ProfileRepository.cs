@@ -69,13 +69,16 @@ namespace Domain.Service.Profile
             return true;
         }
 
-        public async Task<byte[]?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId)
+        public async Task<string?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId)
         {
             var profile = await _context.JobSeekerProfiles
                 .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
 
+            // Resume is already Base64 string in DB
             return profile?.Resume;
         }
+
+
 
 
         public async Task<List<Skill>> GetAllSkillsAsync()

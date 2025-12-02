@@ -316,6 +316,12 @@ namespace Job_Portal.API.JobProvider
             var count = await _service.GetApplicationCountAsync();
             return Ok(new { totalApplications = count });
         }
+        [HttpPost("logout/{jobProviderId}")]
+        public async Task<IActionResult> Logout(Guid jobProviderId)
+        {
+            var result = await _service.LogoutAsync(jobProviderId);
+            return Ok(new { Message = result });
+        }
 
     }
 }
