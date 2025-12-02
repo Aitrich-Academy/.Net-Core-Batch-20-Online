@@ -346,21 +346,70 @@ namespace Domain.Service.Profile
         public async Task<WorkExperienceDto> AddWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto)
         {
 
+            //var profile = await _context.JobSeekerProfiles
+            //    .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
+
             var profile = await _context.JobSeekerProfiles
-                .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
+    .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId && p.ProfileName != null);
+
 
             if (profile == null)
                 throw new Exception("JobSeeker profile not found");
 
             var entity = mapper.Map<WorkExperience>(dto);
-            entity.JobSeekerProfileId = profile.Id;
             entity.Id = Guid.NewGuid();
+            entity.JobSeekerProfileId = profile.Id;
+            
 
             await _profileRepository.AddWorkExperiencesync(entity);
             await _profileRepository.SaveChangesAsync();
+            Console.WriteLine("JobSeekerId param: " + jobSeekerId);
+            Console.WriteLine("Profile.Id: " + profile.Id);
+            Console.WriteLine("Assigned JobSeekerProfileId: " + entity.JobSeekerProfileId);
 
             return mapper.Map<WorkExperienceDto>(entity);
+            
+
+
+
         }
+
+        //public async Task AddWorkExperienceAsync(Guid userId, WorkExperienceDto request)
+        //{
+        //    // 1️⃣ Find the user's profile
+        //    var profile = await _context.JobSeekerProfiles
+        //                                .FirstOrDefaultAsync(p => p.JobSeekerId == userId);
+
+        //    if (profile == null)
+        //        throw new Exception("User profile not found. Create a profile first.");
+
+        //    // 2️⃣ Create WorkExperience entity
+        //    var work = new WorkExperience
+        //    {
+        //        JobSeekerProfileId = profile.Id, // FK points to existing profile
+        //        JobTitle = request.JobTitle,
+        //        CompanyName = request.CompanyName,
+        //        Summary = request.Summary,
+        //        ServiceStart = request.ServiceStart,
+        //        ServiceEnd = request.ServiceEnd
+        //    };
+
+        //    // 3️⃣ Add and save
+        //    _context.WorkExperiences.Add(work);
+        //    await _context.SaveChangesAsync();
+
+        //}
+
+        //public async Task<WorkExperienceDto> AddWorkExperienceAsync(WorkExperienceDto workExperienceDto)
+        //{
+        //    var entity = mapper.Map<WorkExperience>(workExperienceDto);
+        //    await _profileRepository.AddAsync(entity);
+        //    await _profileRepository.SaveChangesAsync();
+
+        //    return mapper.Map<WorkExperienceDto>(entity);
+        //}
+
+
 
         public async Task<WorkExperienceDto> UpdateWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto)
         {

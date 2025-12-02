@@ -38,5 +38,8 @@ namespace Domain.Service.Profile.Interface
         Task<bool> DeleteQualificationAsync(Qualification qualification);
         Task<bool> JobSeekerProfileExistsAsync(Guid jobSeekerId);
 
+        Task AddAsync(WorkExperience workExperience);
+        //Task SaveChangesAsync();
+
     }
 }

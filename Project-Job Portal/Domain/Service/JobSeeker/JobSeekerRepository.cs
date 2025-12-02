@@ -18,11 +18,11 @@ namespace Domain.Service.JobSeeker
         {
             _context = dbContext;
         }
-        public Guid AddSignupRequest(SignUpRequest signUpRequest)
+        public  Guid AddSignupRequest(SignUpRequest signUpRequest)
         {
             signUpRequest.Status = Status.PENDING;
-            _context.SignUpRequests.AddAsync(signUpRequest);
-            _context.SaveChanges();
+            _context.SignUpRequests.Add(signUpRequest);
+           _context.SaveChanges();
             return signUpRequest.Id;
         }
 
@@ -161,13 +161,27 @@ namespace Domain.Service.JobSeeker
         // ✅ Delete a JobSeekerProfile by Id
         public async Task<bool> DeleteAsync(Guid id)
         {
-            var profile = await _context.JobSeekerProfiles.FindAsync(id);
-            if (profile == null)
-                return false;
+            //var profile = await _context.JobSeekerProfiles.FindAsync(id);
+            //if (profile == null)
+            //    return false;
 
-            _context.JobSeekerProfiles.Remove(profile);
-            await _context.SaveChangesAsync();
-            return true;
+            //_context.JobSeekerProfiles.Remove(profile);
+            //await _context.SaveChangesAsync();
+            //return true;
+
+            var profile = await _context.JobSeekerProfiles
+     .Include(p => p.JobSeekerProfileSkills)
+     .Include(p => p.Qualifications) // 👈 Add this
+     .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (profile != null)
+            {
+                _context.JobSeekerProfileSkills.RemoveRange(profile.JobSeekerProfileSkills);
+                _context.JobSeekerProfiles.Remove(profile);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         // ✅ Get total JobSeekerProfiles count

@@ -12,8 +12,8 @@
 //namespace Domain.Migrations
 //{
 //    [DbContext(typeof(HireMeNowDbContext))]
-//    [Migration("20251029134446_first")]
-//    partial class first
+//    [Migration("20251026193059_Initial")]
+//    partial class Initial
 //    {
 //        /// <inheritdoc />
 //        protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,20 +103,14 @@
 //                    b.Property<Guid?>("CompanyUserId")
 //                        .HasColumnType("uniqueidentifier");
 
-//                    b.Property<DateTime>("DateScheduled")
+//                    b.Property<DateTime?>("Date")
 //                        .HasColumnType("datetime2");
 
 //                    b.Property<Guid?>("JobId")
 //                        .HasColumnType("uniqueidentifier");
 
-//                    b.Property<string>("Mode")
-//                        .HasColumnType("nvarchar(max)");
-
 //                    b.Property<Guid?>("SheduledBy")
 //                        .HasColumnType("uniqueidentifier");
-
-//                    b.Property<string>("Status")
-//                        .HasColumnType("nvarchar(max)");
 
 //                    b.Property<Guid?>("interviewee")
 //                        .HasColumnType("uniqueidentifier");
@@ -140,7 +134,7 @@
 //                        .ValueGeneratedOnAdd()
 //                        .HasColumnType("uniqueidentifier");
 
-//                    b.Property<Guid>("ApplicantId")
+//                    b.Property<Guid>("Applicant")
 //                        .HasColumnType("uniqueidentifier");
 
 //                    b.Property<string>("CoverLetter")
@@ -149,22 +143,14 @@
 //                    b.Property<DateTime>("Datesubmitted")
 //                        .HasColumnType("datetime2");
 
-//                    b.Property<Guid>("JobPostId")
+//                    b.Property<Guid>("JobPost_id")
 //                        .HasColumnType("uniqueidentifier");
-
-//                    b.Property<Guid?>("ResumeId")
-//                        .HasColumnType("uniqueidentifier");
-
-//                    b.Property<int>("status")
-//                        .HasColumnType("int");
 
 //                    b.HasKey("Id");
 
-//                    b.HasIndex("ApplicantId");
+//                    b.HasIndex("Applicant");
 
-//                    b.HasIndex("JobPostId");
-
-//                    b.HasIndex("ResumeId");
+//                    b.HasIndex("JobPost_id");
 
 //                    b.ToTable("JobApplications");
 //                });
@@ -221,9 +207,6 @@
 //                    b.Property<int>("Role")
 //                        .HasColumnType("int");
 
-//                    b.Property<string>("Title")
-//                        .HasColumnType("nvarchar(max)");
-
 //                    b.Property<string>("UserName")
 //                        .HasColumnType("nvarchar(max)");
 
@@ -277,19 +260,13 @@
 
 //                    b.HasIndex("SkillId");
 
-//                    b.ToTable("JobSeekerProfileSkill");
+//                    b.ToTable("JobSeekerProfileSkills");
 //                });
 
 //            modelBuilder.Entity("Domain.Models.Location", b =>
 //                {
 //                    b.Property<Guid>("Id")
 //                        .HasColumnType("uniqueidentifier");
-
-//                    b.Property<string>("City")
-//                        .HasColumnType("nvarchar(max)");
-
-//                    b.Property<string>("Country")
-//                        .HasColumnType("nvarchar(max)");
 
 //                    b.Property<string>("Description")
 //                        .IsRequired()
@@ -302,9 +279,6 @@
 //                        .HasMaxLength(25)
 //                        .HasColumnType("nchar(25)")
 //                        .IsFixedLength();
-
-//                    b.Property<string>("State")
-//                        .HasColumnType("nvarchar(max)");
 
 //                    b.HasKey("Id");
 
@@ -639,18 +613,11 @@
 //                    b.Property<Guid>("Id")
 //                        .HasColumnType("uniqueidentifier");
 
-//                    b.Property<DateTime>("ApplicationDeadline")
-//                        .HasColumnType("datetime2");
-
 //                    b.Property<Guid>("CategoryId")
 //                        .HasColumnType("uniqueidentifier");
 
 //                    b.Property<Guid>("CompanyId")
 //                        .HasColumnType("uniqueidentifier");
-
-//                    b.Property<string>("Experience")
-//                        .IsRequired()
-//                        .HasColumnType("nvarchar(max)");
 
 //                    b.Property<Guid>("IndustryId")
 //                        .HasColumnType("uniqueidentifier");
@@ -666,10 +633,6 @@
 //                        .HasColumnType("nchar(10)")
 //                        .IsFixedLength();
 
-//                    b.Property<string>("JobType")
-//                        .IsRequired()
-//                        .HasColumnType("nvarchar(max)");
-
 //                    b.Property<Guid>("LocationId")
 //                        .HasColumnType("uniqueidentifier");
 
@@ -678,9 +641,6 @@
 
 //                    b.Property<DateTime>("PostedDate")
 //                        .HasColumnType("datetime");
-
-//                    b.Property<decimal>("Salary")
-//                        .HasColumnType("decimal(18,2)");
 
 //                    b.Property<string>("Status")
 //                        .IsRequired()
@@ -727,9 +687,6 @@
 //                    b.Property<Guid>("Location")
 //                        .HasColumnType("uniqueidentifier");
 
-//                    b.Property<byte[]>("ProfilePictureData")
-//                        .HasColumnType("varbinary(max)");
-
 //                    b.Property<string>("Summary")
 //                        .IsRequired()
 //                        .HasMaxLength(50)
@@ -755,9 +712,6 @@
 
 //                    b.Property<string>("ConnectionId")
 //                        .HasColumnType("nvarchar(max)");
-
-//                    b.Property<Guid?>("JobProviderId")
-//                        .HasColumnType("uniqueidentifier");
 
 //                    b.Property<bool?>("OnlineStatus")
 //                        .HasColumnType("bit");
@@ -820,23 +774,17 @@
 //                {
 //                    b.HasOne("Domain.Models.JobSeeker", "Seeker")
 //                        .WithMany()
-//                        .HasForeignKey("ApplicantId")
+//                        .HasForeignKey("Applicant")
 //                        .OnDelete(DeleteBehavior.Cascade)
 //                        .IsRequired();
 
 //                    b.HasOne("JobPost", "JobPost")
-//                        .WithMany("JobApplications")
-//                        .HasForeignKey("JobPostId")
+//                        .WithMany()
+//                        .HasForeignKey("JobPost_id")
 //                        .OnDelete(DeleteBehavior.Cascade)
 //                        .IsRequired();
 
-//                    b.HasOne("Domain.Models.Resume", "Resume")
-//                        .WithMany()
-//                        .HasForeignKey("ResumeId");
-
 //                    b.Navigation("JobPost");
-
-//                    b.Navigation("Resume");
 
 //                    b.Navigation("Seeker");
 //                });
@@ -1063,8 +1011,6 @@
 
 //            modelBuilder.Entity("JobPost", b =>
 //                {
-//                    b.Navigation("JobApplications");
-
 //                    b.Navigation("JobResponsibilities");
 //                });
 

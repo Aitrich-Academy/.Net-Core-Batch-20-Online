@@ -25,8 +25,8 @@ namespace Job_Portal.API.Admin.Helper
             CreateMap<CreateJobCategoryDto, JobCategoryDto>();
             CreateMap<JobCategoryDto, JobCategory>();
             CreateMap<JobCategory, JobCategoryDto>().ReverseMap();
-            CreateMap<JobCategory,PatchJobCategoryDTO>().ReverseMap();
-            CreateMap<JobCategoryDto, PatchJobCategoryDTO>().ReverseMap();
+            CreateMap<JobCategory,Domain.Service.Admin.DTOs.PatchJobCategoryDTO>().ReverseMap();
+            CreateMap<JobCategoryDto, Domain.Service.Admin.DTOs.PatchJobCategoryDTO>().ReverseMap();
             CreateMap<Location, LocationDto>().ReverseMap();
             CreateMap<LocationRequest, LocationDto>().ReverseMap();
             CreateMap<SystemUser, AdminLoginDTO>().ReverseMap();
@@ -47,6 +47,28 @@ namespace Job_Portal.API.Admin.Helper
 
             CreateMap<JobPost, JobDto>().ReverseMap();
 
+
+
+            CreateMap<JobPost, JobDto>().ReverseMap();
+
+
+            CreateMap<CreateJobCategoryDto, JobCategoryDto>().ReverseMap();
+            CreateMap<JobCategoryDto, JobCategory>().ReverseMap();
+            // From API Patch DTO -> Domain Patch DTO
+           // CreateMap<PatchJobCategoryDto, PatchJobCategoryDTO>().ReverseMap();
+
+            // From Domain Patch DTO -> JobCategory (entity)
+            CreateMap<Domain.Service.Admin.DTOs.PatchJobCategoryDTO, JobCategory>().ReverseMap();
+
+
+
+            //CreateMap<JobProviderRequestDto, JobProviderDto>().ReverseMap();
+            //CreateMap<JobProviderDto, JobProviderCompany>().ReverseMap();
+            //CreateMap<JobProviderCompany, JobProviderRequestDto>().ReverseMap();
+
+            CreateMap<JobProviderCompany, JobProviderDto>().ReverseMap();
+            CreateMap<JobProviderCompany, JobProviderRequestDto>().ReverseMap();
+            CreateMap<JobProviderDto, JobProviderRequestDto>().ReverseMap();
 
 
         }

@@ -21,8 +21,20 @@ namespace Domain.Service.Login
 
         }
 
-        public AuthUser? GetUserByEmail(string email)
+        //public AuthUser? GetUserByEmail(string email)
+        //{
+        //    return await _context.AuthUsers
+        //        .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+        //}
+        public async Task<AuthUser?> GetUserByEmailAsync(string email)
         {
+            return await _context.AuthUsers
+                .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+        }
+        public async Task<AuthUser?> GetUserByEmailAndPasswordAsync(string email, string password)
+        {
+            return await _context.AuthUsers
+        .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
             try
             {
                 return _context.AuthUsers
@@ -35,16 +47,18 @@ namespace Domain.Service.Login
         }
 
 
-        public async Task<AuthUser?> GetUserByEmailAsync(string email)
-        {
-            return await _context.AuthUsers.FirstOrDefaultAsync(e => e.Email == email);
-        }
+        //public async Task<AuthUser?> GetUserByEmailAsync(string email)
+        //{
+        //    return await _context.AuthUsers.FirstOrDefaultAsync(e => e.Email == email);
+        //}
 
-        public async Task<AuthUser?> GetUserByEmailAndPasswordAsync(string email, string password)
-        {
-            return await _context.AuthUsers
-                .FirstOrDefaultAsync(e => e.Email == email && e.Password == password);
-        }
+        //public async Task<AuthUser?> GetUserByEmailAndPasswordAsync(string email, string password)
+        //{
+        //    return await _context.AuthUsers
+        //        .FirstOrDefaultAsync(e => e.Email == email && e.Password == password);
+        //}
+
+
 
     }
 }

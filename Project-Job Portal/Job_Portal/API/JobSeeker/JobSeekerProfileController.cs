@@ -49,6 +49,14 @@ namespace Job_Portal.API.JobSeeker
         }
 
 
+        //[HttpGet("debug-user")]
+        //public IActionResult DebugUser()
+        //{
+        //    var userId = authUserService.GetUserId();
+        //    return Ok(new { userId });
+        //}
+
+
 
 
         [Authorize]
@@ -310,7 +318,7 @@ namespace Job_Portal.API.JobSeeker
 
         [Authorize]
         [HttpPost("AddWorkExperience")]
-        public async Task<IActionResult> AddWorkExperience([FromBody] AddWorkExperienceRequest request)
+        public async Task<IActionResult> AddWorkExperience(AddWorkExperienceRequest request)
         {
             var userId = authUserService.GetUserId();
             if (string.IsNullOrEmpty(userId))
@@ -325,6 +333,23 @@ namespace Job_Portal.API.JobSeeker
             return Ok(result);
         }
 
+        //[Authorize(Roles = "JOB_SEEKER")]
+        //[HttpPost("workexperience")]
+        //public async Task<IActionResult> AddWorkExperience([FromBody] WorkExperienceDto request)
+        //{
+        //    // 1️⃣ Get logged-in user ID from JWT claims
+        //    var userIdClaim = User.FindFirst("sid")?.Value;
+        //    if (userIdClaim == null)
+        //        return Unauthorized("User not logged in.");
+
+        //    var userId = Guid.Parse(userIdClaim);
+
+        //    // 2️⃣ Add WorkExperience
+        //    await _profileService.AddWorkExperienceAsync(userId, request);
+
+        //    return Ok("Work experience added successfully.");
+        //}
+
 
 
 
@@ -332,7 +357,7 @@ namespace Job_Portal.API.JobSeeker
         [HttpPut("UpdateWorkExperience")]
         public async Task<IActionResult> UpdateWorkExperience([FromBody] UpdateWorkExperienceRequest request)
         {
-            
+
             var userId = authUserService.GetUserId();
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized("Invalid or missing JobSeeker ID.");
@@ -353,7 +378,7 @@ namespace Job_Portal.API.JobSeeker
         [HttpPatch("PatchWorkExperience")]
         public async Task<IActionResult> PatchWorkExperience([FromBody] PatchWorkExperienceRequest request)
         {
-            
+
             var userId = authUserService.GetUserId();
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized("Invalid or missing JobSeeker ID.");
@@ -398,7 +423,7 @@ namespace Job_Portal.API.JobSeeker
         {
             try
             {
-           
+
                 var userId = authUserService.GetUserId();
                 if (string.IsNullOrEmpty(userId))
                     return Unauthorized("Invalid or missing JobSeeker ID.");
@@ -453,7 +478,7 @@ namespace Job_Portal.API.JobSeeker
         {
             try
             {
-                
+
                 var userId = authUserService.GetUserId();
                 if (string.IsNullOrEmpty(userId))
                     return Unauthorized("Invalid or missing JobSeeker ID.");
@@ -492,7 +517,7 @@ namespace Job_Portal.API.JobSeeker
         {
             try
             {
-                
+
                 var userId = authUserService.GetUserId();
                 if (string.IsNullOrEmpty(userId))
                     return Unauthorized("Invalid or missing JobSeeker ID.");

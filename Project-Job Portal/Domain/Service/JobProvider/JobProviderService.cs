@@ -97,7 +97,7 @@ namespace Domain.Service.JobProvider
 
         // ================== Company ==================
         public async Task<(Guid CompanyId, string Message)> AddCompanyAsync(
-      Guid jobProviderId, string companyName, string location, string industry, string websiteUrl)
+      Guid jobProviderId, string companyName, Guid? location, string industry, string websiteUrl)
         {
             var company = new CompanyUser
             {
@@ -115,7 +115,7 @@ namespace Domain.Service.JobProvider
                 Address = "Default Address",              // ✅ Keep text address separate
                 Summary = industry,
                 Website = websiteUrl,
-                Location = Guid.Parse(location),          // ✅ This fixes FK constraint
+                Location = location,          // ✅ This fixes FK constraint
                 CompanyUsers = { company }
             };
 

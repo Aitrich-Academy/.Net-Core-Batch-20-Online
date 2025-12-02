@@ -8,5 +8,6 @@
         public string Summary { get; set; }
         public string Website { get; set; }
         public string LocationName { get; set; }
+
     }
 }

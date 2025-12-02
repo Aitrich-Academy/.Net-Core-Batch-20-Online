@@ -245,6 +245,11 @@ namespace Domain.Service.Profile
             await _context.WorkExperiences.AddAsync(experience);
         }
 
+        public async Task AddAsync(WorkExperience workExperience)
+        {
+            await _context.WorkExperiences.AddAsync(workExperience);
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
