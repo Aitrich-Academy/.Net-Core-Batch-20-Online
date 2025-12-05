@@ -172,7 +172,7 @@ namespace Domain.Service.Admin
         public async Task<Industry?> GetIndustryByIdAsync(Guid id)
         {
             return await _context.Industries.FindAsync(id);
-            
+
         }
 
         //get IndustryCount
@@ -191,40 +191,74 @@ namespace Domain.Service.Admin
         }
 
         //patch Industry
-        public async Task<Industry?> PatchIndustryAsync(Guid id, Industry updatedData)
+        //public async Task<Industry?> PatchIndustryAsync(Guid id, Industry updatedData)
+        //{
+        //    var existing = await _context.Industries.FindAsync(id);
+        //    if (existing == null)
+        //        return null;
+
+        //    if (!string.IsNullOrEmpty(updatedData.Name))
+        //        existing.Name= updatedData.Name;
+
+        //    if (!string.IsNullOrEmpty(updatedData.Description) )
+        //        existing.Description = updatedData.Description;
+        //    _context.Industries.Update(existing);
+        //    await _context.SaveChangesAsync();
+        //    return existing;
+        //}
+        public async Task<bool> PatchIndustryAsync(Industry updatedData)
         {
-            var existing = await _context.Industries.FindAsync(id);
-            if (existing == null)
-                return null;
 
-            // ✅ Update only if values are provided in request
-            if (!string.IsNullOrWhiteSpace(updatedData.Name))
-                existing.Name = updatedData.Name;
-
-            if (!string.IsNullOrWhiteSpace(updatedData.Description))
-                existing.Description = updatedData.Description;
-
+            _context.Industries.Update(updatedData);
             await _context.SaveChangesAsync();
+            return true;
 
-            // ✅ Return the latest saved entity (with existing or updated values)
-            return existing;
+            //            var existing = await _context.Industries.FindAsync(id);
+            //            if (existing == null)
+            //                return null;
+
+            //            // ✅ Update only if values are provided in request
+            //            if (!string.IsNullOrWhiteSpace(updatedData.Name))
+            //                existing.Name = updatedData.Name;
+
+            //            if (!string.IsNullOrWhiteSpace(updatedData.Description))
+            //                existing.Description = updatedData.Description;
+
+            //            await _context.SaveChangesAsync();
+
+            //            // ✅ Return the latest saved entity (with existing or updated values)
+            //            return existing;
+            //>>>>>>> b675f2f9f5b56abc974a76ee90ba683a593e0e36
         }
 
         //Delete Industry
         public async Task<bool> DeleteIndustryAsync(Guid id)
         {
-            var existing = await _context.Industries.FindAsync(id);
-            if (existing == null)
-                return false;
+            //var existing = await _context.Industries.FindAsync(id);
+            //if (existing == null)
+            //    return false;
 
-            _context.Industries.Remove(existing);
+            //_context.Industries.Remove(existing);
 
+            //await _context.SaveChangesAsync();
+            //return true;
+
+
+            var jobPosts = await _context.JobPosts
+    .Where(j => j.IndustryId == id)
+    .ToListAsync();
+
+            _context.JobPosts.RemoveRange(jobPosts);
+            await _context.SaveChangesAsync();
+
+            var industry = await _context.Industries.FindAsync(id);
+            _context.Industries.Remove(industry);
             await _context.SaveChangesAsync();
             return true;
         }
 
 
-       
+
         public async Task<IEnumerable<JobPost>> GetPendingJobsAsync()
         {
             return await _context.JobPosts
@@ -318,13 +352,32 @@ namespace Domain.Service.Admin
         }
         public async Task<bool> DeleteJobProviderAsync(Guid id)
         {
-            var existing = await _context.JobProviderCompanies.FindAsync(id);
-            if (existing == null)
-                return false;
+            //var existing = await _context.JobProviderCompanies.FindAsync(id);
+            //if (existing == null)
+            //    return false;
 
-            _context.JobProviderCompanies.Remove(existing);
-            await _context.SaveChangesAsync();
-            return true;
+            //_context.JobProviderCompanies.Remove(existing);
+            //await _context.SaveChangesAsync();
+            //return true;
+
+            var jobPosts = await _context.JobPosts
+        .Where(j => j.CompanyId == id)
+        .ToListAsync();
+
+            if (jobPosts.Any())
+            {
+                _context.JobPosts.RemoveRange(jobPosts);
+                await _context.SaveChangesAsync();
+            }
+
+            var company = await _context.JobProviderCompanies.FindAsync(id);
+            if (company != null)
+            {
+                _context.JobProviderCompanies.Remove(company);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
 
@@ -341,8 +394,8 @@ namespace Domain.Service.Admin
         }
 
 
-      
-      
+
+
 
         public async Task<bool> RejectJobAsync(Guid jobId)
         {
@@ -355,6 +408,111 @@ namespace Domain.Service.Admin
             return true;
         }
 
+
+        //<<<<<<< HEAD
+        //        //Add Category
+        //        public async Task<JobCategory> AddJobCategoryAsync(JobCategory category)
+        //        {
+        //            _context.JobCategories.Add(category);
+        //            await _context.SaveChangesAsync();
+        //            return category;
+        //        }
+
+
+        //        //GetAllCategory
+        //        public async Task<IEnumerable<JobCategory>> GetAllJobCategoryAsync()
+        //        {
+        //            return await _context.JobCategories.ToListAsync();
+        //        }
+
+        //        //GetCategoryById
+        //        public async Task<JobCategory?> GetJobCategoryByIdAsync(Guid id)
+        //        {
+        //            return await _context.JobCategories.FindAsync(id);
+        //        }
+
+
+        //        //updateJobCategory
+        //        public async Task<bool> UpdateJobCategoryAsync(JobCategory category)
+        //        {
+        //            _context.JobCategories.Update(category);
+        //            return await _context.SaveChangesAsync() > 0;
+        //        }
+
+        //        //PatchJobCategory
+        //        public async Task<bool> PatchJobCategoryAsync( JobCategory category)
+        //        {
+
+
+        //            _context.JobCategories.Update(category);
+        //            await _context.SaveChangesAsync();
+        //            return true;
+        //        }
+
+        //        //Delete JobCategory
+        //        public async Task<bool> DeleteJobCategoryAsync(Guid id)
+        //        {
+        //            var existing = await _context.JobCategories.FindAsync(id);
+        //            if (existing == null)
+        //                return false;
+
+        //            _context.JobCategories.Remove(existing);
+        //            await _context.SaveChangesAsync();
+        //            return true;
+        //        }
+
+
+        //        public async Task<int> GetJobCountAsync()
+        //        {
+        //            return await _context.JobPosts.CountAsync();
+        //        }
+
+        //        public async Task<JobPost?> GetJobByNameAsync(string jobTitle)
+        //        {
+
+
+        //            var Job = await _context.JobPosts.FirstOrDefaultAsync(x => x.JobTitle == jobTitle);
+        //            return Job;
+        //        }
+
+
+        //        public async Task<IEnumerable<JobProviderCompany>> GetAllProviders()
+        //        {
+        //            return await _context.JobProviderCompanies.ToListAsync();
+        //        }
+
+
+        //        public async Task<JobProviderCompany?> GetJobProviderByIdAsync(Guid id)
+        //        {
+        //            return await _context.JobProviderCompanies.FindAsync(id);
+
+        //        }
+
+        //        public async Task<int> GetJobProviderCountAsync()
+        //        {
+        //            return await _context.JobProviderCompanies.CountAsync();
+        //        }
+
+
+        //        //Delete Industry
+        //        public async Task<bool> DeleteJobProviderAsync(Guid id)
+        //        {
+        //            var existing = await _context.JobProviderCompanies.FindAsync(id);
+        //            if (existing == null)
+        //                return false;
+
+        //            _context.JobProviderCompanies.Remove(existing);
+        //            await _context.SaveChangesAsync();
+        //            return true;
+        //        }
+
+        //    }
+
+
+
+
+        //=======
+        //>>>>>>> b675f2f9f5b56abc974a76ee90ba683a593e0e36
 
     }
 }

@@ -34,17 +34,34 @@ namespace Domain.Service.JobSeeker
             _context = context;
         }
 
-        public async void CreateSignupRequest(JobSeekerSignupRequestDto data)
+        //public async void CreateSignupRequest(JobSeekerSignupRequestDto data)
+        //{
+        //    var signUpRequest = mapper.Map<SignUpRequest>(data);
+        //    var signUpId = jobSeekerRepository.AddSignupRequest(signUpRequest);
+        //    MailRequest mailRequest = new MailRequest();
+
+        //    mailRequest.Subject = "HireMeNow SignUp Verification";
+        //    mailRequest.Body = signUpId.ToString();
+        //    mailRequest.ToEmail = signUpRequest.Email;
+        //    await emailService.SendEmailAsync(mailRequest);
+        //}
+        public async Task CreateSignupRequest(JobSeekerSignupRequestDto data)
         {
             var signUpRequest = mapper.Map<SignUpRequest>(data);
             var signUpId = jobSeekerRepository.AddSignupRequest(signUpRequest);
-            MailRequest mailRequest = new MailRequest();
 
-            mailRequest.Subject = "HireMeNow SignUp Verification";
-            mailRequest.Body = signUpId.ToString();
-            mailRequest.ToEmail = signUpRequest.Email;
+            MailRequest mailRequest = new MailRequest
+            {
+                Subject = "HireMeNow SignUp Verification",
+                Body = signUpId.ToString(),
+                ToEmail = signUpRequest.Email
+            };
+
             await emailService.SendEmailAsync(mailRequest);
         }
+
+
+
 
         public async Task<bool> VerifyEmailAsync(Guid jobSeekerSignupRequestId)
         {

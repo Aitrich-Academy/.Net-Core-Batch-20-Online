@@ -17,6 +17,38 @@ namespace Domain.Service.Email
             _mailSettings = mailSettings.Get("Provider");
         }
 
+        //public async Task SendEmailAsync(string toEmail, string subject, string body)
+        //{
+        //    try
+        //    {
+        //        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+        //        using var smtp = new SmtpClient(_mailSettings.Host, _mailSettings.Port)
+        //        {
+        //            Credentials = new NetworkCredential(_mailSettings.UserMail, _mailSettings.Password),
+        //            EnableSsl = _mailSettings.UseSSL
+        //        };
+
+        //        var mailMessage = new MailMessage
+        //        {
+        //            From = new MailAddress(_mailSettings.FromMail ?? _mailSettings.UserMail, _mailSettings.DisplayName),
+        //            Subject = subject,
+        //            Body = body,
+        //            IsBodyHtml = true
+        //        };
+
+        //        mailMessage.To.Add(toEmail);
+        //        await smtp.SendMailAsync(mailMessage);
+        //    }
+        //    catch (SmtpException smtpEx)
+        //    {
+        //        throw new InvalidOperationException($"SMTP error: {smtpEx.StatusCode} - {smtpEx.Message}", smtpEx);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new InvalidOperationException("Failed to send email.", ex);
+        //    }
+        //}
         public async Task SendEmailAsync(string toEmail, string subject, string body)
         {
             try
@@ -26,7 +58,9 @@ namespace Domain.Service.Email
                 using var smtp = new SmtpClient(_mailSettings.Host, _mailSettings.Port)
                 {
                     Credentials = new NetworkCredential(_mailSettings.UserMail, _mailSettings.Password),
-                    EnableSsl = _mailSettings.UseSSL
+                    EnableSsl = _mailSettings.UseSSL,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    Timeout = 20000 // 20 seconds
                 };
 
                 var mailMessage = new MailMessage
@@ -38,16 +72,23 @@ namespace Domain.Service.Email
                 };
 
                 mailMessage.To.Add(toEmail);
+
+                // Send email and log exact error if it fails
                 await smtp.SendMailAsync(mailMessage);
             }
-            catch (SmtpException smtpEx)
+            catch (SmtpException ex)
             {
-                throw new InvalidOperationException($"SMTP error: {smtpEx.StatusCode} - {smtpEx.Message}", smtpEx);
+                // This will print the exact SMTP error
+                Console.WriteLine($"SMTP Error: {ex.StatusCode}, {ex.Message}");
+                throw; // rethrow for higher-level handling if needed
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Failed to send email.", ex);
+                // This will print any other general error
+                Console.WriteLine($"General Error: {ex.Message}");
+                throw;
             }
         }
+
     }
 }

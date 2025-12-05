@@ -27,7 +27,7 @@ namespace Job_Portal.API.Jobs
         // JOB POST ENDPOINTS
         // -------------------------
 
-      
+
         [HttpPost("jobs")]
         public async Task<IActionResult> CreateJobPost([FromBody] CreateJobPostRequest request)
         {
@@ -37,7 +37,7 @@ namespace Job_Portal.API.Jobs
         }
 
 
-      
+
         [HttpGet("jobs/{id}")]
         public async Task<IActionResult> GetJobById(Guid id)
         {
@@ -81,7 +81,7 @@ namespace Job_Portal.API.Jobs
         }
 
 
-      
+
         [HttpGet("jobs")]
         public async Task<IActionResult> GetAllJobs()
         {

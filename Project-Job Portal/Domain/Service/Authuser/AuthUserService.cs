@@ -36,6 +36,15 @@ namespace Domain.Service.Authuser
             }
             return result;
         }
+        //public string GetUserId()
+        //{
+        //    if (_httpContextAccessor.HttpContext?.User == null)
+        //        return string.Empty;
+
+        //    var sidClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid);
+        //    return sidClaim?.Value ?? string.Empty;
+        //}
+
 
         public async Task LogoutAsync(Guid userId)
         {

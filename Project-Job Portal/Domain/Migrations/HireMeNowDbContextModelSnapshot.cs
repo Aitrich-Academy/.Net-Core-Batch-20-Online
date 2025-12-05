@@ -244,14 +244,14 @@ namespace Domain.Migrations
                     b.Property<string>("ProfileSummary")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Resume")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Resume")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ResumeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("SeekerImage")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("SeekerImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -408,8 +408,8 @@ namespace Domain.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("File")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("File")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");

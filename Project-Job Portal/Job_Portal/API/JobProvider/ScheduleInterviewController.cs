@@ -26,7 +26,7 @@ namespace Job_Portal.API.JobProvider
 
         // 28. Schedule Interview
 
-       
+
         [HttpPost]
         public async Task<IActionResult> ScheduleInterview([FromBody] ScheduleInterviewRequest request)
         {
@@ -36,7 +36,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-      
+
         [HttpGet]
         public async Task<IActionResult> GetAllScheduledInterviews()
         {
@@ -45,7 +45,7 @@ namespace Job_Portal.API.JobProvider
         }
 
 
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetInterviewById(Guid id)
         {
@@ -55,7 +55,7 @@ namespace Job_Portal.API.JobProvider
 
         // 30. Update Interview
 
-        
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateInterview(Guid id, [FromBody] UpdateInterviewRequest request)
         {
@@ -68,7 +68,7 @@ namespace Job_Portal.API.JobProvider
 
         // 31. Patch Interview (time only)
 
-     
+
         [HttpPatch("{id}")]
         public async Task<IActionResult> PatchInterview(Guid id, [FromBody] PatchInterviewRequest request)
         {
@@ -80,7 +80,7 @@ namespace Job_Portal.API.JobProvider
 
         // 32. Update Interview Status
 
-       
+
         [HttpPut("{id}/status")]
         public async Task<IActionResult> UpdateInterviewStatus(Guid id, [FromBody] UpdateInterviewStatusRequest request)
         {
@@ -97,7 +97,7 @@ namespace Job_Portal.API.JobProvider
 
         // 33. Delete Interview
 
-       
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInterview(Guid id)
         {

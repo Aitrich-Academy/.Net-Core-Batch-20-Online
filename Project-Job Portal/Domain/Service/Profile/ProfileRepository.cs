@@ -69,13 +69,16 @@ namespace Domain.Service.Profile
             return true;
         }
 
-        public async Task<byte[]?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId)
+        public async Task<string?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId)
         {
             var profile = await _context.JobSeekerProfiles
                 .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
 
+            // Resume is already Base64 string in DB
             return profile?.Resume;
         }
+
+
 
 
         public async Task<List<Skill>> GetAllSkillsAsync()
@@ -240,6 +243,11 @@ namespace Domain.Service.Profile
         public async Task AddWorkExperiencesync(WorkExperience experience)
         {
             await _context.WorkExperiences.AddAsync(experience);
+        }
+
+        public async Task AddAsync(WorkExperience workExperience)
+        {
+            await _context.WorkExperiences.AddAsync(workExperience);
         }
 
         public async Task SaveChangesAsync()

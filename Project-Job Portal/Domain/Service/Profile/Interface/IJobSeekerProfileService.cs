@@ -19,7 +19,8 @@ namespace Domain.Service.Profile.Interface
 
         Task<string> DeleteProfileAsync(Guid jobSeekerId);
 
-        Task<byte[]?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId);
+        Task<string?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId);
+
 
         Task<List<Skill>> GetAllSkillsAsync();
         Task<string> AddSkillsToJobSeekerAsync(Guid jobSeekerId, List<Guid> skillIds);
@@ -32,7 +33,7 @@ namespace Domain.Service.Profile.Interface
 
         Task<List<SkillDto>> GetSkillsByJobSeekerIdAsync(Guid jobSeekerId);
 
-        Task<WorkExperienceDto> AddWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto);
+        //Task<WorkExperienceDto> AddWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto);
 
         Task<WorkExperienceDto> UpdateWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto);
 
@@ -51,5 +52,8 @@ namespace Domain.Service.Profile.Interface
         Task<IEnumerable<QualificationDto>> GetQualificationsByJobSeekerIdAsync(Guid jobSeekerId);
 
         Task<bool> DeleteQualificationAsync(Guid qualificationId, Guid jobSeekerId);
+        Task<WorkExperienceDto> AddWorkExperienceAsync(Guid userId, WorkExperienceDto workExperienceDto);
+        //Task AddWorkExperienceAsync(Guid userId, AddWorkExperienceRequest request)
     }
 }
+

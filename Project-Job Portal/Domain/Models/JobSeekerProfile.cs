@@ -17,9 +17,9 @@ namespace Domain.Models
         public Guid JobSeekerId { get; set; }
 
         public string? ProfileName { get; set; }
-        public byte[]? SeekerImage { get; set; }  
- 
-        public byte[]? Resume { get; set; }
+        public string? SeekerImage { get; set; }  // ✅ change from string[] to string
+        public string? Resume { get; set; }       // ✅ change from string[] to string
+
 
         public string? ProfileSummary { get; set; }
 

@@ -9,9 +9,9 @@ namespace Domain.Service.SignUp.Interface
 {
   public interface ISignUpRequestService
     {
-        
 
-        void CreateSignupRequest(SignUpRequestDto data);
+        Task CreateSignupRequest(SignUpRequestDto data);
+        //void CreateSignupRequest(SignUpRequestDto data);
 
         Task<bool> VerifyEmailAsync(Guid jobProviderSignupRequestId);
 
