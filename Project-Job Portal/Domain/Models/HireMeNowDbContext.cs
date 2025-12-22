@@ -1,10 +1,14 @@
 ﻿using System;
-using Domain.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Domain.Models;
 
 namespace Domain.Models
 {
-    public partial class HireMeNowDbContext : DbContext
+    public partial class HireMeNowDbContext:DbContext
     {
         public HireMeNowDbContext()
         {
@@ -44,16 +48,30 @@ namespace Domain.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
 
+<<<<<<< HEAD
                 "Data Source=ANOOD;Initial Catalog=JobPortal;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+=======
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 
-            
+        //"Data Source=VIJISHA;Initial Catalog=JobPortalProjectOriginal;Integrated Security=True;Trust Server Certificate=True");
+        "Data Source=VIJISHA;Initial Catalog=JobportalFinalProject;Integrated Security=True;Trust Server Certificate=True");
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-    //        modelBuilder.Entity<AuthUser>()
-    //.HasOne(a => a.SystemUser)
-    //.WithOne(s => s.AuthUser)
-    //.HasForeignKey<AuthUser>(a => a.SystemUserId)
-    //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
+//<<<<<<< HEAD
+//            //        modelBuilder.Entity<AuthUser>()
+//            //.HasOne(a => a.SystemUser)
+//            //.WithOne(s => s.AuthUser)
+//            //.HasForeignKey<AuthUser>(a => a.SystemUserId)
+//            //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
+//=======
+//    //        modelBuilder.Entity<AuthUser>()
+//    //.HasOne(a => a.SystemUser)
+//    //.WithOne(s => s.AuthUser)
+//    //.HasForeignKey<AuthUser>(a => a.SystemUserId)
+//    //.OnDelete(DeleteBehavior.Restrict); // Use Restrict to avoid cascade issues
+//>>>>>>> b675f2f9f5b56abc974a76ee90ba683a593e0e36
 
 
             modelBuilder.Entity<CompanyUser>(entity =>
@@ -169,12 +187,12 @@ namespace Domain.Models
 
             modelBuilder.Entity<WorkExperience>(entity =>
             {
-                   entity.HasOne(w => w.JobSeekerProfile)
-                  .WithMany(p => p.WorkExperiences)
-                  .HasForeignKey(w => w.JobSeekerProfileId)
-                  .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(w => w.JobSeekerProfile)
+               .WithMany(p => p.WorkExperiences)
+               .HasForeignKey(w => w.JobSeekerProfileId)
+               .OnDelete(DeleteBehavior.Cascade);
             });
-        
+
 
 
 
@@ -262,4 +280,9 @@ namespace Domain.Models
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
+
+
 }
+
+        
+

@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿
+=======
+
+using System.Security.Claims;
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 using AutoMapper;
 using Domain.Service.Authuser.Interfaces;
 using Domain.Service.JobProvider.Interfaces;
@@ -11,7 +16,7 @@ using Domain.Service.Login.Interfaces;
 using Job_Portal.API.JobSeeker.RequestObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-﻿using System.Security.Claims;
+using System.Security.Claims;
 
 namespace Job_Portal.API.JobSeeker
 {
@@ -25,9 +30,13 @@ namespace Job_Portal.API.JobSeeker
 
         public IJobService jobService;
         public ILoginRequestService loginRequestService { get; set; }
-        public IAuthUserService  authUserService { get; set; }
+        public IAuthUserService authUserService { get; set; }
         public IMapper mapper { get; set; }
+<<<<<<< HEAD
         public JobSeekerController(IInterviewService interviewService,IJobSeekerService _jobSeekerService, IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService , IJobService _jobService)
+=======
+        public JobSeekerController(IInterviewService interviewService, IJobSeekerService _jobSeekerService, IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService/*, IJobProviderService _jobProviderService*/)
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
         {
             jobSeekerService = _jobSeekerService;
             loginRequestService = _loginRequestService;
@@ -44,7 +53,7 @@ namespace Job_Portal.API.JobSeeker
         public async Task<ActionResult> createJobSeekerSignupRequest(JobSeekerSignupRequest data)
         {
             var jobSeekerSignupRequestDto = mapper.Map<JobSeekerSignupRequestDto>(data);
-            jobSeekerService.CreateSignupRequest(jobSeekerSignupRequestDto);
+            await jobSeekerService.CreateSignupRequest(jobSeekerSignupRequestDto);
             return Ok(data);
         }
 
@@ -135,6 +144,10 @@ namespace Job_Portal.API.JobSeeker
 //.....................................................................................................................................
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
         [HttpPost]
         [Route("Job-application")]
         public async Task<IActionResult> ApplyJob([FromBody] ApplyJobRequest request)
@@ -158,7 +171,7 @@ namespace Job_Portal.API.JobSeeker
 
 
 
-        
+
         [HttpGet]
         [Route("Get Applied-jobs")]
         public async Task<IActionResult> GetAppliedJobs()
@@ -173,7 +186,7 @@ namespace Job_Portal.API.JobSeeker
 
 
 
-       
+
         [HttpGet]
         [Route("Search applied-jobs by Title")]
         public async Task<IActionResult> GetAppliedJobsByTitle([FromQuery] string title)
@@ -188,7 +201,7 @@ namespace Job_Portal.API.JobSeeker
 
 
 
-        
+
         [HttpDelete]
         [Route("Cancel job-application")]
         public async Task<IActionResult> CancelAppliedJob(Guid jobApplicationId)
@@ -206,7 +219,7 @@ namespace Job_Portal.API.JobSeeker
 
 
 
-      
+
         [HttpPost("SaveJob")]
         public async Task<IActionResult> SaveJob(Guid jobId)
         {
@@ -227,7 +240,7 @@ namespace Job_Portal.API.JobSeeker
 
 
 
-        
+
         [HttpGet("Get saved-jobs")]
         public async Task<IActionResult> GetSavedJobs()
         {
@@ -239,7 +252,7 @@ namespace Job_Portal.API.JobSeeker
 
 
 
-       
+
         [HttpGet("Search saved-jobs")]
         public async Task<IActionResult> GetSavedJobsByTitle([FromQuery] string title)
         {
@@ -251,7 +264,7 @@ namespace Job_Portal.API.JobSeeker
 
 
 
-     
+
         [HttpDelete("Remove saved-job")]
         public async Task<IActionResult> RemoveSavedJob(Guid savedJobId)
         {
@@ -267,9 +280,9 @@ namespace Job_Portal.API.JobSeeker
 
 
 
-     
+
         [HttpGet("Get scheduled-interviews")]
-      
+
         public async Task<IActionResult> GetAllScheduledInterviews()
         {
             var interviews = await _interviewService.GetAllScheduledInterviewsAsync();
@@ -295,5 +308,5 @@ namespace Job_Portal.API.JobSeeker
 
     }
 }
- 
+
 

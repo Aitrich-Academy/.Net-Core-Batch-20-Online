@@ -8,6 +8,7 @@ using Domain.Models;
 
 using Domain.Service.Jobs.Dto;
 using Domain.Service.Jobs.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -30,7 +31,7 @@ namespace Domain.Service.Jobs
         // JOB POST METHODS
         // -------------------------
 
-        public async Task<Guid> CreateJobPostAsync(JobPostDto jobPostDto)
+        public async Task<Guid> CreateJobPostAsync([FromBody] JobPostDto jobPostDto)
         {
             // Fetch existing related entities
             var location = await _context.Locations.FindAsync(jobPostDto.LocationId);

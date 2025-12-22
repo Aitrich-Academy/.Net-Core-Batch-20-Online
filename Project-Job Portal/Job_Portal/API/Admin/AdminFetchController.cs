@@ -18,27 +18,101 @@ namespace Job_Portal.API.Admin
     public class AdminFetchController : ControllerBase
     {
         private readonly IAdminServices _adminService;
-        
+
         public IJobSeekerService jobSeekerService { get; set; }
 
         private readonly IMapper _mapper;
-        IAdminRepository _adminRepository;
-        private IMapper mapper;
+        private readonly IAdminRepository _adminRepository;
         private readonly ILoginRequestService _loginRequestService;
         private readonly IJobSeekerRepository _jobSeekerRepository;
         private readonly IJobProviderService _service;
-        public AdminFetchController( IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService,IJobProviderService service,IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService, IJobSeekerRepository jobSeekerRepository)
+        public AdminFetchController(IMapper _mapper, ILoginRequestService _loginRequestService, IAuthUserService _authUserService, IJobProviderService service, IMapper mapper, IAdminServices adminService, IAdminRepository adminRepostory, ILoginRequestService loginRequestService, IJobSeekerRepository jobSeekerRepository)
         {
             _mapper = mapper;
-          
+
             _adminService = adminService;
-            _adminRepository = adminRepostory;
+            _adminRepository = adminRepository;
             _loginRequestService = loginRequestService;
             _jobSeekerRepository = jobSeekerRepository;
             _service = service;
-            
+
 
         }
+        // ✅ Get total job count
+        [HttpGet("Jobcount")]
+        public async Task<IActionResult> GetJobCount()
+        {
+            var count = await _adminService.GetJobCountAsync();
+            return Ok(new { TotalJobs = count });
+        }
+
+
+        // ✅ Get job by name
+        [HttpGet("getbyname/{jobTitle}")]
+        public async Task<IActionResult> GetJobByName(string jobTitle)
+        {
+            var job = await _adminService.GetJobByNameAsync(jobTitle);
+
+            if (job == null)
+                return NotFound(new { Message = $"No job found with title '{jobTitle}'." });
+
+            return Ok(job);
+        }
+
+        //[HttpGet("GetAllJobProviders")]
+        //public async Task<IActionResult> GetAllJobProviders()
+        //{
+        //    var providers = await _adminService.GetAllProviders();
+        //    var allproviders = _mapper.Map<List<JobProviderRequestDto>>(providers);
+        //    return Ok(allproviders);
+        //}
+        [HttpGet("GetAllJobProviders")]
+        public async Task<IActionResult> GetAllJobProviders()
+        {
+            var providers = await _adminService.GetAllProviders();
+            // var allproviders = _mapper.Map<List<JobProviderRequestDto>>(providers);
+            return Ok(providers);
+        }
+
+
+        [HttpGet("GetJobProviderById/{id}")]
+
+        public async Task<IActionResult> GetJobProviderById(Guid id)
+        {
+            var jobprovider = await _adminService.GetJobProviderByIdAsync(id);
+
+            if (jobprovider == null)
+                return NotFound("JobProvider not found");
+            //  var providerById = _mapper.Map<JobProviderRequestDto>(jobprovider);
+            return Ok(jobprovider);
+        }
+
+
+        // ✅ Get total jobProvider count
+        [HttpGet("JobProvidercount")]
+        public async Task<IActionResult> GetJobProviderCount()
+        {
+            var count = await _adminService.GetJobProviderCountAsync();
+            //return Ok(count);
+            return Ok(new { TotalJobProvider = count });
+        }
+
+
+        [HttpDelete("DeleteJobProvider/{id}")]
+
+        public async Task<IActionResult> DeleteJobProvider(Guid id)
+        {
+            var deleted = await _adminService.DeleteJobProviderAsync(id);
+
+            if (!deleted)
+                return NotFound("JobProvider not found.");
+
+            return Ok(new { Message = "JobProvider deleted successfully." });
+        }
+
+
+
+
         // ✅ 1. Get all JobSeekerProfiles
         [Authorize(Roles = "ADMIN")]
         [HttpGet("GetAllJobSeekers")]
@@ -69,7 +143,7 @@ namespace Job_Portal.API.Admin
 
             return Ok($"JobSeekerProfile with ID {id} deleted successfully.");
         }
-        
+
         // ✅ 4. Get total JobSeeker count
         [HttpGet("GetJobSeekerCount")]
         public async Task<IActionResult> GetJobSeekerCount()
@@ -77,70 +151,7 @@ namespace Job_Portal.API.Admin
             var count = await _jobSeekerRepository.GetCountAsync();
             return Ok(new { TotalJobSeekers = count });
         }
-        // ✅ Get total job count
-        [HttpGet("Jobcount")]
-        public async Task<IActionResult> GetJobCount()
-        {
-            var count = await _adminService.GetJobCountAsync();
-            return Ok(new { TotalJobs = count });
-        }
-
-
-        // ✅ Get job by name
-        [HttpGet("getbyname/{jobTitle}")]
-        public async Task<IActionResult> GetJobByName(string jobTitle)
-        {
-            var job = await _adminService.GetJobByNameAsync(jobTitle);
-
-            if (job == null)
-                return NotFound(new { Message = $"No job found with title '{jobTitle}'." });
-
-            return Ok(job);
-        }
-
-        [HttpGet("GetAllJobProviders")]
-        public async Task<IActionResult> GetAllJobProviders()
-        {
-            var providers = await _adminService.GetAllProviders();
-            var allproviders = _mapper.Map<List<JobProviderRequestDto>>(providers);
-            return Ok(providers);
-        }
-
-
-        [HttpGet("GetJobProviderById/{id}")]
-
-        public async Task<IActionResult> GetJobProviderById(Guid id)
-        {
-            var jobprovider = await _adminService.GetJobProviderByIdAsync(id);
-
-            if (jobprovider == null)
-                return NotFound("JobProvider not found");
-            var providerById = _mapper.Map<JobProviderRequestDto>(jobprovider);
-            return Ok(providerById);
-        }
-
-
-        // ✅ Get total jobProvider count
-        [HttpGet("JobProvidercount")]
-        public async Task<IActionResult> GetJobProviderCount()
-        {
-            var count = await _adminService.GetJobProviderCountAsync();
-            //return Ok(count);
-            return Ok(new { TotalJobProvider = count });
-        }
-
-
-        [HttpDelete("DeleteJobProvider/{id}")]
-
-        public async Task<IActionResult> DeleteJobProvider(Guid id)
-        {
-            var deleted = await _adminService.DeleteJobProviderAsync(id);
-
-            if (!deleted)
-                return NotFound("JobProvider not found.");
-
-            return Ok(new { Message = "JobProvider deleted successfully." });
-        }
+       
 
         [HttpGet("company/member/{memberId}")]
         public async Task<IActionResult> GetCompanyMemberById(Guid memberId)
@@ -171,7 +182,7 @@ namespace Job_Portal.API.Admin
             return Ok(new { Message = message });
         }
 
-      
+
 
 
 
@@ -179,4 +190,4 @@ namespace Job_Portal.API.Admin
 }
 
 
-    
+

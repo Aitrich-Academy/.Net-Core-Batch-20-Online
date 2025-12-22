@@ -11,12 +11,37 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Service.Authuser.Interfaces;
 using Domain.Service.Login.DTO;
+using AutoMapper;
+using Domain.Service.Authuser.Interfaces;
+using Domain.Service.Login.DTOs;
+using Domain.Service.Login.Interfaces;
+using AutoMapper;
+using Domain.Service.Authuser;
+using Domain.Service.Login.DTOs;
+using Domain.Service.Login.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 
 
 namespace Domain.Service.Login
 {
+<<<<<<< HEAD
     public class LoginRequestService : ILoginRequestService 
+=======
+    //public class LoginRequestService : ILoginRequestService
+    //{
+    //    private readonly ILoginRequestRepository _loginRepository;
+    //    private readonly IAuthUserRepository _authUserRepository;
+    //    private readonly IMapper _mapper;
+
+    //    public LoginRequestService(ILoginRequestRepository loginRepository, IMapper mapper, IAuthUserRepository authUserRepository)
+    //    {
+    //        _loginRepository = loginRepository;
+    //        _mapper = mapper;
+    //        _authUserRepository = authUserRepository;
+    //    }
+    public class LoginRequestService : ILoginRequestService
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
     {
 
         private readonly HireMeNowDbContext _context;
@@ -32,20 +57,34 @@ namespace Domain.Service.Login
 
         }
 
-        public AdminLoginDTO Adminlogin(string email, string password)
+        //public AdminLoginDTO Adminlogin(string email, string password)
+        //{
+        //    var user = loginRepository.GetUserByEmail(email);
+        //    if (user == null)
+        //        return null;
+
+        //    if (password == user.Password)
+        //    {
+        //        var userReturn = mapper.Map<AdminLoginDTO>(user);
+        //        userReturn.Token = authUserRepository.CreateToken(user);
+        //        return userReturn;
+        //    }
+
+        //    return null;
+        //}
+        public async Task<AdminLoginDTO?> AdminLoginAsync(string email, string password)
         {
-            var user = loginRepository.GetUserByEmail(email);
-            if (user == null)
+            var user = await loginRepository.GetUserByEmailAsync(email);
+
+            if (user == null || user.Password != password)
                 return null;
 
-            if (password == user.Password)
-            {
-                var userReturn = mapper.Map<AdminLoginDTO>(user);
-                userReturn.Token = authUserRepository.CreateToken(user);
-                return userReturn;
-            }
+            var userReturn = mapper.Map<AdminLoginDTO>(user);
+            userReturn.Token = authUserRepository.CreateToken(user);
 
-            return null;
+            return userReturn;
+
+
         }
 
         public async Task<bool> LogoutAsync(Guid adminId)
@@ -60,23 +99,48 @@ namespace Domain.Service.Login
             await _context.SaveChangesAsync();
             return true;
         }
-        public JobProviderLoginDto Login(string email, string password)
+        //public JobProviderLoginDto Login(string email, string password)
+        //{
+        //    var user = loginRepository.GetUserByEmailAsync(email);
+        //    if (user == null)
+        //        return null;
+
+        //    // Verify hashed password
+        //    //if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+        //    //    return null;
+
+        //    var dto = mapper.Map<JobProviderLoginDto>(user);
+        //    dto.JobProviderId = user.JobProviderId;
+        //    dto.Token = authUserRepository.CreateToken(user);
+        //    dto.Token = authUserRepository.CreateToken(user);
+
+        //    return dto;
+
+        //    return dto;
+        //}
+
+        public async Task<JobProviderLoginDto?> Login(string email, string password)
         {
-            var user = loginRepository.GetUserByEmail(email);
-            if (user == null)
+            // Get the user by email
+            var user = await loginRepository.GetUserByEmailAsync(email);
+
+            if (user == null || user.Role != Enums.Role.JOB_PROVIDER)
+                return null; // Not found or not a Job Provider
+
+           // Verify password(if using hashed passwords)
+             if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                 return null;
 
-            // Verify hashed password
-            if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
-                return null;
+            // Generate JWT token
+            var token = authUserRepository.CreateToken(user);
 
+            // Map to JobProvider DTO
             var dto = mapper.Map<JobProviderLoginDto>(user);
             dto.JobProviderId = user.JobProviderId;
-            dto.Token = authUserRepository.CreateToken(user);
+            dto.Token = token;
 
             return dto;
         }
-
 
 
         public async Task<JobSeekerLoginDto?> LoginJS(string email, string password)

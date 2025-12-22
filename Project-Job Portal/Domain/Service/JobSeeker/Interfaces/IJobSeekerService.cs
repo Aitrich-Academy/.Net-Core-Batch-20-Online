@@ -6,7 +6,8 @@ namespace Domain.Service.JobSeeker.Interfaces
 {
     public interface IJobSeekerService
     {
-        void CreateSignupRequest(JobSeekerSignupRequestDto data);
+        Task CreateSignupRequest(JobSeekerSignupRequestDto data);
+       //void CreateSignupRequest(JobSeekerSignupRequestDto data);
         Task<bool> VerifyEmailAsync(Guid jobSeekerSignupRequestId);
         Task CreateJobseeker(Guid jobSeekerSignupRequestId, string password);
         Task<bool> ApplyJobAsync(Guid jobSeekerId, ApplyJobRequestDto requestDto);

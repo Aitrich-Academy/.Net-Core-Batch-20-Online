@@ -37,7 +37,8 @@ namespace Domain.Service.Admin.Interfaces
 
         Task<int> GetIndustryCountAsync();
         Task<IndustryDto?> UpdateIndustryAsync(Guid id, IndustryDto dto);
-        Task<Industry?> PatchIndustryAsync(Guid id, IndustryDto updatedData);
+        //Task<Industry?> PatchIndustryAsync(Guid id, IndustryDto updatedData);
+        Task<bool> PatchIndustryAsync(Guid id, IndustryDto updatedData);
         Task<bool> DeleteIndustryAsync(Guid id);
 
         Task<IEnumerable<JobDto>> GetPendingJobsAsync();
@@ -61,7 +62,22 @@ namespace Domain.Service.Admin.Interfaces
         Task<bool> ApproveJobAsync(Guid jobId);
         Task<bool> RejectJobAsync(Guid jobId);
 
+        //Task<JobCategoryDto> CreateJobCategoryAsync(JobCategoryDto dto);
+        //Task<IEnumerable<JobCategoryDto>> GetAllJobCategoryAsync();
+        //Task<JobCategoryDto?> GetJobCategoryByIdAsync(Guid id);
+        //Task<bool> UpdateJobCategoryAsync(Guid id, JobCategoryDto dto);
+        //Task<bool> PatchJobCategoryAsync(Guid id, PatchJobCategoryDTO dto);
+        //Task<bool> DeleteJobCategoryAsync(Guid id);
 
+        //Task<int> GetJobCountAsync();
+        //Task<JobPost?> GetJobByNameAsync(string jobTitle);
+
+        //Task<IEnumerable<JobProviderDto>> GetAllProviders();
+        //Task<JobProviderDto> GetJobProviderByIdAsync(Guid id);
+
+        //Task<int> GetJobProviderCountAsync();
+
+        //Task<bool> DeleteJobProviderAsync(Guid id);
 
 
     }

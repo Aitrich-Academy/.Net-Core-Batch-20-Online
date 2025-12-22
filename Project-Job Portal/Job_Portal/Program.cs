@@ -6,6 +6,8 @@ using Domain.Models;
 using Job_Portal.API.Admin.Helper;
 using Job_Portal.API.JobSeeker.Helper;
 using Job_Portal.Helper;
+using Job_Portal.API.Admin.Helper;
+//using Job_Portal.Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.IdentityModel.Tokens;
@@ -21,8 +23,13 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+//builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+//builder.Services.Configure<MailSettings>("Provider", builder.Configuration.GetSection("ProviderMailSetti
+
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.Configure<MailSettings>("Provider", builder.Configuration.GetSection("ProviderMailSettings"));
+
+
 
 builder.Services.AddAutoMapper(typeof(SeekerProfiles));
 //builder.Services.Configure<Domain.Helper.MailSettings>(builder.Configuration.GetSection("MailSettings"));
@@ -30,6 +37,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 builder.Services.AddAutoMapper(typeof(SeekerProfile));
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

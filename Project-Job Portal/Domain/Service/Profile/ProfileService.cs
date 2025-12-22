@@ -25,33 +25,50 @@ namespace Domain.Service.Profile
             _context = context;
         }
 
-       
+
         public async Task<JobSeekerProfileDto> CreateProfileAsync(JobSeekerProfileDto dto, Guid jobSeekerId)
         {
-           
             var jobSeeker = await _context.JobSeekers.FindAsync(jobSeekerId);
             if (jobSeeker == null)
                 throw new InvalidOperationException("JobSeeker does not exist.");
 
-            //// Check if profile already exists
-            //bool profileExists = await _profileRepository.JobSeekerProfileExistsAsync(jobSeekerId);
-            //if (profileExists)
-            //    throw new InvalidOperationException("Profile already exists for this job seeker.");
+            string? imagePath = null, resumePath = null;
 
-            // Convert files to byte[]
-            byte[]? imageData = null, resumeData = null;
-            if (dto.SeekerImage != null)
+            // Define root paths
+            var wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+
+            // ✅ Save image file
+            if (dto.SeekerImage != null && dto.SeekerImage.Length > 0)
             {
-                using var ms = new MemoryStream();
-                await dto.SeekerImage.CopyToAsync(ms);
-                imageData = ms.ToArray();
+                var imageFolder = Path.Combine(wwwRootPath, "Images");
+                Directory.CreateDirectory(imageFolder);
+
+                var imageFileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.SeekerImage.FileName)}";
+                var imageFullPath = Path.Combine(imageFolder, imageFileName);
+
+                using (var stream = new FileStream(imageFullPath, FileMode.Create))
+                {
+                    await dto.SeekerImage.CopyToAsync(stream);
+                }
+
+                imagePath = $"/Images/{imageFileName}"; // relative URL
             }
 
-            if (dto.Resume != null)
+            // ✅ Save resume file
+            if (dto.Resume != null && dto.Resume.Length > 0)
             {
-                using var ms = new MemoryStream();
-                await dto.Resume.CopyToAsync(ms);
-                resumeData = ms.ToArray();
+                var resumeFolder = Path.Combine(wwwRootPath, "Resumes");
+                Directory.CreateDirectory(resumeFolder);
+
+                var resumeFileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.Resume.FileName)}";
+                var resumeFullPath = Path.Combine(resumeFolder, resumeFileName);
+
+                using (var stream = new FileStream(resumeFullPath, FileMode.Create))
+                {
+                    await dto.Resume.CopyToAsync(stream);
+                }
+
+                resumePath = $"/Resumes/{resumeFileName}";
             }
 
             var profile = new JobSeekerProfile
@@ -60,8 +77,8 @@ namespace Domain.Service.Profile
                 JobSeekerId = jobSeekerId,
                 ProfileName = dto.ProfileName,
                 ProfileSummary = dto.ProfileSummary,
-                SeekerImage = imageData ?? Array.Empty<byte>(),
-                Resume = resumeData ?? Array.Empty<byte>()
+                SeekerImage = imagePath,
+                Resume = resumePath
             };
 
             await _profileRepository.CreateJobseekerProfileAsync(profile);
@@ -71,92 +88,183 @@ namespace Domain.Service.Profile
                 Id = profile.Id,
                 JobSeekerId = profile.JobSeekerId,
                 ProfileName = profile.ProfileName,
-                ProfileSummary = profile.ProfileSummary
+                ProfileSummary = profile.ProfileSummary,
+                ImagePath = profile.SeekerImage,
+                ResumePath = profile.Resume
             };
         }
 
 
 
-
-
-
-        public async Task<JobSeekerProfileDto> UpdateProfileAsync(JobSeekerProfileDto JobSeekerProfileDto, Guid jobSeekerId)
+        public async Task<JobSeekerProfileDto> UpdateProfileAsync(JobSeekerProfileDto dto, Guid jobSeekerId)
         {
             var profile = await _profileRepository.GetByJobSeekerIdAsync(jobSeekerId);
-
             if (profile == null)
                 throw new Exception("Profile not found for this Job Seeker.");
 
+            // ✅ Update text fields
+            if (!string.IsNullOrEmpty(dto.ProfileName))
+                profile.ProfileName = dto.ProfileName;
 
-            if (!string.IsNullOrEmpty(JobSeekerProfileDto.ProfileName))
-                profile.ProfileName = JobSeekerProfileDto.ProfileName;
+            if (!string.IsNullOrEmpty(dto.ProfileSummary))
+                profile.ProfileSummary = dto.ProfileSummary;
 
-            if (!string.IsNullOrEmpty(JobSeekerProfileDto.ProfileSummary))
-                profile.ProfileSummary = JobSeekerProfileDto.ProfileSummary;
+            // ✅ Define root path
+            var wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
 
-            if (JobSeekerProfileDto.SeekerImage != null)
+            // ✅ Update image if new file is uploaded
+            if (dto.SeekerImage != null && dto.SeekerImage.Length > 0)
             {
-                using var ms = new MemoryStream();
-                await JobSeekerProfileDto.SeekerImage.CopyToAsync(ms);
-                profile.SeekerImage = ms.ToArray();
+                var imageFolder = Path.Combine(wwwRootPath, "Images");
+                Directory.CreateDirectory(imageFolder);
+
+                // 🔹 Delete old image if exists
+                if (!string.IsNullOrEmpty(profile.SeekerImage))
+                {
+                    var oldImagePath = Path.Combine(wwwRootPath, profile.SeekerImage.TrimStart('/'));
+                    if (File.Exists(oldImagePath))
+                        File.Delete(oldImagePath);
+                }
+
+                // 🔹 Save new image
+                var newImageFileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.SeekerImage.FileName)}";
+                var newImageFullPath = Path.Combine(imageFolder, newImageFileName);
+
+                using (var stream = new FileStream(newImageFullPath, FileMode.Create))
+                {
+                    await dto.SeekerImage.CopyToAsync(stream);
+                }
+
+                profile.SeekerImage = $"/Images/{newImageFileName}";
             }
 
-            if (JobSeekerProfileDto.Resume != null)
+            // ✅ Update resume if new file is uploaded
+            if (dto.Resume != null && dto.Resume.Length > 0)
             {
-                using var ms = new MemoryStream();
-                await JobSeekerProfileDto.Resume.CopyToAsync(ms);
-                profile.Resume = ms.ToArray();
+                var resumeFolder = Path.Combine(wwwRootPath, "Resumes");
+                Directory.CreateDirectory(resumeFolder);
+
+                // 🔹 Delete old resume if exists
+                if (!string.IsNullOrEmpty(profile.Resume))
+                {
+                    var oldResumePath = Path.Combine(wwwRootPath, profile.Resume.TrimStart('/'));
+                    if (File.Exists(oldResumePath))
+                        File.Delete(oldResumePath);
+                }
+
+                // 🔹 Save new resume
+                var newResumeFileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.Resume.FileName)}";
+                var newResumeFullPath = Path.Combine(resumeFolder, newResumeFileName);
+
+                using (var stream = new FileStream(newResumeFullPath, FileMode.Create))
+                {
+                    await dto.Resume.CopyToAsync(stream);
+                }
+
+                profile.Resume = $"/Resumes/{newResumeFileName}";
             }
 
+            // ✅ Save changes
             var updated = await _profileRepository.UpdateJobseekerProfileAsync(profile);
 
+            // ✅ Return DTO
             return new JobSeekerProfileDto
             {
                 Id = updated.Id,
                 JobSeekerId = updated.JobSeekerId,
                 ProfileName = updated.ProfileName,
-                ProfileSummary = updated.ProfileSummary
+                ProfileSummary = updated.ProfileSummary,
+                ImagePath = updated.SeekerImage,
+                ResumePath = updated.Resume
             };
         }
 
-
-        public async Task<JobSeekerProfileDto?> PatchProfileAsync(JobSeekerProfileDto JobSeekerProfileDto, Guid jobSeekerId)
+        public async Task<JobSeekerProfileDto?> PatchProfileAsync(JobSeekerProfileDto dto, Guid jobSeekerId)
         {
             var profile = await _profileRepository.GetByJobSeekerIdAsync(jobSeekerId);
-
             if (profile == null)
                 return null;
 
-            if (!string.IsNullOrEmpty(JobSeekerProfileDto.ProfileName))
-                profile.ProfileName = JobSeekerProfileDto.ProfileName;
+            // ✅ Update text fields only if provided
+            if (!string.IsNullOrEmpty(dto.ProfileName))
+                profile.ProfileName = dto.ProfileName;
 
-            if (!string.IsNullOrEmpty(JobSeekerProfileDto.ProfileSummary))
-                profile.ProfileSummary = JobSeekerProfileDto.ProfileSummary;
+            if (!string.IsNullOrEmpty(dto.ProfileSummary))
+                profile.ProfileSummary = dto.ProfileSummary;
 
-            if (JobSeekerProfileDto.SeekerImage != null)
+            // ✅ Define wwwroot path
+            var wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+
+            // ✅ Handle image update (optional)
+            if (dto.SeekerImage != null && dto.SeekerImage.Length > 0)
             {
-                using var ms = new MemoryStream();
-                await JobSeekerProfileDto.SeekerImage.CopyToAsync(ms);
-                profile.SeekerImage = ms.ToArray();
+                var imageFolder = Path.Combine(wwwRootPath, "Images");
+                Directory.CreateDirectory(imageFolder);
+
+                // Delete old image if exists
+                if (!string.IsNullOrEmpty(profile.SeekerImage))
+                {
+                    var oldImagePath = Path.Combine(wwwRootPath, profile.SeekerImage.TrimStart('/'));
+                    if (File.Exists(oldImagePath))
+                        File.Delete(oldImagePath);
+                }
+
+                // Save new image
+                var imageFileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.SeekerImage.FileName)}";
+                var imageFullPath = Path.Combine(imageFolder, imageFileName);
+
+                using (var stream = new FileStream(imageFullPath, FileMode.Create))
+                {
+                    await dto.SeekerImage.CopyToAsync(stream);
+                }
+
+                profile.SeekerImage = $"/Images/{imageFileName}";
             }
 
-            if (JobSeekerProfileDto.Resume != null)
+            // ✅ Handle resume update (optional)
+            if (dto.Resume != null && dto.Resume.Length > 0)
             {
-                using var ms = new MemoryStream();
-                await JobSeekerProfileDto.Resume.CopyToAsync(ms);
-                profile.Resume = ms.ToArray();
+                var resumeFolder = Path.Combine(wwwRootPath, "Resumes");
+                Directory.CreateDirectory(resumeFolder);
+
+                // Delete old resume if exists
+                if (!string.IsNullOrEmpty(profile.Resume))
+                {
+                    var oldResumePath = Path.Combine(wwwRootPath, profile.Resume.TrimStart('/'));
+                    if (File.Exists(oldResumePath))
+                        File.Delete(oldResumePath);
+                }
+
+                // Save new resume
+                var resumeFileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.Resume.FileName)}";
+                var resumeFullPath = Path.Combine(resumeFolder, resumeFileName);
+
+                using (var stream = new FileStream(resumeFullPath, FileMode.Create))
+                {
+                    await dto.Resume.CopyToAsync(stream);
+                }
+
+                profile.Resume = $"/Resumes/{resumeFileName}";
             }
 
+            // ✅ Save updates
             var updated = await _profileRepository.UpdateJobseekerProfileAsync(profile);
 
+            // ✅ Return updated DTO
             return new JobSeekerProfileDto
             {
                 Id = updated.Id,
                 JobSeekerId = updated.JobSeekerId,
                 ProfileName = updated.ProfileName,
-                ProfileSummary = updated.ProfileSummary
+                ProfileSummary = updated.ProfileSummary,
+                ImagePath = updated.SeekerImage,
+                ResumePath = updated.Resume
             };
         }
+
+
+
+
 
         public async Task<JobSeekerProfileViewDto?> GetProfileByJobSeekerIdAsync(Guid jobSeekerId)
         {
@@ -171,8 +279,9 @@ namespace Domain.Service.Profile
                 JobSeekerId = profile.JobSeekerId,
                 ProfileName = profile.ProfileName,
                 ProfileSummary = profile.ProfileSummary,
-                ImageBase64 = profile.SeekerImage != null ? Convert.ToBase64String(profile.SeekerImage) : null,
-                ResumeBase64 = profile.Resume != null ? Convert.ToBase64String(profile.Resume) : null
+                // ✅ Already Base64 strings, so no conversion needed
+                ImageBase64 = profile.SeekerImage,
+                ResumeBase64 = profile.Resume
             };
         }
 
@@ -192,10 +301,12 @@ namespace Domain.Service.Profile
             return "Profile deleted successfully.";
         }
 
-        public async Task<byte[]?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId)
+        public async Task<string?> GetResumeByJobSeekerIdAsync(Guid jobSeekerId)
         {
             return await _profileRepository.GetResumeByJobSeekerIdAsync(jobSeekerId);
         }
+
+
 
 
         public async Task<List<Skill>> GetAllSkillsAsync()
@@ -235,21 +346,70 @@ namespace Domain.Service.Profile
         public async Task<WorkExperienceDto> AddWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto)
         {
 
+            //var profile = await _context.JobSeekerProfiles
+            //    .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
+
             var profile = await _context.JobSeekerProfiles
-                .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId);
+    .FirstOrDefaultAsync(p => p.JobSeekerId == jobSeekerId && p.ProfileName != null);
+
 
             if (profile == null)
                 throw new Exception("JobSeeker profile not found");
 
             var entity = mapper.Map<WorkExperience>(dto);
-            entity.JobSeekerProfileId = profile.Id;
             entity.Id = Guid.NewGuid();
+            entity.JobSeekerProfileId = profile.Id;
+            
 
             await _profileRepository.AddWorkExperiencesync(entity);
             await _profileRepository.SaveChangesAsync();
+            Console.WriteLine("JobSeekerId param: " + jobSeekerId);
+            Console.WriteLine("Profile.Id: " + profile.Id);
+            Console.WriteLine("Assigned JobSeekerProfileId: " + entity.JobSeekerProfileId);
 
             return mapper.Map<WorkExperienceDto>(entity);
+            
+
+
+
         }
+
+        //public async Task AddWorkExperienceAsync(Guid userId, WorkExperienceDto request)
+        //{
+        //    // 1️⃣ Find the user's profile
+        //    var profile = await _context.JobSeekerProfiles
+        //                                .FirstOrDefaultAsync(p => p.JobSeekerId == userId);
+
+        //    if (profile == null)
+        //        throw new Exception("User profile not found. Create a profile first.");
+
+        //    // 2️⃣ Create WorkExperience entity
+        //    var work = new WorkExperience
+        //    {
+        //        JobSeekerProfileId = profile.Id, // FK points to existing profile
+        //        JobTitle = request.JobTitle,
+        //        CompanyName = request.CompanyName,
+        //        Summary = request.Summary,
+        //        ServiceStart = request.ServiceStart,
+        //        ServiceEnd = request.ServiceEnd
+        //    };
+
+        //    // 3️⃣ Add and save
+        //    _context.WorkExperiences.Add(work);
+        //    await _context.SaveChangesAsync();
+
+        //}
+
+        //public async Task<WorkExperienceDto> AddWorkExperienceAsync(WorkExperienceDto workExperienceDto)
+        //{
+        //    var entity = mapper.Map<WorkExperience>(workExperienceDto);
+        //    await _profileRepository.AddAsync(entity);
+        //    await _profileRepository.SaveChangesAsync();
+
+        //    return mapper.Map<WorkExperienceDto>(entity);
+        //}
+
+
 
         public async Task<WorkExperienceDto> UpdateWorkExperienceAsync(Guid jobSeekerId, WorkExperienceDto dto)
         {

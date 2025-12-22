@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Service.Login.DTOs
 {
-    public class AdminLoginDTO
+    public class AdminLoginDto
     {
         public string Email { get; set; }
 

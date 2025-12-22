@@ -3,6 +3,11 @@ using Domain.Service;
 using Domain.Service.Admin;
 using Domain.Service.Admin.Interfaces;
 using Domain.Service.Authuser;
+
+using Domain.Service.Login;
+using Domain.Service.Login.Interfaces;
+using Domain.Service;
+
 using Domain.Service.Authuser.Interfaces;
 using Domain.Service.Email;
 using Domain.Service.Email.Interface;
@@ -12,8 +17,8 @@ using Domain.Service.Jobs;
 using Domain.Service.Jobs.Interfaces;
 using Domain.Service.JobSeeker;
 using Domain.Service.JobSeeker.Interfaces;
-using Domain.Service.Login;
-using Domain.Service.Login.Interfaces;
+
+
 using Domain.Service.Profile;
 using Domain.Service.Profile.Interface;
 using Domain.Service.SignUp;
@@ -69,6 +74,12 @@ namespace Domain.Extensions
             services.AddScoped<IJobService, JobService>();
             services.AddHttpContextAccessor();
 
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IAdminServices, AdminService>();
+            services.AddScoped<ILoginRequestService, LoginRequestService>();
+            services.AddScoped<ILoginRequestRepository, LoginRequestRepository>();
+            services.AddScoped<  IAuthUserRepository, AuthUserRepository> ();
             return services;
         }
     }

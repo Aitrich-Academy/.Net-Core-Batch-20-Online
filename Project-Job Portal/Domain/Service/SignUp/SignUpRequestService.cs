@@ -41,7 +41,31 @@ namespace Domain.Service.SignUp
         }
 
         // 1️⃣ Create Signup Request
-        public void CreateSignupRequest(SignUpRequestDto data)
+        //public  void CreateSignupRequest(SignUpRequestDto data)
+        //{
+        //    var signUpRequest = new SignUpRequest
+        //    {
+        //        UserName = data.UserName,
+        //        FirstName = data.FirstName,
+        //        LastName = data.LastName,
+        //        Email = data.Email,
+        //        Phone = data.Phone,
+        //        Status = Status.PENDING
+        //    };
+
+        //    // Add request and get ID
+        //    var signUpId =  _signUpRequestRepository.AddSignupRequest(signUpRequest);
+
+        //    // Send email
+        //     _emailService.SendEmailAsync(
+        //       data.Email,
+        //       "Signup Received",
+        //       $"Hello {data.FirstName}, your signup request has been received.\nYour Request ID: {signUpId}"
+        //   ).GetAwaiter().GetResult();
+        //}
+
+
+        public async Task CreateSignupRequest(SignUpRequestDto data)
         {
             var signUpRequest = new SignUpRequest
             {
@@ -53,15 +77,13 @@ namespace Domain.Service.SignUp
                 Status = Status.PENDING
             };
 
-            // Add request and get ID
             var signUpId = _signUpRequestRepository.AddSignupRequest(signUpRequest);
 
-            // Send email
-            _emailService.SendEmailAsync(
+            await _emailService.SendEmailAsync(
                 data.Email,
                 "Signup Received",
                 $"Hello {data.FirstName}, your signup request has been received.\nYour Request ID: {signUpId}"
-            ).GetAwaiter().GetResult();
+            );
         }
 
         // 2️⃣ Verify Email

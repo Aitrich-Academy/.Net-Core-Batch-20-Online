@@ -11,7 +11,7 @@ namespace Domain.Service.Login.Interfaces
     public interface ILoginRequestRepository
     {
 
-        AuthUser? GetUserByEmail(string email);
+       // AuthUser? GetUserByEmail(string email);
 
 
         Task<AuthUser?> GetUserByEmailAsync(string email);

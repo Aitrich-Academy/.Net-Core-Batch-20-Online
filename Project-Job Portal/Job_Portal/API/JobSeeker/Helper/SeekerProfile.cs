@@ -31,7 +31,7 @@ namespace Job_Portal.API.JobSeeker.Helper
             CreateMap<Qualification, QualificationDto>();
             CreateMap<QualificationUpdateRequest, QualificationDto>();
             CreateMap<QualificationPatchRequest, QualificationDto>();
-
+            CreateMap<WorkExperienceDto, WorkExperience>().ReverseMap();
 
         }
     }

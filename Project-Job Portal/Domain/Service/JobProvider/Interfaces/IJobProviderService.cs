@@ -24,7 +24,7 @@ namespace Domain.Service.JobProvider.Interfaces
 
 
         // ================== Company ==================
-        Task<(Guid CompanyId, string Message)> AddCompanyAsync(Guid jobProviderId, string companyName, string location, string industry, string websiteUrl);
+        Task<(Guid CompanyId, string Message)> AddCompanyAsync(Guid jobProviderId, string companyName, Guid? location, string industry, string websiteUrl);
         Task<JobProviderCompany> GetCompanyByIdAsync(Guid companyId);
 
         Task<IEnumerable<JobProviderCompany>> GetAllCompaniesAsync();
