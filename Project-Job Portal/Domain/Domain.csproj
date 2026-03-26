@@ -73,6 +73,16 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.12" />
   </ItemGroup>
 
+<<<<<<< HEAD
+
+	<ItemGroup>
+		<Folder Include="Service\Admin\Interfaces\" />
+		<Folder Include="Service\JobProvider\DTOs\" />
+		<Folder Include="Service\JobSeeker\Interfaces\" />
+	</ItemGroup>
+
+
+=======
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="Service\Admin\Interfaces\" />
@@ -81,5 +91,6 @@
     <Folder Include="Service\JobSeeker\DTOs\" />
     <Folder Include="Service\JobSeeker\Interfaces\" />
   </ItemGroup>
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 
 </Project>

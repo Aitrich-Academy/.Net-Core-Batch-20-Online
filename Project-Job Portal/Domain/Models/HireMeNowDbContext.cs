@@ -48,6 +48,10 @@ namespace Domain.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(
 
+<<<<<<< HEAD
+                "Data Source=ANOOD;Initial Catalog=JobPortal;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+=======
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 
         //"Data Source=VIJISHA;Initial Catalog=JobPortalProjectOriginal;Integrated Security=True;Trust Server Certificate=True");
         "Data Source=VIJISHA;Initial Catalog=JobportalFinalProject;Integrated Security=True;Trust Server Certificate=True");

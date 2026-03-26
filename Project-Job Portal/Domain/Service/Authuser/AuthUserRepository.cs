@@ -1,4 +1,6 @@
 
+<<<<<<< HEAD
+=======
 ////using AutoMapper;
 ////using Domain.Models;
 ////using Microsoft.Extensions.Configuration;
@@ -149,18 +151,34 @@
 ////}
 
 
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 //using AutoMapper;
 //using Domain.Models;
 //using Microsoft.Extensions.Configuration;
 //using Microsoft.IdentityModel.Tokens;
 //using System;
 //using System.Collections.Generic;
+<<<<<<< HEAD
+//using System.Linq;
+=======
 //using System.IdentityModel.Tokens.Jwt;
 //using System.Security.Claims;
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 //using System.Text;
 //using System.Threading.Tasks;
 //using Domain.Service.Authuser.Interfaces;
 
+<<<<<<< HEAD
+
+//namespace Domain.Service.Authuser
+//{
+//    internal class AuthUserRepository
+//    {
+
+//        private readonly HireMeNowDbContext _context;
+//        IMapper _mapper;
+//        private readonly IConfiguration _configuration;
+=======
 //namespace Domain.Service.Authuser
 //{
 //    public class AuthUserRepository : IAuthUserRepository
@@ -169,11 +187,17 @@
 //        private readonly IMapper _mapper;
 //        private readonly IConfiguration _configuration;
 
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 //        public AuthUserRepository(HireMeNowDbContext context, IMapper mapper, IConfiguration configuration)
 //        {
 //            _context = context;
 //            _mapper = mapper;
 //            _configuration = configuration;
+<<<<<<< HEAD
+
+//        }
+
+=======
 //        }
 
 //        // ✅ Register Job Seeker
@@ -224,6 +248,7 @@
 //        }
 
 //        // ✅ Create Token (for any user)
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 //        public string? CreateToken(AuthUser user)
 //        {
 //            if (user == null)
@@ -233,7 +258,11 @@
 //            if (string.IsNullOrEmpty(tokenSecret))
 //                throw new InvalidOperationException("Token secret is missing or empty in configuration.");
 
+<<<<<<< HEAD
+//            // Update connection info
+=======
 //            // Assign Connection ID and update online status
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 //            user.ConnectionId = Guid.NewGuid().ToString();
 //            user.OnlineStatus = true;
 //            _context.SaveChanges();
@@ -259,14 +288,61 @@
 //            return new JwtSecurityTokenHandler().WriteToken(token);
 //        }
 
+<<<<<<< HEAD
+
+
+//        public async Task<AuthUser> AddAuthUserJS(AuthUser authUser)
+//        {
+//            authUser.Role = Enums.Role.JOB_SEEKER;
+//            await _context.AuthUsers.AddAsync(authUser);
+//            Models.JobSeeker jobSeeker = _mapper.Map<Models.JobSeeker>(authUser);
+//            await _context.JobSeekers.AddAsync(jobSeeker);
+//            JobSeekerProfile jp = new();
+//            jp.Id = Guid.NewGuid();
+//            jp.JobSeekerId = jobSeeker.Id;
+//            await _context.JobSeekerProfiles.AddAsync(jp);
+//            _context.SaveChanges();
+//            return authUser;
+//        }
+
+
+//        // Add Auth User for Job Provider
+//        public async Task<AuthUser> AddAuthUserJP(AuthUser authUser)
+
+//        {
+//            authUser.Role = Enums.Role.JOB_PROVIDER;
+
+//            await _context.AuthUsers.AddAsync(authUser);
+
+//            Models.JobSeeker jobSeeker = _mapper.Map<Models.JobSeeker>(authUser);
+//            await _context.JobSeekers.AddAsync(jobSeeker);
+//            JobSeekerProfile jp = new();
+//            jp.Id = Guid.NewGuid();
+//            jp.JobSeekerId = jobSeeker.Id;
+//            await _context.JobSeekerProfiles.AddAsync(jp);
+//            _context.SaveChanges();
+//            return authUser;
+//        }
+
+=======
 //        // ✅ Common Add method if needed
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 //        public async Task AddUserAsync(AuthUser user)
 //        {
 //            await _context.AuthUsers.AddAsync(user);
 //            await _context.SaveChangesAsync();
 //        }
+<<<<<<< HEAD
+
+
+
 //    }
 //}
+
+=======
+//    }
+//}
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
 using AutoMapper;
 using Domain.Models;
 using Microsoft.Extensions.Configuration;

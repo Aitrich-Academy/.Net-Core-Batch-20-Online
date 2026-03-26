@@ -25,6 +25,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Service.Login
 {
+<<<<<<< HEAD
+    public class LoginRequestService : ILoginRequestService 
+=======
     //public class LoginRequestService : ILoginRequestService
     //{
     //    private readonly ILoginRequestRepository _loginRepository;
@@ -38,6 +41,7 @@ namespace Domain.Service.Login
     //        _authUserRepository = authUserRepository;
     //    }
     public class LoginRequestService : ILoginRequestService
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75
     {
 
         private readonly HireMeNowDbContext _context;

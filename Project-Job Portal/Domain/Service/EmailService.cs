@@ -1,4 +1,7 @@
-﻿using Domain.Mail;
+﻿ 
+
+using AutoMapper.Internal;
+using Domain.Mail;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;

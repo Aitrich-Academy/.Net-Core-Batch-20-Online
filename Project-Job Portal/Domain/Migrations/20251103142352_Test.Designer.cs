@@ -9,6 +9,21 @@
 
 //#nullable disable
 
+<<<<<<< HEAD:Project-Job Portal/Domain/Migrations/20251103142352_Test.Designer.cs
+namespace Domain.Migrations
+{
+    [DbContext(typeof(HireMeNowDbContext))]
+    [Migration("20251103142352_Test")]
+    partial class Test
+    {
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "7.0.20")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+=======
 //namespace Domain.Migrations
 //{
 //    [DbContext(typeof(HireMeNowDbContext))]
@@ -22,6 +37,7 @@
 //            modelBuilder
 //                .HasAnnotation("ProductVersion", "7.0.20")
 //                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+>>>>>>> 6959ce1bb84d1b7c1ba32b28f827057c8f121f75:Project-Job Portal/Domain/Migrations/20251030105857_second.Designer.cs
 
 //            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 

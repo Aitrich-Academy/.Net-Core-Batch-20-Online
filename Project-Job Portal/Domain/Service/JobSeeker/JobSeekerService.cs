@@ -1,4 +1,7 @@
-﻿using System;
+﻿ 
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -14,23 +17,27 @@ using Domain.Service.JobProvider;
 using Domain.Service.JobSeeker.DTOs;
 using Domain.Service.JobSeeker.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper.Internal;
+using Domain.Service.JobProvider.Interfaces;
+using Domain.Service.Jobs.Interfaces;
+using Domain.Service.Jobs.Dto;
 namespace Domain.Service.JobSeeker
 {
     public class JobSeekerService : IJobSeekerService
     {
         IJobSeekerRepository jobSeekerRepository;
-        //IJobProviderService jobProviderService;
+        IJobService jobService;
         IAuthUserRepository authUserRepository;
         IMapper mapper;
         IEmailService emailService;
         private readonly HireMeNowDbContext _context;
-        public JobSeekerService(IJobSeekerRepository _jobSeekerRepository, IMapper _mapper, IEmailService _emailService, IAuthUserRepository _authUserRepository, HireMeNowDbContext context/*, IJobProviderService _jobProviderService*/)
+        public JobSeekerService(IJobSeekerRepository _jobSeekerRepository, IMapper _mapper, IEmailService _emailService, IAuthUserRepository _authUserRepository, HireMeNowDbContext context, IJobService _jobService)
         {
             jobSeekerRepository = _jobSeekerRepository;
             mapper = _mapper;
             emailService = _emailService;
             authUserRepository = _authUserRepository;
-            //jobProviderService = _jobProviderService;
+            jobService = _jobService;
             _context = context;
         }
 
@@ -159,7 +166,7 @@ namespace Domain.Service.JobSeeker
         {
             bool jobExists = await jobSeekerRepository.JobExistsAsync(dto.JobId);
             if (!jobExists)
-                return false; 
+                return false;
             var savedJob = new SavedJob
             {
                 Job = dto.JobId,
@@ -175,9 +182,9 @@ namespace Domain.Service.JobSeeker
 
             var result = entities.Select(s => new SavedJobDto
             {
-                SavedJobId = s.Id,                
-                JobId = s.Job,                    
-                JobTitle = s.JobPost.JobTitle,   
+                SavedJobId = s.Id,
+                JobId = s.Job,
+                JobTitle = s.JobPost.JobTitle,
                 DateSaved = s.DateSaved
             }).ToList();
 
@@ -213,14 +220,14 @@ namespace Domain.Service.JobSeeker
             return mapper.Map<IEnumerable<InterviewDto>>(interviews);
         }
 
-        //public async Task <JobDto?> GetJobByTitleAsync(string title)
-        //{
-        //    var jobs = await _jobProviderService.GetAllJobsAsync();
-        //    return jobs.FirstOrDefault(j=>j.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
-        //}
+        public async Task<JobPostDto?> GetJobByTitleAsync(string title)
+        {
+            var jobs = await jobService.GetAllJobsAsync();
+            return jobs.FirstOrDefault(j => j.JobTitle.Equals(title, StringComparison.OrdinalIgnoreCase));
+        }
 
 
-        
+
     }
 
 }

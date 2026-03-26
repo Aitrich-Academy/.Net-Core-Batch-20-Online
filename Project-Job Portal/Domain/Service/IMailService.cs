@@ -1,4 +1,5 @@
-﻿using Domain.Mail;
+﻿using AutoMapper.Internal;
+using Domain.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
